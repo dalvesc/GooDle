@@ -1,13 +1,17 @@
 package goodle.model;
 
+import java.io.File;
+
 public class Pagina {
 
     private int quantDaPalavra, acesso;
-
+    File arq;
+    
     /**
      * Controller da classe
      */
-    public Pagina() {
+    public Pagina(File arq) {
+        this.arq = arq;
         this.quantDaPalavra = 0;
         this.acesso = 0;
     }
