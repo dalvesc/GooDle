@@ -8,10 +8,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
-/**
- *
- * @author danco
- */
 public class Controller {
 
     Ilist listaPalavras = new LinkedList();
