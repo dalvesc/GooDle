@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
-public class Controller {
+public class Controller{
 
     Ilist listaPalavras = new LinkedList();
 
