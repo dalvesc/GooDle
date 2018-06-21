@@ -18,9 +18,6 @@ public class ArvoreAVL07 {
         novo.inserir("Rua");
         novo.percorrerPreOrdem(novo.raiz);
         System.out.println("******************");
-        novo.inserir("7");
-        novo.percorrerPreOrdem(novo.raiz);
-        System.out.println("******************");
         novo.inserir("José");
         novo.percorrerPreOrdem(novo.raiz);
         System.out.println("******************");
@@ -28,9 +25,6 @@ public class ArvoreAVL07 {
         novo.percorrerPreOrdem(novo.raiz);
         System.out.println("******************");
         novo.inserir("Mica");
-        novo.percorrerPreOrdem(novo.raiz);
-        System.out.println("******************");
-        novo.inserir("10");
         novo.percorrerPreOrdem(novo.raiz);
         System.out.println("******************");
         novo.inserir("Gineco");
@@ -66,6 +60,15 @@ public class ArvoreAVL07 {
         System.out.println("REMOVER me");
         novo.remove("me");
         novo.percorrerPreOrdem(novo.raiz);
+        novo.remove("josé");
+        System.out.println("Pre ordem");
+        novo.percorrerPreOrdem(novo.raiz);
+        System.out.println("Raiz");
+        System.out.println(novo.raiz.chave);
+        System.out.println("Direita");
+        System.out.println(novo.raiz.dir.chave);
+        System.out.println("Esquerda");
+        System.out.println(novo.raiz.esq.chave);
     }
 
 }

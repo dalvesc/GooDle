@@ -1,5 +1,7 @@
 package goodle.util;
 
+import goodle.model.Palavra;
+
 /**
   *Adaptado do código https://github.com/douglasrz/ArvoreAVL
  * @author Douglas
@@ -14,19 +16,22 @@ public class Arvore {
         this.h = false;
     }
 
-    public void inserir(String chave) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
-        this.raiz = insAVL(chave, this.raiz);
+    public void inserir(Object palavra) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
+        this.raiz = insAVL(palavra, this.raiz);
     }
 
-    private NodeArvore insAVL(String chave, NodeArvore pt) {
+    private NodeArvore insAVL(Object palavra, NodeArvore pt) {
+        
+        Palavra chave = (Palavra) palavra;
+        
         if (pt == null) {
             h = true;
-            return new NodeArvore(chave);
+            return new NodeArvore(chave.getPalavra());
         } else {
-            if (chave.equals(pt.chave)) {
+            if (chave.getPalavra().equals(pt.chave)) {
                 return pt;
             }
-            if (chave.compareToIgnoreCase(pt.chave) < 0) {//PERCORRO PARA O RAMO ESQUERDO
+            if (chave.getPalavra().compareToIgnoreCase(pt.chave) < 0) {//PERCORRO PARA O RAMO ESQUERDO
                 pt.esq = insAVL(chave, pt.esq);
                 if (h) {
                     switch (pt.bal) {
@@ -141,17 +146,18 @@ public class Arvore {
         return pt;
     }
 
-    public void remove(String chave) {
-        this.raiz = remover(chave, this.raiz);
+    public void remove(Object palavra) {
+        this.raiz = remover(palavra, this.raiz);
     }
 
-    private NodeArvore remover(String chave, NodeArvore pt) {
+    private NodeArvore remover(Object palavra, NodeArvore pt) {
+        Palavra chave = (Palavra) palavra;
         if (pt == null) {
             System.out.println("ELEMENTO NÃO ENCONTRADO");//QUANDO PERCORRE TODA A ARVORE E NAO ENCONTRO O ELEMENTO
             h = false;//PARA REMOVER ELEMENTOS Q NAO EXISTE, POIS TAVA DANDO ERRO
             return pt;
         } else {
-            if (chave.compareToIgnoreCase(pt.chave) < 0) {//PERCORRO O PARA ESQUERDA
+            if (chave.getPalavra().compareToIgnoreCase(pt.chave) < 0) {//PERCORRO O PARA ESQUERDA
                 pt.esq = remover(chave, pt.esq);
                 if (h) {
                     switch (pt.bal) {
@@ -169,7 +175,7 @@ public class Arvore {
                     }
                 }
             }
-            if (chave.compareToIgnoreCase(pt.chave) > 0) {//PERCORRO PARA A DIREITA    
+            if (chave.getPalavra().compareToIgnoreCase(pt.chave) > 0) {//PERCORRO PARA A DIREITA    
                 pt.dir = remover(chave, pt.dir);
                 if (h) {
                     switch (pt.bal) {
@@ -187,7 +193,7 @@ public class Arvore {
                     }
                 }
             }
-            if (chave.compareToIgnoreCase(pt.chave) == 0) {//APOS PERCORRER ATÉ QUE A CHAVE NEM SEJA MAIOR OU MENOR QUE OS NO,EU VERIFICO SE É IGUAL
+            if (chave.getPalavra().compareToIgnoreCase(pt.chave) == 0) {//APOS PERCORRER ATÉ QUE A CHAVE NEM SEJA MAIOR OU MENOR QUE OS NO,EU VERIFICO SE É IGUAL
                 if ((pt.dir == null) && (pt.esq == null)) {
                     return null;//NO SEM FILHOS ENTÃO BASTA APAGAR
                 } else {//SENÃO EU PEGO O MAIOR E COLOCO NO LUGAR NO REMOVIDO
@@ -195,7 +201,7 @@ public class Arvore {
                         //MÉTODO ALTERADO PELA MINHA LÓGICA, POIS ESTAVA DANDO ERRO
                         NodeArvore aux = max(pt.esq);
                         pt.chave = aux.chave;
-                        aux.chave = chave;
+                        aux.chave = chave.getPalavra();
                         pt.esq = remover(chave, pt.esq);
                         if (h) {
                             switch (pt.bal) {
@@ -215,7 +221,7 @@ public class Arvore {
                             //MÉTODO ALTERADO PELA MINHA LÓGICA, POIS ESTAVA DANDO ERRO
                             NodeArvore aux = min(pt.dir);
                             pt.chave = aux.chave;
-                            aux.chave = chave;
+                            aux.chave = chave.getPalavra();
                             pt.dir = remover(chave, pt.dir);
                             if (h) {
                                 pt.bal = 0;
@@ -241,7 +247,7 @@ public class Arvore {
             percorrerInOrdem(pt.dir);//por fim a direita, após a raiz
         }
     }
-
+    
     public void percorrerPreOrdem(NodeArvore pt) {
         if (pt == null) {
             return;
@@ -255,17 +261,20 @@ public class Arvore {
         }
     }
 
-    public void percorrerPosOrdem(NodeArvore pt) {
-        if (pt == null) {
-            return;
+    //coloquei esse metódo para rodar a árvore e caso ele encontre uma palavra
+    //repetida ele retorna true para poder saber se uma palavra já se encontra na árvore
+    public boolean buscaPalavraRepetida(NodeArvore pt, Object palavra) {
+        Palavra chave = (Palavra) palavra;
+        if (pt == null || pt.chave.equals(chave.getPalavra())) {
+            return true;
         }
         if (pt.esq != null) {
-            percorrerPosOrdem(pt.esq);
+            buscaPalavraRepetida(pt.esq, palavra);
         }
         if (pt.dir != null) {//PERCORRO TUDO, POR ULTIMO PERCORRO A SUBARVORE DIREITA A PARTIR DO ULTIMO NÓ DA DIREITA É 
-            percorrerPosOrdem(pt.dir);//QUE VENHO IMPRIMINDO E ASSIM VOLTANDO RECURSIVAMENTE
+            buscaPalavraRepetida(pt.dir, palavra);//QUE VENHO IMPRIMINDO E ASSIM VOLTANDO RECURSIVAMENTE
         }
-        System.out.println("Chave: " + pt.chave);
+        return false;
     }
 
     private NodeArvore min(NodeArvore pt) {

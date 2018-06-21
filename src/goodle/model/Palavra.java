@@ -12,6 +12,38 @@ public class Palavra {
     private int quantidade, buscas;
     private Ilist lPagina;
 
+    public String getPalavra() {
+        return palavra;
+    }
+
+    public void setPalavra(String palavra) {
+        this.palavra = palavra;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public int getBuscas() {
+        return buscas;
+    }
+
+    public void setBuscas(int buscas) {
+        this.buscas = buscas;
+    }
+
+    public Ilist getlPagina() {
+        return lPagina;
+    }
+
+    public void setlPagina(Ilist lPagina) {
+        this.lPagina = lPagina;
+    }
+
     /**
      * Controller da classe
      *
@@ -29,9 +61,12 @@ public class Palavra {
      * @param pagina pagina em que a palavra aparece
      * @return retorna a lista
      */
-    public Ilist Pagina(Pagina pagina) {
+    public void Pagina(Pagina pagina) {
         pagina.Quantidade();
         this.lPagina.addLast(pagina);
+    }
+    
+    public Ilist getPagina(){
         return this.lPagina;
     }
 
