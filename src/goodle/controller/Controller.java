@@ -2,6 +2,7 @@ package goodle.controller;
 
 import goodle.model.Pagina;
 import goodle.model.Palavra;
+import goodle.util.Arvore;
 import goodle.util.Ilist;
 import goodle.util.LinkedList;
 import java.io.File;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class Controller{
 
-    Ilist listaPalavras = new LinkedList();
+    Arvore listaPalavras = new Arvore();
 
     /**
      * Ler os arquivos de texto e salva dentro de uma lista
@@ -33,9 +34,10 @@ public class Controller{
                 palavra = scan.next();
 
                 palavras = new Palavra(palavra);
-                palavras.Pagina(pagina);
-
-                listaPalavras.addLast(palavras);
+                
+                if(listaPalavras.buscaPalavraRepetida(listaPalavras.raiz, palavras)){
+                    
+                }
             }
             scan.close();
         } catch (Exception e) {
