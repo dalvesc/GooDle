@@ -1,9 +1,11 @@
 package goodle.util;
 
+import goodle.model.Pagina;
 import goodle.model.Palavra;
 
 /**
-  *Adaptado do código https://github.com/douglasrz/ArvoreAVL
+ * Adaptado do código https://github.com/douglasrz/ArvoreAVL
+ *
  * @author Douglas
  */
 public class Arvore {
@@ -16,23 +18,34 @@ public class Arvore {
         this.h = false;
     }
 
-    public void inserir(Object palavra) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
-        this.raiz = insAVL(palavra, this.raiz);
+    public void inserir(Object palavra, Object pagina) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
+        this.raiz = insAVL(palavra, pagina, this.raiz);
     }
 
-    private NodeArvore insAVL(Object palavra, NodeArvore pt) {
-        
+    private NodeArvore insAVL(Object palavra, Object pagina, NodeArvore pt) {
+
         Palavra chave = (Palavra) palavra;
-        
+        Pagina pag = (Pagina) pagina;
         if (pt == null) {
             h = true;
             return new NodeArvore(chave.getPalavra());
         } else {
-            if (chave.getPalavra().equals(pt.chave)) {
+
+            if (chave.getPalavra().equalsIgnoreCase(pt.chave)) { //fiz isso para caso as palavras sejam iguais
+                Iterator iterator = chave.getPagina().iterator(); //pego a lista de pagina da palavra
+                while (iterator.hasNext()) {
+                    Pagina temp = (Pagina) iterator.next();
+                    if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
+                        temp.Quantidade();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
+                    } else {
+                        chave.Pagina(pag);//caso não seja igual adiciona a pagina na lista
+                    }
+                }
                 return pt;
             }
+
             if (chave.getPalavra().compareToIgnoreCase(pt.chave) < 0) {//PERCORRO PARA O RAMO ESQUERDO
-                pt.esq = insAVL(chave, pt.esq);
+                pt.esq = insAVL(chave, pagina, pt.esq);
                 if (h) {
                     switch (pt.bal) {
                         case 1:
@@ -50,7 +63,7 @@ public class Arvore {
                     }
                 }
             } else {
-                pt.dir = insAVL(chave, pt.dir);//PERCORRO PARA A DIREITA
+                pt.dir = insAVL(chave, pagina, pt.dir);//PERCORRO PARA A DIREITA
                 if (h) {
                     switch (pt.bal) {
                         case -1:
@@ -247,7 +260,7 @@ public class Arvore {
             percorrerInOrdem(pt.dir);//por fim a direita, após a raiz
         }
     }
-    
+
     public void percorrerPreOrdem(NodeArvore pt) {
         if (pt == null) {
             return;

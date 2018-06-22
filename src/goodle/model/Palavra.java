@@ -59,14 +59,13 @@ public class Palavra {
      * Cria uma lista para salvar os arquivos em que essa palavra aparece
      *
      * @param pagina pagina em que a palavra aparece
-     * @return retorna a lista
      */
     public void Pagina(Pagina pagina) {
         pagina.Quantidade();
         this.lPagina.addLast(pagina);
     }
-    
-    public Ilist getPagina(){
+
+    public Ilist getPagina() {
         return this.lPagina;
     }
 

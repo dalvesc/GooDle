@@ -3,18 +3,16 @@ package goodle.controller;
 import goodle.model.Pagina;
 import goodle.model.Palavra;
 import goodle.util.Arvore;
-import goodle.util.Ilist;
-import goodle.util.LinkedList;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
-public class Controller{
+public class Controller {
 
     Arvore listaPalavras = new Arvore();
 
     /**
-     * Ler os arquivos de texto e salva dentro de uma lista
+     * Ler os arquivos de texto e salva dentro de uma árvore
      */
     public void AdicionarPalavras() {
 
@@ -26,18 +24,13 @@ public class Controller{
         try {
             File arq = new File("jogadoresCadastrados.txt");
 
-            pagina = new Pagina(arq);
+            pagina = new Pagina(arq.getName());
             Scanner scan = new Scanner(new FileReader(arq)).useDelimiter(" |\n");
 
-            //Falta a condição caso a palavra já tenha aparecido ateriormente
             while (scan.hasNext()) {
-                palavra = scan.next();
-
-                palavras = new Palavra(palavra);
-                
-                if(listaPalavras.buscaPalavraRepetida(listaPalavras.raiz, palavras)){
-                    
-                }
+                palavra = scan.next(); //salvando as palavras lidas em uma string
+                palavras = new Palavra(palavra); //criando o objeto palavra
+                listaPalavras.inserir(palavras, pagina); //mandando o objeto palavra e pagina para a arvore
             }
             scan.close();
         } catch (Exception e) {
@@ -47,6 +40,7 @@ public class Controller{
 
     /**
      * Faz a busca da palavra que o usuário deseja
+     *
      * @param palavra palavra que o usuário deseja buscar
      */
     public void Buscar(Palavra palavra) {

@@ -1,19 +1,43 @@
 package goodle.model;
 
-import java.io.File;
-
 public class Pagina {
 
     private int quantDaPalavra, acesso;
-    File arq;
-    
+    String arq;
+
     /**
      * Controller da classe
+     *
+     * @param arq nome do arquivo
      */
-    public Pagina(File arq) {
+    public Pagina(String arq) {
         this.arq = arq;
         this.quantDaPalavra = 0;
         this.acesso = 0;
+    }
+
+    public int getQuantDaPalavra() {
+        return quantDaPalavra;
+    }
+
+    public void setQuantDaPalavra(int quantDaPalavra) {
+        this.quantDaPalavra = quantDaPalavra;
+    }
+
+    public int getAcesso() {
+        return acesso;
+    }
+
+    public void setAcesso(int acesso) {
+        this.acesso = acesso;
+    }
+
+    public String getArq() {
+        return arq;
+    }
+
+    public void setArq(String arq) {
+        this.arq = arq;
     }
 
     /**

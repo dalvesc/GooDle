@@ -1,7 +1,5 @@
 package goodle.controller;
 
-
-
 import goodle.util.Arvore;
 
 public class ArvoreAVL07 {
@@ -48,7 +46,7 @@ public class ArvoreAVL07 {
         novo.inserir("abacaxi");
         novo.percorrerPreOrdem(novo.raiz);
         System.out.println("******************");
-        
+
         System.out.println("REMOVER Mica");
         novo.remove("Mica");
         novo.percorrerPreOrdem(novo.raiz);
