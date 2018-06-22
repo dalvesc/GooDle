@@ -28,7 +28,7 @@ public class Arvore {
         Pagina pag = (Pagina) pagina;
         if (pt == null) {
             h = true;
-            return new NodeArvore(chave.getPalavra());
+            return new NodeArvore(chave);
         } else {
 
             if (chave.compareTo(pt.chave) == 0) { //fiz isso para caso as palavras sejam iguais
@@ -214,7 +214,7 @@ public class Arvore {
                         //MÉTODO ALTERADO PELA MINHA LÓGICA, POIS ESTAVA DANDO ERRO
                         NodeArvore aux = max(pt.esq);
                         pt.chave = aux.chave;
-                        aux.chave = chave.getPalavra();
+                        aux.chave = chave;
                         pt.esq = remover(chave, pt.esq);
                         if (h) {
                             switch (pt.bal) {
@@ -234,7 +234,7 @@ public class Arvore {
                             //MÉTODO ALTERADO PELA MINHA LÓGICA, POIS ESTAVA DANDO ERRO
                             NodeArvore aux = min(pt.dir);
                             pt.chave = aux.chave;
-                            aux.chave = chave.getPalavra();
+                            aux.chave = chave;
                             pt.dir = remover(chave, pt.dir);
                             if (h) {
                                 pt.bal = 0;
@@ -281,7 +281,7 @@ public class Arvore {
     //repetida ele retorna true para poder saber se uma palavra já se encontra na árvore
     public boolean buscaPalavraRepetida(NodeArvore pt, Object palavra) {
         Palavra chave = (Palavra) palavra;
-        if (pt == null || pt.chave.equals(chave.getPalavra())) {
+        if (pt == null || pt.chave.equals(chave)) {
             return true;
         }
         if (pt.esq != null) {

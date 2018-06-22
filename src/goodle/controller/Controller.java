@@ -43,7 +43,9 @@ public class Controller {
      *
      * @param palavra palavra que o usuário deseja buscar
      */
-    public void Buscar(Palavra palavra) {
+    public Object Buscar(Palavra palavra) {
+        Palavra temp = (Palavra) listaPalavras.busca(palavra);
+        return temp;
     }
 
 }

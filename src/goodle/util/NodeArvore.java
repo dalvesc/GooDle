@@ -12,7 +12,7 @@ public class NodeArvore {
     public NodeArvore esq;
     public NodeArvore dir;
 
-    public NodeArvore(String chave) {
+    public NodeArvore(Object chave) {
         this.chave = chave;
         this.bal = 0;
         this.dir = null;
