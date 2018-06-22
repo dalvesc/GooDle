@@ -320,7 +320,7 @@ public class Arvore {
         if (pt == null) {
             return null;
         } else {
-            if (chave.compareTo(pt.chave) < 0) {//PERCORRO O PARA ESQUERDA
+            if (chave.compareTo(pt.chave) < 0) {
                 pt.esq = buscAVL(chave, pt.esq);
             } else if (chave.compareTo(pt.chave) > 0) {
                 pt.dir = buscAVL(chave, pt.dir);
