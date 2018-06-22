@@ -1,12 +1,13 @@
 package goodle.util;
 
 /**
- *Adaptado do código https://github.com/douglasrz/ArvoreAVL
+ * Adaptado do código https://github.com/douglasrz/ArvoreAVL
+ *
  * @author Douglas
  */
 public class NodeArvore {
 
-    public String chave;
+    public Object chave;
     public int bal;
     public NodeArvore esq;
     public NodeArvore dir;

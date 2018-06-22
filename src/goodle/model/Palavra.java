@@ -6,7 +6,7 @@ import goodle.util.Ilist;
  *
  * @author danco
  */
-public class Palavra {
+public class Palavra implements Comparable {
 
     private String palavra;
     private int quantidade, buscas;
@@ -85,5 +85,17 @@ public class Palavra {
     public int Quantidade(int quant) {
         this.quantidade = quant;
         return quantidade;
+    }
+
+    @Override
+    public int compareTo(Object p) {
+        Palavra palav = (Palavra) p;
+        if (getPalavra().compareToIgnoreCase(palav.getPalavra()) > 0) {
+            return 1;
+        } else if (getPalavra().compareToIgnoreCase(palav.getPalavra()) < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

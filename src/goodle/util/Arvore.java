@@ -31,7 +31,7 @@ public class Arvore {
             return new NodeArvore(chave.getPalavra());
         } else {
 
-            if (chave.getPalavra().equalsIgnoreCase(pt.chave)) { //fiz isso para caso as palavras sejam iguais
+            if (chave.compareTo(pt.chave) == 0) { //fiz isso para caso as palavras sejam iguais
                 Iterator iterator = chave.getPagina().iterator(); //pego a lista de pagina da palavra
                 while (iterator.hasNext()) {
                     Pagina temp = (Pagina) iterator.next();
@@ -44,7 +44,7 @@ public class Arvore {
                 return pt;
             }
 
-            if (chave.getPalavra().compareToIgnoreCase(pt.chave) < 0) {//PERCORRO PARA O RAMO ESQUERDO
+            if (chave.compareTo(pt.chave) < 0) {//PERCORRO PARA O RAMO ESQUERDO
                 pt.esq = insAVL(chave, pagina, pt.esq);
                 if (h) {
                     switch (pt.bal) {
@@ -170,7 +170,7 @@ public class Arvore {
             h = false;//PARA REMOVER ELEMENTOS Q NAO EXISTE, POIS TAVA DANDO ERRO
             return pt;
         } else {
-            if (chave.getPalavra().compareToIgnoreCase(pt.chave) < 0) {//PERCORRO O PARA ESQUERDA
+            if (chave.compareTo(pt.chave) < 0) {//PERCORRO O PARA ESQUERDA
                 pt.esq = remover(chave, pt.esq);
                 if (h) {
                     switch (pt.bal) {
@@ -188,7 +188,7 @@ public class Arvore {
                     }
                 }
             }
-            if (chave.getPalavra().compareToIgnoreCase(pt.chave) > 0) {//PERCORRO PARA A DIREITA    
+            if (chave.compareTo(pt.chave) > 0) {//PERCORRO PARA A DIREITA    
                 pt.dir = remover(chave, pt.dir);
                 if (h) {
                     switch (pt.bal) {
@@ -206,7 +206,7 @@ public class Arvore {
                     }
                 }
             }
-            if (chave.getPalavra().compareToIgnoreCase(pt.chave) == 0) {//APOS PERCORRER ATÉ QUE A CHAVE NEM SEJA MAIOR OU MENOR QUE OS NO,EU VERIFICO SE É IGUAL
+            if (chave.compareTo(pt.chave) == 0) {//APOS PERCORRER ATÉ QUE A CHAVE NEM SEJA MAIOR OU MENOR QUE OS NO,EU VERIFICO SE É IGUAL
                 if ((pt.dir == null) && (pt.esq == null)) {
                     return null;//NO SEM FILHOS ENTÃO BASTA APAGAR
                 } else {//SENÃO EU PEGO O MAIOR E COLOCO NO LUGAR NO REMOVIDO
@@ -248,6 +248,7 @@ public class Arvore {
         return pt;
     }
 
+    //desnecessario
     public void percorrerInOrdem(NodeArvore pt) {
         if (pt == null) {
             return;
@@ -261,6 +262,7 @@ public class Arvore {
         }
     }
 
+    //desnecessario
     public void percorrerPreOrdem(NodeArvore pt) {
         if (pt == null) {
             return;
@@ -274,6 +276,7 @@ public class Arvore {
         }
     }
 
+    //desnecessario
     //coloquei esse metódo para rodar a árvore e caso ele encontre uma palavra
     //repetida ele retorna true para poder saber se uma palavra já se encontra na árvore
     public boolean buscaPalavraRepetida(NodeArvore pt, Object palavra) {
@@ -304,5 +307,27 @@ public class Arvore {
         } else {
             return max(pt.dir);
         }
+    }
+
+    public Object busca(Object palavra) {
+        NodeArvore temp = buscAVL(palavra, this.raiz);
+        return temp.chave;
+    }
+
+    private NodeArvore buscAVL(Object palavra, NodeArvore pt) {
+        Palavra chave = (Palavra) palavra;
+
+        if (pt == null) {
+            return null;
+        } else {
+            if (chave.compareTo(pt.chave) < 0) {//PERCORRO O PARA ESQUERDA
+                pt.esq = buscAVL(chave, pt.esq);
+            } else if (chave.compareTo(pt.chave) > 0) {
+                pt.dir = buscAVL(chave, pt.dir);
+            } else {
+                return pt;
+            }
+        }
+        return null;
     }
 }
