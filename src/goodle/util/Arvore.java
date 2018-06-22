@@ -3,12 +3,7 @@ package goodle.util;
 import goodle.model.Pagina;
 import goodle.model.Palavra;
 
-/**
- * Adaptado do código https://github.com/douglasrz/ArvoreAVL
- *
- * @author Douglas
- */
-public class Arvore {
+public class Arvore implements AVL {
 
     public boolean h;
     public NodeArvore raiz;
@@ -18,6 +13,7 @@ public class Arvore {
         this.h = false;
     }
 
+    @Override
     public void inserir(Object palavra, Object pagina) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
         this.raiz = insAVL(palavra, pagina, this.raiz);
     }
@@ -159,6 +155,7 @@ public class Arvore {
         return pt;
     }
 
+    @Override
     public void remove(Object palavra) {
         this.raiz = remover(palavra, this.raiz);
     }
@@ -276,23 +273,6 @@ public class Arvore {
         }
     }
 
-    //desnecessario
-    //coloquei esse metódo para rodar a árvore e caso ele encontre uma palavra
-    //repetida ele retorna true para poder saber se uma palavra já se encontra na árvore
-    public boolean buscaPalavraRepetida(NodeArvore pt, Object palavra) {
-        Palavra chave = (Palavra) palavra;
-        if (pt == null || pt.chave.equals(chave)) {
-            return true;
-        }
-        if (pt.esq != null) {
-            buscaPalavraRepetida(pt.esq, palavra);
-        }
-        if (pt.dir != null) {//PERCORRO TUDO, POR ULTIMO PERCORRO A SUBARVORE DIREITA A PARTIR DO ULTIMO NÓ DA DIREITA É 
-            buscaPalavraRepetida(pt.dir, palavra);//QUE VENHO IMPRIMINDO E ASSIM VOLTANDO RECURSIVAMENTE
-        }
-        return false;
-    }
-
     private NodeArvore min(NodeArvore pt) {
         if (pt.esq == null) {
             return pt;
@@ -309,6 +289,7 @@ public class Arvore {
         }
     }
 
+    @Override
     public Object busca(Object palavra) {
         NodeArvore temp = buscAVL(palavra, this.raiz);
         return temp.chave;
