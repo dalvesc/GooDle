@@ -65,10 +65,6 @@ public class Palavra implements Comparable {
         this.lPagina.addLast(pagina);
     }
 
-    public Ilist getPagina() {
-        return this.lPagina;
-    }
-
     /**
      * Contador para a quantidade de vezes que essa palavra foi buscada
      */
@@ -89,10 +85,10 @@ public class Palavra implements Comparable {
 
     @Override
     public int compareTo(Object p) {
-        Palavra palav = (Palavra) p;
-        if (getPalavra().compareToIgnoreCase(palav.getPalavra()) > 0) {
+        String palavra = (String) p;
+        if (this.palavra.compareToIgnoreCase(palavra) > 0) {
             return 1;
-        } else if (getPalavra().compareToIgnoreCase(palav.getPalavra()) < 0) {
+        } else if (this.palavra.compareToIgnoreCase(palavra) < 0) {
             return -1;
         } else {
             return 0;

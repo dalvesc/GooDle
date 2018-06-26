@@ -24,27 +24,21 @@ public class Controller {
     public void adicionarPalavras() {
 
         String[] arquivos = null;
+        String diretorio = null;
+        
         try{
-            String diretorio = new File("arquivos").getCanonicalPath(); //"CRIA" UM ARQUIVO ARQUIVO QUALQUER E PEGA SEU DIRETÓRIO, QUE É O MESMO DIRETÓRIO DO PROGRAMA
+            diretorio = new File("arquivos").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
             File arq = new File(diretorio);
-            arquivos = arq.list();
+            arquivos = arq.list(); //ESSE MÉTODO DEVOLVE UM ARRAY COM TODOS OS ARQUIVOS QUE ESTÃO NESSA PASTA
         }
         catch(Exception e){
             System.out.println(e.getMessage());
-        }
+        } 
         
-        //File subpasta = null;
+        
+        for (String nome : arquivos) {//OS ARQUIVOS DE TEXTO SÃO VISITADOS            
 
-//        for (String s : aux) { //ACESSA O VETOR DE ARQUIVOS DO DIRETÓRIO PADRÃO ATÉ ACHAR A PASTA "ARQUIVOS" 
-//            if (s.compareTo("hehe") == 0) {
-//                subpasta = new File(diretorio, s);//QUANDO ACHA A PASTA, CRIA UM NOVO ARQUIVO PARA ARMAZENÁ-LA
-//            }
-//
-//        }
-
-        for (String nome : arquivos) {//JÁ DENTRO DA SUBPASTA "ARQUIVOS", OS ARQUIVOS DE TEXTO SÃO VISITADOS            
-
-            File file = new File(nome);
+            File file = new File(diretorio, nome);
 
             try {
                 Scanner scan = new Scanner(new FileReader(file));
@@ -55,6 +49,7 @@ public class Controller {
 
                 while (scan.hasNext()) {
                     linha = scan.nextLine();
+                    System.out.println(linha);
                     palavras = linha.split(" |\n|,|.|:");
                     int i = 0;
 
@@ -63,6 +58,7 @@ public class Controller {
                         Pagina pagina = new Pagina(nome);
 
                         listaPalavras.inserir(palavra, pagina);
+                        System.out.println("INSERIU NA ARVORE");
 
                         System.out.println(palavras[i]);
 

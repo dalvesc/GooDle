@@ -1,7 +1,6 @@
 package goodle.controller;
 
 import goodle.util.Arvore;
-import goodle.model.*;
 
 public class ArvoreAVL07 {
 
@@ -10,20 +9,20 @@ public class ArvoreAVL07 {
      */
     public static void main(String[] args) {
 
-        Arvore novo = new Arvore();
+        //Arvore novo = new Arvore(); 
         
-        //Controller controller = new Controller();
+        Controller controller = new Controller();
         
-        
-        novo.inserir(new Palavra("Casa"), new Pagina ("1"));
-        novo.percorrerPreOrdem(novo.raiz);
-        System.out.println("******************");
-        novo.inserir(new Palavra("raiz"), new Pagina ("2"));
-        novo.percorrerPreOrdem(novo.raiz);
-        System.out.println("******************");
-        novo.inserir(new Palavra("jose"), new Pagina ("3"));
-        novo.percorrerPreOrdem(novo.raiz);
-        System.out.println("******************");
+//        
+//        novo.inserir(new Palavra("Casa"), new Pagina ("1.txt"));
+//        novo.percorrerPreOrdem(novo.raiz);
+//        System.out.println("******************");
+//        novo.inserir(new Palavra("raiz"), new Pagina ("2.txt"));
+//        novo.percorrerPreOrdem(novo.raiz);
+//        System.out.println("******************");
+//        novo.inserir(new Palavra("jose"), new Pagina ("3.txt"));
+//        novo.percorrerPreOrdem(novo.raiz);
+//        System.out.println("******************");
         
         
 //        novo.inserir("Rafa");
