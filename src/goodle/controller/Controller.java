@@ -1,23 +1,19 @@
 package goodle.controller;
 
-import goodle.model.Pagina;
-import goodle.model.Palavra;
-import goodle.util.Arvore;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import goodle.model.*;
+import goodle.util.*;
+import java.io.*;
 import java.util.Scanner;
 
 public class Controller {
 
+    Ilist paginas;
     String diretorio;
-    public int size =0;
-    
+    public int size = 0;
+
     public Controller(Arvore listaPalavras) {
         diretorio = null;
+        paginas = new LinkedList();
         adicionarPalavras(listaPalavras);
     }
 
@@ -33,7 +29,6 @@ public class Controller {
 
         try {
             diretorio = new File("arquivos").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
-            System.out.println(diretorio);
             File arq = new File(diretorio);
             arquivos = arq.list(); //ESSE MÉTODO DEVOLVE UM ARRAY COM TODOS OS ARQUIVOS QUE ESTÃO NESSA PASTA
         } catch (Exception e) {
@@ -49,6 +44,8 @@ public class Controller {
                 String linha;
                 String[] palavras;
 
+                Pagina pagina = new Pagina(nome);
+                paginas.addLast(pagina);
                 //System.out.println("ENTROU NO 'TRY'");
                 while (scan.hasNext()) {
                     linha = scan.nextLine();
@@ -58,7 +55,6 @@ public class Controller {
 
                     while (i < palavras.length) { //CADA LINHA É QUEBRADA EM PALAVRAS, ESSAS PALAVRAS VÃO PARA UM ARRAY
                         Palavra palavra = new Palavra(palavras[i]);
-                        Pagina pagina = new Pagina(nome);
 
                         listaPalavras.inserir(palavra, pagina);
                         //System.out.println("INSERIU NA ARVORE");
@@ -95,6 +91,15 @@ public class Controller {
         BufferedReader lerArq;
         String linha;
         String nomePagina = diretorio + "\\" + (String) pagina;
+        Iterator iterator = this.paginas.iterator();
+        
+        while (iterator.hasNext()) {
+            Pagina comparar = (Pagina) iterator.next();
+            if (pagina.equals(comparar.getArq())) {
+                comparar.Acesso();
+            }
+        }
+        
         try {
             arq = new FileReader(nomePagina);
             lerArq = new BufferedReader(arq);
@@ -108,6 +113,7 @@ public class Controller {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
+    
+    //Falta imprimir os hankings
 }
