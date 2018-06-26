@@ -5,7 +5,9 @@ import goodle.model.Palavra;
 import goodle.util.Arvore;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
+
 
 public class Controller {
 
@@ -21,22 +23,26 @@ public class Controller {
      */
     public void adicionarPalavras() {
 
-        String diretorio = (new File(".").getAbsolutePath());//"CRIA" UM ARQUIVO ARQUIVO QUALQUER E PEGA SEU DIRETÓRIO, QUE É O MESMO DIRETÓRIO DO PROGRAMA
-        File arq = new File(diretorio);
-        String[] aux = arq.list();
-        File subpasta = null;
-
-        for (String s : aux) { //ACESSA O VETOR DE ARQUIVOS DO DIRETÓRIO PADRÃO ATÉ ACHAR A PASTA "ARQUIVOS" 
-            if (s.compareTo("arquivos") == 0) {
-                System.out.println(s);
-                subpasta = new File(diretorio, s);//QUANDO ACHA A PASTA, CRIA UM NOVO ARQUIVO PARA ARMAZENÁ-LA
-            }
-
+        String[] arquivos = null;
+        try{
+            String diretorio = new File("arquivos").getCanonicalPath(); //"CRIA" UM ARQUIVO ARQUIVO QUALQUER E PEGA SEU DIRETÓRIO, QUE É O MESMO DIRETÓRIO DO PROGRAMA
+            File arq = new File(diretorio);
+            arquivos = arq.list();
         }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        
+        //File subpasta = null;
 
-        for (String nome : subpasta.list()) {//JÁ DENTRO DA SUBPASTA "ARQUIVOS", OS ARQUIVOS DE TEXTO SÃO VISITADOS
+//        for (String s : aux) { //ACESSA O VETOR DE ARQUIVOS DO DIRETÓRIO PADRÃO ATÉ ACHAR A PASTA "ARQUIVOS" 
+//            if (s.compareTo("hehe") == 0) {
+//                subpasta = new File(diretorio, s);//QUANDO ACHA A PASTA, CRIA UM NOVO ARQUIVO PARA ARMAZENÁ-LA
+//            }
+//
+//        }
 
-            System.out.println(nome);
+        for (String nome : arquivos) {//JÁ DENTRO DA SUBPASTA "ARQUIVOS", OS ARQUIVOS DE TEXTO SÃO VISITADOS            
 
             File file = new File(nome);
 
@@ -44,10 +50,12 @@ public class Controller {
                 Scanner scan = new Scanner(new FileReader(file));
                 String linha;
                 String[] palavras;
+                
+                System.out.println("ENTROU NO 'TRY'");
 
                 while (scan.hasNext()) {
                     linha = scan.nextLine();
-                    palavras = linha.split(" |\n|,|.");
+                    palavras = linha.split(" |\n|,|.|:");
                     int i = 0;
 
                     while (i < palavras.length) { //CADA LINHA É QUEBRADA EM PALAVRAS, ESSAS PALAVRAS VÃO PARA UM ARRAY
@@ -63,8 +71,10 @@ public class Controller {
                 }
                 scan.close();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {                
+                System.out.println(e.getMessage());
+                System.out.println(file.getAbsolutePath());
+                
             }
 
         }
