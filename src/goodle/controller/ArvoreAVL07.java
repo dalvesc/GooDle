@@ -15,7 +15,7 @@ public class ArvoreAVL07 {
         Scanner scan = new Scanner(System.in);
         Controller controller = new Controller(listaPalavras);
         listaPalavras.percorrerPreOrdem(listaPalavras.raiz);
-        System.out.println(listaPalavras.size);
+        System.out.println(listaPalavras.size());
         System.out.println(controller.size);
         System.out.println("Digite palavra");
         String palavra = scan.next();

@@ -96,7 +96,7 @@ public class Controller {
         while (iterator.hasNext()) {
             Pagina comparar = (Pagina) iterator.next();
             if (pagina.equals(comparar.getArq())) {
-                comparar.Acesso();
+                comparar.acesso();
             }
         }
         

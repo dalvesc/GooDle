@@ -20,38 +20,26 @@ public class Pagina {
         return quantDaPalavra;
     }
 
-    public void setQuantDaPalavra(int quantDaPalavra) {
-        this.quantDaPalavra = quantDaPalavra;
-    }
-
     public int getAcesso() {
         return acesso;
-    }
-
-    public void setAcesso(int acesso) {
-        this.acesso = acesso;
     }
 
     public String getArq() {
         return arq;
     }
 
-    public void setArq(String arq) {
-        this.arq = arq;
-    }
-
     /**
      * Contador para a quantidade de vezes que determinada palavra aparece acho
      * que vai precisar mudar isso
      */
-    public void Quantidade() {
+    public void quantidade() {
         this.quantDaPalavra = quantDaPalavra + 1;
     }
 
     /**
      * Contador para a quantidade de acessos na página
      */
-    public void Acesso() {
+    public void acesso() {
         this.acesso = acesso + 1;
     }
 }

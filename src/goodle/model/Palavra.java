@@ -1,6 +1,7 @@
 package goodle.model;
 
 import goodle.util.Ilist;
+import goodle.util.LinkedList;
 
 /**
  *
@@ -11,39 +12,7 @@ public class Palavra implements Comparable {
     private String palavra;
     private int quantidade, buscas;
     private Ilist lPagina;
-
-    public String getPalavra() {
-        return palavra;
-    }
-
-    public void setPalavra(String palavra) {
-        this.palavra = palavra;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public int getBuscas() {
-        return buscas;
-    }
-
-    public void setBuscas(int buscas) {
-        this.buscas = buscas;
-    }
-
-    public Ilist getlPagina() {
-        return lPagina;
-    }
-
-    public void setlPagina(Ilist lPagina) {
-        this.lPagina = lPagina;
-    }
-
+  
     /**
      * Controller da classe
      *
@@ -53,35 +22,44 @@ public class Palavra implements Comparable {
         this.palavra = palavra;
         this.quantidade = 1;
         this.buscas = 0;
-        this.lPagina = null;
+        this.lPagina = new LinkedList();
+    }
+    
+    public String getPalavra() {
+        return palavra;
     }
 
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public int getBuscas() {
+        return buscas;
+    }
+
+    public Ilist getlPagina() {
+        return lPagina;
+    }
+
+    public void quantidade(){
+        this.quantidade = this.quantidade + 1;
+    }
+ 
     /**
      * Cria uma lista para salvar os arquivos em que essa palavra aparece
      *
      * @param pagina pagina em que a palavra aparece
      */
-    public void Pagina(Pagina pagina) {
-        pagina.Quantidade();
-        this.lPagina.addLast(pagina);
+    public void addPagina(Pagina pagina) {
+        pagina.quantidade();
+        this.lPagina.addLast(pagina);    
     }
 
     /**
      * Contador para a quantidade de vezes que essa palavra foi buscada
      */
-    public void Busca() {
+    public void buscas() {
         this.buscas = this.buscas + 1;
-    }
-
-    /**
-     * Atualiza a quantidade de vezes que a palavra aparece
-     *
-     * @param quant
-     * @return
-     */
-    public int Quantidade(int quant) {
-        this.quantidade = quant;
-        return quantidade;
     }
 
     @Override
