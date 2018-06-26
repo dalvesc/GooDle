@@ -53,6 +53,7 @@ public class Palavra implements Comparable {
         this.palavra = palavra;
         this.quantidade = 1;
         this.buscas = 0;
+        this.lPagina = null;
     }
 
     /**
@@ -63,10 +64,6 @@ public class Palavra implements Comparable {
     public void Pagina(Pagina pagina) {
         pagina.Quantidade();
         this.lPagina.addLast(pagina);
-    }
-
-    public Ilist getPagina() {
-        return this.lPagina;
     }
 
     /**
@@ -97,5 +94,10 @@ public class Palavra implements Comparable {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return palavra;
     }
 }

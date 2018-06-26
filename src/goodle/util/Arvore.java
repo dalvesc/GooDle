@@ -7,6 +7,7 @@ public class Arvore implements AVL {
 
     public boolean h;
     public NodeArvore raiz;
+    private Object encontrei;
 
     public Arvore() {
         this.raiz = null;
@@ -28,13 +29,17 @@ public class Arvore implements AVL {
         } else {
 
             if (chave.compareTo(pt.chave) == 0) { //fiz isso para caso as palavras sejam iguais
-                Iterator iterator = chave.getPagina().iterator(); //pego a lista de pagina da palavra
-                while (iterator.hasNext()) {
-                    Pagina temp = (Pagina) iterator.next();
-                    if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
-                        temp.Quantidade();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
-                    } else {
-                        chave.Pagina(pag);//caso não seja igual adiciona a pagina na lista
+                Iterator iterator = chave.getlPagina().iterator(); //pego a lista de pagina da palavra
+                if (iterator == null) {
+                    return pt;
+                } else {
+                    while (iterator.hasNext()) {
+                        Pagina temp = (Pagina) iterator.next();
+                        if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
+                            temp.Quantidade();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
+                        } else {
+                            chave.Pagina(pag);//caso não seja igual adiciona a pagina na lista
+                        }
                     }
                 }
                 return pt;
@@ -85,7 +90,6 @@ public class Arvore implements AVL {
         NodeArvore ptu = pt.esq;
         if (ptu.bal == -1) {//ROTAÇÃO SIMPLES PARA A DIREITA
 
-            System.out.println("ROTACAO SIMPLES DIREITA COM " + pt.chave + "\n ***ANTES***");
             percorrerPreOrdem(this.raiz);
 
             pt.esq = ptu.dir;
@@ -94,7 +98,6 @@ public class Arvore implements AVL {
             pt = ptu;
         } else {//ROTAÇÃO DUPLA PARA A DIREITA
 
-            System.out.println("ROTACAO DUPLA A DIREITA \n ***ANTES***");
             percorrerPreOrdem(this.raiz);
 
             NodeArvore ptv = ptu.dir;
@@ -115,7 +118,6 @@ public class Arvore implements AVL {
             pt = ptv;
         }
         pt.bal = 0;
-        System.out.println("******************");
         return pt;
     }
 
@@ -123,7 +125,6 @@ public class Arvore implements AVL {
         NodeArvore ptu = pt.dir;
         if (ptu.bal == 1) {//ROTAÇÃO SIMPLES PARA A ESQUERDA
 
-            System.out.println("ROTACAO SIMPLES A ESQUERDA COM " + pt.chave + "\n ***ANTES");
             percorrerPreOrdem(this.raiz);
 
             pt.dir = ptu.esq;
@@ -131,7 +132,6 @@ public class Arvore implements AVL {
             pt.bal = 0;
             pt = ptu;
         } else {//DUPLA ROTAÇÃO PARA A ESQUERDA
-            System.out.println("ROTACAO DUPLA A ESQUERDA \n ***ANTES***");
             percorrerPreOrdem(this.raiz);
             NodeArvore ptv = ptu.esq;
             ptu.esq = ptv.dir;
@@ -151,7 +151,6 @@ public class Arvore implements AVL {
             pt = ptv;
         }
         pt.bal = 0;
-        System.out.println("******************");
         return pt;
     }
 
@@ -163,7 +162,6 @@ public class Arvore implements AVL {
     private NodeArvore remover(Object palavra, NodeArvore pt) {
         Palavra chave = (Palavra) palavra;
         if (pt == null) {
-            System.out.println("ELEMENTO NÃO ENCONTRADO");//QUANDO PERCORRE TODA A ARVORE E NAO ENCONTRO O ELEMENTO
             h = false;//PARA REMOVER ELEMENTOS Q NAO EXISTE, POIS TAVA DANDO ERRO
             return pt;
         } else {
@@ -246,20 +244,6 @@ public class Arvore implements AVL {
     }
 
     //desnecessario
-    public void percorrerInOrdem(NodeArvore pt) {
-        if (pt == null) {
-            return;
-        }
-        if (pt.esq != null) {//primeiro percorro a subarvore esquerda, OU SEJA, visitando os menores
-            percorrerInOrdem(pt.esq);
-        }//QUANDO CHEGO NO ULTIMO A ESQ É QUE IMPRIMO ELE E VOU VOLTANDO POIS É RECURSIVO
-        System.out.println("Chave: " + pt.chave);
-        if (pt.dir != null) {
-            percorrerInOrdem(pt.dir);//por fim a direita, após a raiz
-        }
-    }
-
-    //desnecessario
     public void percorrerPreOrdem(NodeArvore pt) {
         if (pt == null) {
             return;
@@ -291,23 +275,24 @@ public class Arvore implements AVL {
 
     @Override
     public Object busca(Object palavra) {
-        NodeArvore temp = buscAVL(palavra, this.raiz);
-        return temp.chave;
+        buscAVL(palavra, this.raiz);
+        return this.encontrei;
     }
 
+    //pensando em alterar isso
     private NodeArvore buscAVL(Object palavra, NodeArvore pt) {
         Palavra chave = (Palavra) palavra;
 
+        if (chave.equals(pt.chave)) {
+            this.encontrei = pt.chave;
+        }
         if (pt == null) {
             return null;
-        } else {
-            if (chave.compareTo(pt.chave) < 0) {
-                pt.esq = buscAVL(chave, pt.esq);
-            } else if (chave.compareTo(pt.chave) > 0) {
-                pt.dir = buscAVL(chave, pt.dir);
-            } else {
-                return pt;
-            }
+        }
+        if (chave.compareTo(pt.chave) < 0) {
+            pt.esq = buscAVL(chave, pt.esq);
+        } else if (chave.compareTo(pt.chave) > 0) {
+            pt.dir = buscAVL(chave, pt.dir);
         }
         return null;
     }
