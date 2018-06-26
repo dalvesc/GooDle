@@ -25,7 +25,6 @@ public class Controller {
     public void adicionarPalavras(Arvore listaPalavras) {
 
         String[] arquivos = null;
-        String diretorio = null;
 
         try {
             diretorio = new File("arquivos").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
