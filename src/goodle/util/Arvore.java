@@ -7,7 +7,6 @@ public class Arvore implements AVL {
 
     public boolean h;
     public NodeArvore raiz;
-    private Object encontrei;
 
     public Arvore() {
         this.raiz = null;
@@ -23,16 +22,17 @@ public class Arvore implements AVL {
 
         Palavra chave = (Palavra) palavra;
         Pagina pag = (Pagina) pagina;
+        
         if (pt == null) {
             h = true;
             return new NodeArvore(chave);
         } else {
 
-            if (chave.compareTo(pt.chave) == 0) { //fiz isso para caso as palavras sejam iguais
+            Palavra raiz = (Palavra) pt.getChave();            
+            
+
+            if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) { //fiz isso para caso as palavras sejam iguais
                 Iterator iterator = chave.getlPagina().iterator(); //pego a lista de pagina da palavra
-                if (iterator == null) {
-                    return pt;
-                } else {
                     while (iterator.hasNext()) {
                         Pagina temp = (Pagina) iterator.next();
                         if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
@@ -41,20 +41,20 @@ public class Arvore implements AVL {
                             chave.Pagina(pag);//caso não seja igual adiciona a pagina na lista
                         }
                     }
-                }
                 return pt;
             }
 
-            if (chave.compareTo(pt.chave) < 0) {//PERCORRO PARA O RAMO ESQUERDO
-                pt.esq = insAVL(chave, pagina, pt.esq);
+            if (chave.getPalavra().compareTo(raiz.getPalavra()) < 0) {//PERCORRO PARA O RAMO ESQUERDO
+                pt.setEsq(insAVL(chave, pagina, pt.getEsq())); 
+                
                 if (h) {
-                    switch (pt.bal) {
+                    switch (pt.getBal()) {
                         case 1:
-                            pt.bal = 0;
+                            pt.setBal(0);
                             h = false;
                             break;
                         case 0:
-                            pt.bal = -1;
+                            pt.setBal(-1);
                             break;
                         case -1:
                             h = false;
@@ -64,15 +64,16 @@ public class Arvore implements AVL {
                     }
                 }
             } else {
-                pt.dir = insAVL(chave, pagina, pt.dir);//PERCORRO PARA A DIREITA
+                pt.setDir(insAVL(chave, pagina, pt.getDir())); //PERCORRO PARA A DIREITA
+                
                 if (h) {
-                    switch (pt.bal) {
+                    switch (pt.getBal()) {
                         case -1:
-                            pt.bal = 0;
+                            pt.setBal(0);
                             h = false;
                             break;
                         case 0:
-                            pt.bal = 1;
+                            pt.setBal(1);
                             break;
                         case 1:
                             h = false;
@@ -87,70 +88,81 @@ public class Arvore implements AVL {
     }
 
     public NodeArvore caso1(NodeArvore pt) {
-        NodeArvore ptu = pt.esq;
-        if (ptu.bal == -1) {//ROTAÇÃO SIMPLES PARA A DIREITA
+        NodeArvore ptu = pt.getEsq();        
+        Palavra palavra = (Palavra) pt.getChave();
 
+        
+        if (ptu.getBal() == -1) {//ROTAÇÃO SIMPLES PARA A DIREITA
+
+            System.out.println("ROTACAO SIMPLES DIREITA COM " + palavra.getPalavra() + "\n ***ANTES***");
             percorrerPreOrdem(this.raiz);
 
-            pt.esq = ptu.dir;
-            ptu.dir = pt;
-            pt.bal = 0;
+            pt.setEsq(ptu.getDir());
+            ptu.setDir(pt);
+            pt.setBal(0);
             pt = ptu;
         } else {//ROTAÇÃO DUPLA PARA A DIREITA
 
+            System.out.println("ROTACAO DUPLA A DIREITA \n ***ANTES***");
             percorrerPreOrdem(this.raiz);
 
-            NodeArvore ptv = ptu.dir;
-            ptu.dir = ptv.esq;
-            ptv.esq = ptu;
-            pt.esq = ptv.dir;
-            ptv.dir = pt;
-            if (ptv.bal == -1) {
-                pt.bal = 1;
+            NodeArvore ptv = ptu.getDir();
+            ptu.setDir(ptv.getEsq());
+            ptv.setEsq(ptu);
+            pt.setEsq(ptv.getDir());
+            ptv.setDir(pt);
+            if (ptv.getBal() == -1) {
+                pt.setBal(1);
             } else {
-                pt.bal = 0;
+                pt.setBal(0);
             }
-            if (ptv.bal == 1) {
-                ptu.bal = -1;
+            if (ptv.getBal() == 1) {
+                ptu.setBal(-1);
             } else {
-                ptu.bal = 0;
+                ptu.setBal(0);
             }
             pt = ptv;
         }
-        pt.bal = 0;
+        pt.setBal(0);
+        System.out.println("******************");
         return pt;
     }
 
     public NodeArvore caso2(NodeArvore pt) {
-        NodeArvore ptu = pt.dir;
-        if (ptu.bal == 1) {//ROTAÇÃO SIMPLES PARA A ESQUERDA
+        NodeArvore ptu = pt.getDir();
+        Palavra palavra = (Palavra) pt.getChave();
 
+        if (ptu.getBal() == 1) {//ROTAÇÃO SIMPLES PARA A ESQUERDA
+
+            System.out.println("ROTACAO SIMPLES A ESQUERDA COM " + palavra.getPalavra() + "\n ***ANTES");
             percorrerPreOrdem(this.raiz);
 
-            pt.dir = ptu.esq;
-            ptu.esq = pt;
-            pt.bal = 0;
+            pt.setDir(ptu.getEsq());
+            ptu.setEsq(pt);
+            pt.setBal(0);
             pt = ptu;
         } else {//DUPLA ROTAÇÃO PARA A ESQUERDA
+            System.out.println("ROTACAO DUPLA A ESQUERDA \n ***ANTES***");
             percorrerPreOrdem(this.raiz);
-            NodeArvore ptv = ptu.esq;
-            ptu.esq = ptv.dir;
-            ptv.dir = ptu;
-            pt.dir = ptv.esq;
-            ptv.esq = pt;
-            if (ptv.bal == 1) {
-                pt.bal = -1;
+            NodeArvore ptv = ptu.getEsq();
+            ptu.setEsq(ptv.getDir());
+            ptv.setDir(ptu);
+            pt.setDir(ptv.getEsq());
+            ptv.setEsq(pt);
+            if (ptv.getBal() == 1) {
+                pt.setBal(-1);
             } else {
-                pt.bal = 0;
+                pt.setBal(0);
             }
-            if (ptv.bal == -1) {
-                ptu.bal = 1;
+            if (ptv.getBal() == -1) {
+                ptu.setBal(1);
             } else {
-                ptu.bal = 0;
+                ptu.setBal(0);
             }
             pt = ptv;
         }
-        pt.bal = 0;
+        pt.setBal(0);
+        System.out.println("******************");
         return pt;
     }
 
@@ -161,78 +173,81 @@ public class Arvore implements AVL {
 
     private NodeArvore remover(Object palavra, NodeArvore pt) {
         Palavra chave = (Palavra) palavra;
+        Palavra chaveRaiz = (Palavra) pt.getChave();
+        
         if (pt == null) {
+            System.out.println("ELEMENTO NÃO ENCONTRADO");//QUANDO PERCORRE TODA A ARVORE E NAO ENCONTRO O ELEMENTO
             h = false;//PARA REMOVER ELEMENTOS Q NAO EXISTE, POIS TAVA DANDO ERRO
             return pt;
         } else {
-            if (chave.compareTo(pt.chave) < 0) {//PERCORRO O PARA ESQUERDA
-                pt.esq = remover(chave, pt.esq);
+            if (chave.compareTo(chaveRaiz.getPalavra()) < 0) {//PERCORRO O PARA ESQUERDA
+                pt.setEsq(remover(chave, pt.getEsq()));
                 if (h) {
-                    switch (pt.bal) {
+                    switch (pt.getBal()) {
                         case 1:
                             return caso2(pt);
                         case 0:
-                            pt.bal = 1;
+                            pt.setBal(1);
                             h = false;
                             break;
                         case -1:
-                            pt.bal = 0;
+                            pt.setBal(0);
                             break;
                         default:
                             break;
                     }
                 }
             }
-            if (chave.compareTo(pt.chave) > 0) {//PERCORRO PARA A DIREITA    
-                pt.dir = remover(chave, pt.dir);
+            if (chave.compareTo(chaveRaiz.getPalavra()) > 0) {//PERCORRO PARA A DIREITA    
+                pt.setDir(remover(chave, pt.getDir()));
                 if (h) {
-                    switch (pt.bal) {
+                    switch (pt.getBal()) {
                         case -1:
                             return caso1(pt);
                         case 0:
-                            pt.bal = -1;
+                            pt.setBal(-1);
                             h = false;
                             break;
                         case 1:
-                            pt.bal = 0;
+                            pt.setBal(0);
                             break;
                         default:
                             break;
                     }
                 }
             }
-            if (chave.compareTo(pt.chave) == 0) {//APOS PERCORRER ATÉ QUE A CHAVE NEM SEJA MAIOR OU MENOR QUE OS NO,EU VERIFICO SE É IGUAL
-                if ((pt.dir == null) && (pt.esq == null)) {
+            if (chave.compareTo(chaveRaiz.getPalavra()) == 0) {//APOS PERCORRER ATÉ QUE A CHAVE NEM SEJA MAIOR OU MENOR QUE OS NO,EU VERIFICO SE É IGUAL
+                if ((pt.getDir() == null) && (pt.getEsq() == null)) {
                     return null;//NO SEM FILHOS ENTÃO BASTA APAGAR
                 } else {//SENÃO EU PEGO O MAIOR E COLOCO NO LUGAR NO REMOVIDO
-                    if (pt.bal <= 0) {
+                    if (pt.getBal() <= 0) {
                         //MÉTODO ALTERADO PELA MINHA LÓGICA, POIS ESTAVA DANDO ERRO
-                        NodeArvore aux = max(pt.esq);
-                        pt.chave = aux.chave;
-                        aux.chave = chave;
-                        pt.esq = remover(chave, pt.esq);
+                        NodeArvore aux = max(pt.getEsq());
+                        pt.setChave(aux.getChave());
+                        aux.setChave(chave);
+                        pt.setEsq(remover(chave, pt.getEsq()));
                         if (h) {
-                            switch (pt.bal) {
+                            switch (pt.getBal()) {
                                 case 0:
-                                    pt.bal = 1;
+                                    pt.setBal(1);
                                     h = false;
                                     break;
                                 case -1:
-                                    pt.bal = 0;
+                                    pt.setBal(0);
                                     break;
                                 default:
                                     break;
                             }
                         }
                     } else {
-                        if (pt.bal == 1) {
+                        if (pt.getBal() == 1) {
                             //MÉTODO ALTERADO PELA MINHA LÓGICA, POIS ESTAVA DANDO ERRO
-                            NodeArvore aux = min(pt.dir);
-                            pt.chave = aux.chave;
-                            aux.chave = chave;
-                            pt.dir = remover(chave, pt.dir);
+                            NodeArvore aux = min(pt.getDir());
+                            pt.setChave(aux.getChave());
+                            aux.setChave(chave);
+                            pt.setDir(remover(chave, pt.getDir()));
                             if (h) {
-                                pt.bal = 0;
+                                pt.setBal(0);
                             }
                         }
                     }
@@ -245,54 +260,57 @@ public class Arvore implements AVL {
 
     //desnecessario
     public void percorrerPreOrdem(NodeArvore pt) {
+        Palavra palavra = (Palavra) pt.getChave();
+        
         if (pt == null) {
             return;
         }
-        System.out.println("Chave: " + pt.chave);//PRIMEIRO VISITO A RAIZ
-        if (pt.esq != null) {
-            percorrerPreOrdem(pt.esq);//CHAMO ESTE MÉTODO AGORA COM O ESQ COMO RAIZ E JÁ VOU IMPRIMINDO
+        System.out.println("Chave: " + palavra.getPalavra());//PRIMEIRO VISITO A RAIZ
+        if (pt.getEsq() != null) {
+            percorrerPreOrdem(pt.getEsq());//CHAMO ESTE MÉTODO AGORA COM O ESQ COMO RAIZ E JÁ VOU IMPRIMINDO
         }
-        if (pt.dir != null) {
-            percorrerPreOrdem(pt.dir);//CHAMO ESTE MÉTODO AGORA COM O DIR COMO RAIZ
+        if (pt.getDir() != null) {
+            percorrerPreOrdem(pt.getDir());//CHAMO ESTE MÉTODO AGORA COM O DIR COMO RAIZ
         }
     }
 
     private NodeArvore min(NodeArvore pt) {
-        if (pt.esq == null) {
+        if (pt.getEsq() == null) {
             return pt;
         } else {
-            return min(pt.esq);
+            return min(pt.getEsq());
         }
     }
 
     private NodeArvore max(NodeArvore pt) {
-        if (pt.dir == null) {
+        if (pt.getDir() == null) {
             return pt;
         } else {
-            return max(pt.dir);
+            return max(pt.getDir());
         }
     }
 
     @Override
     public Object busca(Object palavra) {
-        buscAVL(palavra, this.raiz);
-        return this.encontrei;
+        NodeArvore temp = buscAVL(palavra, this.raiz);
+        return temp.getChave();
     }
 
     //pensando em alterar isso
     private NodeArvore buscAVL(Object palavra, NodeArvore pt) {
         Palavra chave = (Palavra) palavra;
+        Palavra chaveRaiz = (Palavra) pt.getChave();
 
-        if (chave.equals(pt.chave)) {
-            this.encontrei = pt.chave;
-        }
         if (pt == null) {
             return null;
+        } else {
+            if (chave.getPalavra().compareTo(chaveRaiz.getPalavra()) < 0) {
+                pt.setEsq(buscAVL(chave, pt.getEsq()));
+            } else if (chave.compareTo(chaveRaiz.getPalavra()) > 0) {
+                pt.setDir(buscAVL(chave, pt.getDir()));
+            } else {
+                return pt;
         }
-        if (chave.compareTo(pt.chave) < 0) {
-            pt.esq = buscAVL(chave, pt.esq);
-        } else if (chave.compareTo(pt.chave) > 0) {
-            pt.dir = buscAVL(chave, pt.dir);
         }
         return null;
     }

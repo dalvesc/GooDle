@@ -26,27 +26,34 @@ public class Controller {
      */
     public void adicionarPalavras(Arvore listaPalavras) {
 
-        String diretorio = (new File(".").getAbsolutePath());//"CRIA" UM ARQUIVO ARQUIVO QUALQUER E PEGA SEU DIRETÓRIO, QUE É O MESMO DIRETÓRIO DO PROGRAMA
+        String[] arquivos = null;
+        String diretorio = null;
+        
+        try{
+            diretorio = new File("arquivos").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
         File arq = new File(diretorio);
-        String[] aux = arq.list();
-
-        for (String s : aux) { //ACESSA O VETOR DE ARQUIVOS DO DIRETÓRIO PADRÃO ATÉ ACHAR A PASTA "ARQUIVOS" 
-            if (s.compareTo("arquivos") == 0) {
-                subpasta = new File(diretorio, s);//QUANDO ACHA A PASTA, CRIA UM NOVO ARQUIVO PARA ARMAZENÁ-LA
+            arquivos = arq.list(); //ESSE MÉTODO DEVOLVE UM ARRAY COM TODOS OS ARQUIVOS QUE ESTÃO NESSA PASTA
             }
+        catch(Exception e){
+            System.out.println(e.getMessage());
         }
 
-        for (String nome : subpasta.list()) {//JÁ DENTRO DA SUBPASTA "ARQUIVOS", OS ARQUIVOS DE TEXTO SÃO VISITADOS
 
-            File file = new File(subpasta.getAbsoluteFile() + "\\" + nome);
+        for (String nome : arquivos) {//OS ARQUIVOS DE TEXTO SÃO VISITADOS            
+
+            File file = new File(diretorio, nome);
 
             try {
                 Scanner scan = new Scanner(new FileReader(file));
                 String linha;
                 String[] palavras;
+                
+                System.out.println("ENTROU NO 'TRY'");
+
                 while (scan.hasNext()) {
                     linha = scan.nextLine();
-                    palavras = linha.split(" |,|!|\\|.|;|:|@|%|&|\n|#");
+                    System.out.println(linha);
+                    palavras = linha.split(" |\n|,|.|:");
                     int i = 0;
 
                     while (i < palavras.length) { //CADA LINHA É QUEBRADA EM PALAVRAS, ESSAS PALAVRAS VÃO PARA UM ARRAY
@@ -54,14 +61,19 @@ public class Controller {
                         Pagina pagina = new Pagina(nome);
 
                         listaPalavras.inserir(palavra, pagina);
+                        System.out.println("INSERIU NA ARVORE");
+
+                        System.out.println(palavras[i]);
 
                         i++;
                     }
                 }
                 scan.close();
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            } catch (IOException e) {                
+                System.out.println(e.getMessage());
+                System.out.println(file.getAbsolutePath());
+                
             }
 
         }
