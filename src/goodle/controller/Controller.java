@@ -5,6 +5,7 @@ import goodle.model.Palavra;
 import goodle.util.Arvore;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,10 +13,11 @@ import java.util.Scanner;
 
 public class Controller {
 
-    File subpasta;
-
+    String diretorio;
+    public int size =0;
+    
     public Controller(Arvore listaPalavras) {
-        subpasta = null;
+        diretorio = null;
         adicionarPalavras(listaPalavras);
     }
 
@@ -28,32 +30,30 @@ public class Controller {
 
         String[] arquivos = null;
         String diretorio = null;
-        
-        try{
+
+        try {
             diretorio = new File("arquivos").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
-        File arq = new File(diretorio);
+            System.out.println(diretorio);
+            File arq = new File(diretorio);
             arquivos = arq.list(); //ESSE MÉTODO DEVOLVE UM ARRAY COM TODOS OS ARQUIVOS QUE ESTÃO NESSA PASTA
-            }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
 
         for (String nome : arquivos) {//OS ARQUIVOS DE TEXTO SÃO VISITADOS            
 
             File file = new File(diretorio, nome);
 
             try {
-                Scanner scan = new Scanner(new FileReader(file));
+                Scanner scan = new Scanner(new FileInputStream(file), "latin1");
                 String linha;
                 String[] palavras;
-                
-                System.out.println("ENTROU NO 'TRY'");
 
+                //System.out.println("ENTROU NO 'TRY'");
                 while (scan.hasNext()) {
                     linha = scan.nextLine();
-                    System.out.println(linha);
-                    palavras = linha.split(" |\n|,|.|:");
+                    //System.out.println(linha);
+                    palavras = linha.split(" |,|!|\\.|\\;|:|@|%|&|\n|#|-|\\?|\\/|\\+|_|=");
                     int i = 0;
 
                     while (i < palavras.length) { //CADA LINHA É QUEBRADA EM PALAVRAS, ESSAS PALAVRAS VÃO PARA UM ARRAY
@@ -61,21 +61,20 @@ public class Controller {
                         Pagina pagina = new Pagina(nome);
 
                         listaPalavras.inserir(palavra, pagina);
-                        System.out.println("INSERIU NA ARVORE");
-
-                        System.out.println(palavras[i]);
+                        //System.out.println("INSERIU NA ARVORE");
+                        size++;
+                        //System.out.println(palavras[i]);
 
                         i++;
                     }
                 }
                 scan.close();
 
-            } catch (IOException e) {                
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
                 System.out.println(file.getAbsolutePath());
-                
-            }
 
+            }
         }
     }
 
@@ -95,7 +94,7 @@ public class Controller {
         FileReader arq;
         BufferedReader lerArq;
         String linha;
-        String nomePagina = subpasta.getAbsoluteFile() + "\\" + (String) pagina;
+        String nomePagina = diretorio + "\\" + (String) pagina;
         try {
             arq = new FileReader(nomePagina);
             lerArq = new BufferedReader(arq);

@@ -7,19 +7,23 @@ public class Arvore implements AVL {
 
     public boolean h;
     public NodeArvore raiz;
+    public int size;
 
     public Arvore() {
         this.raiz = null;
         this.h = false;
+        this.size =0;
     }
 
     @Override
     public void inserir(Object palavra, Object pagina) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
         this.raiz = insAVL(palavra, pagina, this.raiz);
+        size++;
     }
 
     private NodeArvore insAVL(Object palavra, Object pagina, NodeArvore pt) {
 
+        
         Palavra chave = (Palavra) palavra;
         Pagina pag = (Pagina) pagina;
         
@@ -32,15 +36,15 @@ public class Arvore implements AVL {
             
 
             if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) { //fiz isso para caso as palavras sejam iguais
-                Iterator iterator = chave.getlPagina().iterator(); //pego a lista de pagina da palavra
-                    while (iterator.hasNext()) {
-                        Pagina temp = (Pagina) iterator.next();
-                        if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
-                            temp.Quantidade();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
-                        } else {
-                            chave.Pagina(pag);//caso não seja igual adiciona a pagina na lista
-                        }
-                    }
+//                Iterator iterator = chave.getlPagina().iterator(); //pego a lista de pagina da palavra
+//                    while (iterator.hasNext()) {
+//                        Pagina temp = (Pagina) iterator.next();
+//                        if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
+//                            temp.Quantidade();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
+//                        } else {
+//                            chave.Pagina(pag);//caso não seja igual adiciona a pagina na lista
+//                        }
+//                    }
                 return pt;
             }
 
@@ -94,17 +98,11 @@ public class Arvore implements AVL {
         
         if (ptu.getBal() == -1) {//ROTAÇÃO SIMPLES PARA A DIREITA
 
-            System.out.println("ROTACAO SIMPLES DIREITA COM " + palavra.getPalavra() + "\n ***ANTES***");
-            percorrerPreOrdem(this.raiz);
-
             pt.setEsq(ptu.getDir());
             ptu.setDir(pt);
             pt.setBal(0);
             pt = ptu;
         } else {//ROTAÇÃO DUPLA PARA A DIREITA
-
-            System.out.println("ROTACAO DUPLA A DIREITA \n ***ANTES***");
-            percorrerPreOrdem(this.raiz);
 
             NodeArvore ptv = ptu.getDir();
             ptu.setDir(ptv.getEsq());
@@ -124,7 +122,6 @@ public class Arvore implements AVL {
             pt = ptv;
         }
         pt.setBal(0);
-        System.out.println("******************");
         return pt;
     }
 
@@ -134,16 +131,11 @@ public class Arvore implements AVL {
 
         if (ptu.getBal() == 1) {//ROTAÇÃO SIMPLES PARA A ESQUERDA
 
-            System.out.println("ROTACAO SIMPLES A ESQUERDA COM " + palavra.getPalavra() + "\n ***ANTES");
-            percorrerPreOrdem(this.raiz);
-
             pt.setDir(ptu.getEsq());
             ptu.setEsq(pt);
             pt.setBal(0);
             pt = ptu;
         } else {//DUPLA ROTAÇÃO PARA A ESQUERDA
-            System.out.println("ROTACAO DUPLA A ESQUERDA \n ***ANTES***");
-            percorrerPreOrdem(this.raiz);
             NodeArvore ptv = ptu.getEsq();
             ptu.setEsq(ptv.getDir());
             ptv.setDir(ptu);
@@ -162,7 +154,6 @@ public class Arvore implements AVL {
             pt = ptv;
         }
         pt.setBal(0);
-        System.out.println("******************");
         return pt;
     }
 
@@ -176,7 +167,6 @@ public class Arvore implements AVL {
         Palavra chaveRaiz = (Palavra) pt.getChave();
         
         if (pt == null) {
-            System.out.println("ELEMENTO NÃO ENCONTRADO");//QUANDO PERCORRE TODA A ARVORE E NAO ENCONTRO O ELEMENTO
             h = false;//PARA REMOVER ELEMENTOS Q NAO EXISTE, POIS TAVA DANDO ERRO
             return pt;
         } else {
