@@ -5,17 +5,28 @@ import goodle.model.Palavra;
 
 public class Arvore implements AVL {
 
+    //não esta inserindo a pagina junto com a palavra
     public boolean h;
     public NodeArvore raiz;
+    private int size;
+    private Object encontrei;
 
     public Arvore() {
         this.raiz = null;
         this.h = false;
+        this.size = 0;
+        encontrei = null;
+    }
+
+    @Override
+    public int size() {
+        return this.size;
     }
 
     @Override
     public void inserir(Object palavra, Object pagina) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
         this.raiz = insAVL(palavra, pagina, this.raiz);
+        size++;
     }
 
     private NodeArvore insAVL(Object palavra, Object pagina, NodeArvore pt) {
@@ -169,6 +180,7 @@ public class Arvore implements AVL {
     @Override
     public void remove(Object palavra) {
         this.raiz = remover(palavra, this.raiz);
+        size--;
     }
 
     private NodeArvore remover(Object palavra, NodeArvore pt) {
@@ -309,10 +321,11 @@ public class Arvore implements AVL {
 
     @Override
     public Object busca(Object palavra) {
-        NodeArvore temp = buscAVL(palavra, this.raiz);
-        return temp.getChave();
+        buscAVL(palavra, this.raiz);
+        return encontrei;
     }
 
+    //pensando em alterar isso
     private NodeArvore buscAVL(Object palavra, NodeArvore pt) {
         Palavra chave = (Palavra) palavra;
         Palavra chaveRaiz = (Palavra) pt.getChave();
@@ -325,6 +338,7 @@ public class Arvore implements AVL {
             } else if (chave.compareTo(chaveRaiz.getPalavra()) > 0) {
                 pt.setDir(buscAVL(chave, pt.getDir()));
             } else {
+                encontrei = chaveRaiz;
                 return pt;
             }
         }

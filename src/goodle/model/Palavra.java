@@ -1,6 +1,7 @@
 package goodle.model;
 
 import goodle.util.Ilist;
+import goodle.util.LinkedList;
 
 /**
  *
@@ -53,6 +54,7 @@ public class Palavra implements Comparable {
         this.palavra = palavra;
         this.quantidade = 1;
         this.buscas = 0;
+        lPagina = new LinkedList();
     }
 
     /**

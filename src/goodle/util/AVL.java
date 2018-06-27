@@ -8,6 +8,8 @@ package goodle.util;
  */
 public interface AVL {
 
+    public int size();
+    
     /**
      * Método para inserir um novo item na árvore 
      * @param palavra palavra que irá ser adicionada
