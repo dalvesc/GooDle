@@ -11,8 +11,6 @@ public class Controller {
 
     Ilist paginas;
     String diretorio;
-    public int sizes = 0;
-    boolean size;
 
     public Controller(Arvore listaPalavras) {
         diretorio = null;
@@ -28,14 +26,17 @@ public class Controller {
     public void adicionarPalavras(Arvore listaPalavras) {
 
         String[] arquivos = null;
-
+        File arq = null;
         try {
             diretorio = new File("hehe").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
-            File arq = new File(diretorio);
+            arq = new File(diretorio);
             arquivos = arq.list(); //ESSE MÉTODO DEVOLVE UM ARRAY COM TODOS OS ARQUIVOS QUE ESTÃO NESSA PASTA
+            System.out.println(arquivos[1]);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        
 
         for (String nomeArquivo : arquivos) {//OS ARQUIVOS DE TEXTO SÃO VISITADOS            
 
@@ -48,7 +49,7 @@ public class Controller {
                 for (String word : palavras) {
                     Pagina novaPagina = new Pagina(nomeArquivo);
                     Palavra novaPalavra = new Palavra(word, novaPagina);
-                    
+
                     listaPalavras.inserir(novaPalavra); //CRIO OS OBJETOS E CHAMO O MÉTODO DE INSERIR NA ÁRVORE                  
                 }
 
