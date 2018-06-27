@@ -26,7 +26,8 @@ public class Palavra implements Comparable {
         setPagina();
     }
     
-    public void setPagina(){
+    public void  setPagina(){
+        this.pagina.quantDaPalavra();
         lPagina.addLast(this.pagina);
     }
     
