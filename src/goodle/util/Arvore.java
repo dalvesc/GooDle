@@ -5,6 +5,7 @@ import goodle.model.Palavra;
 
 public class Arvore implements AVL {
 
+    //não esta inserindo a pagina junto com a palavra
     public boolean h;
     public NodeArvore raiz;
     private int size;
@@ -41,15 +42,15 @@ public class Arvore implements AVL {
             Palavra raiz = (Palavra) pt.getChave();
 
             if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) { //fiz isso para caso as palavras sejam iguais
-//                Iterator iterator = chave.getlPagina().iterator(); //pego a lista de pagina da palavra
-//                    while (iterator.hasNext()) {
-//                        Pagina temp = (Pagina) iterator.next();
-//                        if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
-//                            temp.Quantidade();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
-//                        } else {
-//                            chave.Pagina(pag);//caso não seja igual adiciona a pagina na lista
-//                        }
-//                    }
+                Iterator iterator = chave.getlPagina().iterator(); //pego a lista de pagina da palavra
+                    while (iterator.hasNext()) {
+                        Pagina temp = (Pagina) iterator.next();
+                        if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
+                            temp.quantDaPalavra();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
+                        } else {
+                            chave.addPagina(pag);//caso não seja igual adiciona a pagina na lista
+                        }
+                    }
                 return pt;
             }
 

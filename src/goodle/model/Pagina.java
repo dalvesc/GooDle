@@ -29,17 +29,17 @@ public class Pagina {
     }
 
     /**
-     * Contador para a quantidade de vezes que determinada palavra aparece acho
-     * que vai precisar mudar isso
+     * Contador para a quantidade de vezes que determinada palavra aparece 
+     * 
      */
-    public void quantidade() {
+    public void quantDaPalavra() {
         this.quantDaPalavra = quantDaPalavra + 1;
     }
 
     /**
      * Contador para a quantidade de acessos na página
      */
-    public void acesso() {
+    public void quantAcesso() {
         this.acesso = acesso + 1;
     }
 }

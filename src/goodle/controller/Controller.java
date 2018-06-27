@@ -39,7 +39,7 @@ public class Controller {
             File file = new File(diretorio, nome);
 
             try {
-                Scanner scan = new Scanner(new FileInputStream(file), "latin1");
+                Scanner scan = new Scanner(new FileInputStream(file), "UTF-8");
                 String linha;
                 String[] palavras;
 
@@ -95,7 +95,7 @@ public class Controller {
         while (iterator.hasNext()) {
             Pagina comparar = (Pagina) iterator.next();
             if (pagina.equals(comparar.getArq())) {
-                comparar.acesso();
+                comparar.quantAcesso();
             }
         }
         

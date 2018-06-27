@@ -3,12 +3,9 @@ package goodle.model;
 import goodle.util.Ilist;
 import goodle.util.LinkedList;
 
-/**
- *
- * @author danco
- */
 public class Palavra implements Comparable {
 
+    //pensando em coloca para receber a pagina no controller
     private String palavra;
     private int quantidade, buscas;
     private Ilist lPagina;
@@ -51,7 +48,7 @@ public class Palavra implements Comparable {
      * @param pagina pagina em que a palavra aparece
      */
     public void addPagina(Pagina pagina) {
-        pagina.quantidade();
+        pagina.quantDaPalavra();
         this.lPagina.addLast(pagina);    
     }
 

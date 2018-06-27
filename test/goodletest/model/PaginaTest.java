@@ -18,10 +18,10 @@ public class PaginaTest {
     
     @Test
     public void testQuantidade(){
-        pagina1.quantidade();
-        pagina1.quantidade();
+        pagina1.quantDaPalavra();
+        pagina1.quantDaPalavra();
         
-        pagina2.quantidade();
+        pagina2.quantDaPalavra();
         
         assertEquals(2, pagina1.getQuantDaPalavra());
         assertEquals(1, pagina2.getQuantDaPalavra());
@@ -29,12 +29,12 @@ public class PaginaTest {
     
     @Test
     public void testAcessos(){
-        pagina3.acesso();
-        pagina3.acesso();
-        pagina3.acesso();
+        pagina3.quantAcesso();
+        pagina3.quantAcesso();
+        pagina3.quantAcesso();
         
-        pagina2.acesso();
-        pagina2.acesso();
+        pagina2.quantAcesso();
+        pagina2.quantAcesso();
         
         assertEquals(3, pagina3.getAcesso());
         assertEquals(2, pagina2.getAcesso());
