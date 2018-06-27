@@ -1,17 +1,16 @@
 package goodle.controller;
 
-import goodle.model.Pagina;
-import goodle.model.Palavra;
-import goodle.util.Arvore;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import goodle.model.*;
+import goodle.util.*;
+import java.io.*;
 import java.util.Scanner;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Controller {
 
     Arvore listaPalavras;
+    boolean size;
 
     public Controller() {
         listaPalavras = new Arvore();
@@ -24,70 +23,80 @@ public class Controller {
     public void adicionarPalavras() {
 
         String[] arquivos = null;
-        try{
-            String diretorio = new File("arquivos").getCanonicalPath(); //"CRIA" UM ARQUIVO ARQUIVO QUALQUER E PEGA SEU DIRETÓRIO, QUE É O MESMO DIRETÓRIO DO PROGRAMA
+        String diretorio = null;
+
+        try {
+            diretorio = new File("hehe").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
             File arq = new File(diretorio);
-            arquivos = arq.list();
-        }
-        catch(Exception e){
+            arquivos = arq.list(); //ESSE MÉTODO DEVOLVE UM ARRAY COM TODOS OS ARQUIVOS QUE ESTÃO NESSA PASTA
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
-        //File subpasta = null;
 
-//        for (String s : aux) { //ACESSA O VETOR DE ARQUIVOS DO DIRETÓRIO PADRÃO ATÉ ACHAR A PASTA "ARQUIVOS" 
-//            if (s.compareTo("hehe") == 0) {
-//                subpasta = new File(diretorio, s);//QUANDO ACHA A PASTA, CRIA UM NOVO ARQUIVO PARA ARMAZENÁ-LA
-//            }
-//
-//        }
+        for (String nomeArquivo : arquivos) {//OS ARQUIVOS DE TEXTO SÃO VISITADOS            
 
-        for (String nome : arquivos) {//JÁ DENTRO DA SUBPASTA "ARQUIVOS", OS ARQUIVOS DE TEXTO SÃO VISITADOS            
-
-            File file = new File(nome);
+            File file = new File(diretorio, nomeArquivo);
 
             try {
-                Scanner scan = new Scanner(new FileReader(file));
-                String linha;
-                String[] palavras;
-                
-                System.out.println("ENTROU NO 'TRY'");
 
-                while (scan.hasNext()) {
-                    linha = scan.nextLine();
-                    palavras = linha.split(" |\n|,|.|:");
-                    int i = 0;
+                String[] palavras = formataTexto(file); //AQUI EU CHAMO O MÉTODO QUE "LIMPA" O TEXTO E DEVOLVE UM ARRAY COM TODAS AS PALAVRAS
 
-                    while (i < palavras.length) { //CADA LINHA É QUEBRADA EM PALAVRAS, ESSAS PALAVRAS VÃO PARA UM ARRAY
-                        Palavra palavra = new Palavra(palavras[i]);
-                        Pagina pagina = new Pagina(nome);
+                for (String word : palavras) {
+                    Palavra novaPalavra = new Palavra(word);
+                    Pagina novaPagina = new Pagina(nomeArquivo);
 
-                        listaPalavras.inserir(palavra, pagina);
-
-                        System.out.println(palavras[i]);
-
-                        i++;
-                    }
+                    listaPalavras.inserir(novaPalavra, novaPagina); //CRIO OS OBJETOS E CHAMO O MÉTODO DE INSERIR NA ÁRVORE                  
                 }
-                scan.close();
 
-            } catch (IOException e) {                
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
-                System.out.println(file.getAbsolutePath());
-                
             }
-
         }
     }
 
     /**
      * Faz a busca da palavra que o usuário deseja
      *
+     * @param listaPalavras
      * @param palavra palavra que o usuário deseja buscar
+     * @return
      */
-    public Object buscar(Palavra palavra) {
+    public Object buscar(Arvore listaPalavras, Palavra palavra) {
         Palavra temp = (Palavra) listaPalavras.busca(palavra);
         return temp;
     }
 
+    /**
+     * Formata o texto do arquivo, criando um array somente com as palavras
+     * contidas nele
+     *
+     * @param file
+     * @return String[] palavras
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
+     */
+    private String[] formataTexto(File file) throws FileNotFoundException, UnsupportedEncodingException {
+        Scanner scan = new Scanner(new FileInputStream(file), "UTF-8"); // TENTEI USAR ISSO QUE TU DISSE MAS NÃO DEU CERTO
+
+        String texto = null;
+        String textoFormatado = "";
+        String[] palavras = null;
+
+        while (scan.hasNext()) {
+            texto = scan.nextLine(); // O TEXTO É FORMATADO UMA LINHA DE CADA VEZ
+
+            Pattern pattern = Pattern.compile("[\\p{L}0-9]+{1,}"); //ESSA EXPRESSÃO É RESPONSÁVEL POR PROCURAR UM DETERMINADO PADRÃO NO TEXTO, O PADRÃO NESSE CASO É APENAS LETRAS, NÚMEROS E ESPAÇOS EM BRANCO
+            Matcher matcher = pattern.matcher(texto);
+
+            while (matcher.find()) {
+                textoFormatado += (matcher.group() + " "); //E AQUI O "MATCHER" DEVOLVE PRA STRING TUDO O QUE ELE ACHOU NO TEXTO QUE SATISFAZ ESSE PADRÃO               
+            }
+        }
+        scan.close();
+
+        palavras = textoFormatado.split(" |\n"); //DEVOLVE UM ARRAY COM TODAS AS PALAVRAS
+        return palavras;
+    }
+
+    //Falta imprimir os hankings
 }
