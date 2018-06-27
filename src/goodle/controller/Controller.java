@@ -7,11 +7,20 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *
+ * @author danco
+ */
 public class Controller {
 
     Ilist paginas;
     String diretorio;
 
+    /**
+     * Construtor da classe
+     *
+     * @param listaPalavras árvore das palavras criada na view
+     */
     public Controller(Arvore listaPalavras) {
         diretorio = null;
         paginas = new LinkedList();
@@ -19,9 +28,10 @@ public class Controller {
     }
 
     /**
-     * Lê os arquivos de texto e salva dentro de uma árvore
+     * Lê os arquivos de texto de determindo diretorio e salva dentro de uma
+     * árvore
      *
-     * @param listaPalavras
+     * @param listaPalavras árvore das palavras
      */
     public void adicionarPalavras(Arvore listaPalavras) {
 
@@ -35,8 +45,6 @@ public class Controller {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        
 
         for (String nomeArquivo : arquivos) {//OS ARQUIVOS DE TEXTO SÃO VISITADOS            
 
@@ -62,9 +70,9 @@ public class Controller {
     /**
      * Faz a busca da palavra que o usuário deseja
      *
-     * @param listaPalavras
+     * @param listaPalavras árvore das palavras
      * @param palavra palavra que o usuário deseja buscar
-     * @return
+     * @return objeto com a palavra que foi buscada
      */
     public Object buscar(Arvore listaPalavras, Palavra palavra) {
         Palavra temp = (Palavra) listaPalavras.busca(palavra);
@@ -75,10 +83,11 @@ public class Controller {
      * Formata o texto do arquivo, criando um array somente com as palavras
      * contidas nele
      *
-     * @param file
-     * @return String[] palavras
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     * @param file arquivo que irá ser lido
+     * @return String[] palavras array com as palavras
+     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
+     * @throws UnsupportedEncodingException exceção para caso não consiga ler
+     * determinado caractere
      */
     private String[] formataTexto(File file) throws FileNotFoundException, UnsupportedEncodingException {
         Scanner scan = new Scanner(new FileInputStream(file), "UTF-8"); // TENTEI USAR ISSO QUE TU DISSE MAS NÃO DEU CERTO
@@ -103,6 +112,14 @@ public class Controller {
         return palavras;
     }
 
+    /**
+     * Imprime a página que o usuário deseja visualizar
+     *
+     * @param pagina página que deseja ser lida
+     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
+     * @throws IOException exceção para caso ocorra erro com entrada ou saída de
+     * dados
+     */
     public void imprimirPagina(Object pagina) throws FileNotFoundException, IOException {
         FileReader arq;
         BufferedReader lerArq;

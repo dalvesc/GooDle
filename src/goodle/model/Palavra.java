@@ -3,19 +3,21 @@ package goodle.model;
 import goodle.util.Ilist;
 import goodle.util.LinkedList;
 
+/**
+ *
+ * @author danco
+ */
 public class Palavra implements Comparable {
 
-    //pensando em coloca para receber a pagina no controller
     private String palavra;
     private int quantidade, buscas;
     private Pagina pagina;
     private Ilist lPagina;
-  
+ 
     /**
-     * Controller da classe
-     *
-     * @param palavra
-     * @param pagina
+     *Construtor da classe
+     * @param palavra palavra que foi lida da página
+     * @param pagina pagina em que a palavra foi lida pela primeira vez
      */
     public Palavra(String palavra, Pagina pagina) {
         this.palavra = palavra;
@@ -26,31 +28,57 @@ public class Palavra implements Comparable {
         setPagina();
     }
     
+    /**
+     *Método para adiciona a primeira página na lista
+     */
     public void  setPagina(){
         this.pagina.quantDaPalavra();
         lPagina.addLast(this.pagina);
     }
     
+    /**
+     *
+     * @return primeira página em que a palavra aparece
+     */
     public Pagina getPagina(){
         return this.pagina;
     }
     
+    /**
+     *
+     * @return palavra lida
+     */
     public String getPalavra() {
         return palavra;
     }
 
+    /**
+     *
+     * @return quantidade total da palavra
+     */
     public int getQuantidade() {
         return quantidade;
     }
 
+    /**
+     *
+     * @return quantidade de vezes que a palavra aparece
+     */
     public int getBuscas() {
         return buscas;
     }
 
+    /**
+     *
+     * @return lista com as páginas em que a palavra aparece
+     */
     public Ilist getlPagina() {
         return lPagina;
     }
 
+    /**
+     *Contador para a quantidade de vezes que essa palavra foi lida
+     */
     public void quantidade(){
         this.quantidade = this.quantidade + 1;
     }
@@ -61,7 +89,6 @@ public class Palavra implements Comparable {
      * @param pagina pagina em que a palavra aparece
      */
     public void addPagina(Pagina pagina) {
-        pagina.quantDaPalavra();
         this.lPagina.addLast(pagina);    
     }
 

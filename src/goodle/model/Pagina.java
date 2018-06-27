@@ -2,13 +2,17 @@ package goodle.model;
 
 import java.util.Objects;
 
+/**
+ *
+ * @author danco
+ */
 public class Pagina {
 
     private int quantDaPalavra, acesso;
     String arq;
 
     /**
-     * Controller da classe
+     * Construtor da classe
      *
      * @param arq nome do arquivo
      */
@@ -18,14 +22,26 @@ public class Pagina {
         this.acesso = 0;
     }
 
+    /**
+     *
+     * @return quantidade da palavra que está presente na página
+     */
     public int getQuantDaPalavra() {
         return quantDaPalavra;
     }
 
+    /**
+     *
+     * @return quantidade de vezes que a página foi acessada
+     */
     public int getAcesso() {
         return acesso;
     }
 
+    /**
+     *
+     * @return nome da página
+     */
     public String getArq() {
         return arq;
     }
@@ -65,6 +81,6 @@ public class Pagina {
 
     @Override
     public String toString() {
-        return "quantDaPalavra=" + quantDaPalavra + ", arq=" + arq;
+        return "Na Página " +arq + " aparece " +quantDaPalavra +" vezes";
     }
 }
