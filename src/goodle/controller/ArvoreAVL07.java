@@ -2,6 +2,7 @@ package goodle.controller;
 
 import goodle.util.Arvore;
 import goodle.model.*;
+import goodle.util.Iterator;
 import java.util.Scanner;
 
 public class ArvoreAVL07 {
@@ -15,9 +16,7 @@ public class ArvoreAVL07 {
         Pagina pagina = new Pagina("Pagina");
         Scanner scan = new Scanner(System.in);
         Controller controller = new Controller(listaPalavras);
-        //listaPalavras.percorrerPreOrdem(listaPalavras.raiz);
-        System.out.println(listaPalavras.size());
-        System.out.println(controller.size);
+        listaPalavras.percorrerPreOrdem(listaPalavras.raiz);
         System.out.println("Digite palavra");
         String palavra = scan.next();
         Palavra pal = new Palavra(palavra, pagina);
@@ -28,5 +27,10 @@ public class ArvoreAVL07 {
         }
         System.out.println(temp);
         System.out.println(temp.getQuantidade());
+        Iterator iterator = temp.getlPagina().iterator();
+        while(iterator.hasNext()){
+            pagina = (Pagina) iterator.next();
+            System.out.println(pagina);
+        }
     }
 }

@@ -42,4 +42,9 @@ public class Pagina {
     public void quantAcesso() {
         this.acesso = acesso + 1;
     }
+
+    @Override
+    public String toString() {
+        return "quantDaPalavra=" + quantDaPalavra + ", arq=" + arq;
+    }
 }

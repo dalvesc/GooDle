@@ -41,16 +41,16 @@ public class Arvore implements AVL {
             Palavra raiz = (Palavra) pt.getChave();
 
             if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) { //fiz isso para caso as palavras sejam iguais
+                raiz.quantidade();
                 Iterator iterator = raiz.getlPagina().iterator(); //pego a lista de pagina da palavra
-                    while (iterator.hasNext()) {
-                        Pagina pagina = (Pagina) iterator.next();
-                        
-                        if (chave.getPagina().equals(pagina)) {//comparo se a pagina da palavra recebida é igual a pagina da palavra já resistrada
-                            pagina.quantDaPalavra();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
-                        } else {
-                            raiz.addPagina(chave.getPagina());//caso não seja igual adiciona a pagina na lista
-                        }
+                while (iterator.hasNext()) {
+                    Pagina pagina = (Pagina) iterator.next();
+                    if (chave.getPagina().equals(pagina)) {//comparo se a pagina da palavra recebida é igual a pagina da palavra já resistrada
+                        pagina.quantDaPalavra();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
+                        return pt;
                     }
+                }
+                raiz.addPagina(chave.getPagina());//caso não seja igual adiciona a pagina na lista
                 return pt;
             }
 
@@ -307,7 +307,7 @@ public class Arvore implements AVL {
             } else {
                 encontrei = chaveRaiz;
                 return pt;
-        }
+            }
         }
         return null;
     }
