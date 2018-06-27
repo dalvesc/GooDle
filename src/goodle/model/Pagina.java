@@ -81,6 +81,6 @@ public class Pagina {
 
     @Override
     public String toString() {
-        return "Na Página " +arq + " aparece " +quantDaPalavra +" vezes";
+        return "Na Página " +arq + " aparece " +quantDaPalavra +" vez(es)";
     }
 }

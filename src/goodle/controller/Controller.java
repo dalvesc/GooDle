@@ -7,10 +7,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author danco
- */
 public class Controller {
 
     Ilist paginas;
@@ -38,27 +34,26 @@ public class Controller {
         String[] arquivos = null;
         File arq = null;
         try {
-            diretorio = new File("hehe").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
+            diretorio = new File("hehe").getCanonicalPath();
             arq = new File(diretorio);
-            arquivos = arq.list(); //ESSE MÉTODO DEVOLVE UM ARRAY COM TODOS OS ARQUIVOS QUE ESTÃO NESSA PASTA
-            System.out.println(arquivos[1]);
+            arquivos = arq.list();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        for (String nomeArquivo : arquivos) {//OS ARQUIVOS DE TEXTO SÃO VISITADOS            
+        for (String nomeArquivo : arquivos) {
 
             File file = new File(diretorio, nomeArquivo);
 
             try {
 
-                String[] palavras = formataTexto(file); //AQUI EU CHAMO O MÉTODO QUE "LIMPA" O TEXTO E DEVOLVE UM ARRAY COM TODAS AS PALAVRAS
+                String[] palavras = formataTexto(file);
 
                 for (String word : palavras) {
                     Pagina novaPagina = new Pagina(nomeArquivo);
                     Palavra novaPalavra = new Palavra(word, novaPagina);
 
-                    listaPalavras.inserir(novaPalavra); //CRIO OS OBJETOS E CHAMO O MÉTODO DE INSERIR NA ÁRVORE                  
+                    listaPalavras.inserir(novaPalavra);
                 }
 
             } catch (IOException e) {
@@ -90,25 +85,25 @@ public class Controller {
      * determinado caractere
      */
     private String[] formataTexto(File file) throws FileNotFoundException, UnsupportedEncodingException {
-        Scanner scan = new Scanner(new FileInputStream(file), "UTF-8"); // TENTEI USAR ISSO QUE TU DISSE MAS NÃO DEU CERTO
+        Scanner scan = new Scanner(new FileInputStream(file), "UTF-8"); 
 
         String texto = null;
         String textoFormatado = "";
         String[] palavras = null;
 
         while (scan.hasNext()) {
-            texto = scan.nextLine(); // O TEXTO É FORMATADO UMA LINHA DE CADA VEZ
+            texto = scan.nextLine();
 
-            Pattern pattern = Pattern.compile("[\\p{L}0-9]+{1,}"); //ESSA EXPRESSÃO É RESPONSÁVEL POR PROCURAR UM DETERMINADO PADRÃO NO TEXTO, O PADRÃO NESSE CASO É APENAS LETRAS, NÚMEROS E ESPAÇOS EM BRANCO
+            Pattern pattern = Pattern.compile("[\\p{L}0-9]+{1,}"); 
             Matcher matcher = pattern.matcher(texto);
 
             while (matcher.find()) {
-                textoFormatado += (matcher.group() + " "); //E AQUI O "MATCHER" DEVOLVE PRA STRING TUDO O QUE ELE ACHOU NO TEXTO QUE SATISFAZ ESSE PADRÃO               
+                textoFormatado += (matcher.group() + " ");              
             }
         }
         scan.close();
 
-        palavras = textoFormatado.split(" |\n"); //DEVOLVE UM ARRAY COM TODAS AS PALAVRAS
+        palavras = textoFormatado.split(" |\n");
         return palavras;
     }
 

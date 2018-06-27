@@ -5,7 +5,6 @@ import goodle.model.Palavra;
 
 public class Arvore implements AVL {
 
-    //não esta inserindo a pagina junto com a palavra
     public boolean h;
     public NodeArvore raiz;
     private Object encontrei;
@@ -17,7 +16,7 @@ public class Arvore implements AVL {
     }
 
     @Override
-    public void inserir(Object palavra) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
+    public void inserir(Object palavra) {
         this.raiz = insAVL(palavra, this.raiz);
     }
 
@@ -32,13 +31,13 @@ public class Arvore implements AVL {
 
             Palavra raiz = (Palavra) pt.getChave();
 
-            if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) { //fiz isso para caso as palavras sejam iguais
+            if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) {
                 raiz.quantidade();
-                Iterator iterator = raiz.getlPagina().iterator(); //pego a lista de pagina da palavra
+                Iterator iterator = raiz.getlPagina().iterator();
                 while (iterator.hasNext()) {
                     Pagina pagina = (Pagina) iterator.next();
-                    if (chave.getPagina().equals(pagina)) {//comparo se a pagina da palavra recebida é igual a pagina da palavra já resistrada
-                        pagina.quantDaPalavra();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
+                    if (chave.getPagina().equals(pagina)) {
+                        pagina.quantDaPalavra();
                         return pt;
                     }
                 }
@@ -278,12 +277,12 @@ public class Arvore implements AVL {
     }
 
     @Override
-    public Object busca(Object palavra){
+    public Object busca(Object palavra) {
         buscAVL(palavra, this.raiz);
         return encontrei;
     }
 
-    private NodeArvore buscAVL(Object palavra, NodeArvore pt){
+    private NodeArvore buscAVL(Object palavra, NodeArvore pt) {
         Palavra chave = (Palavra) palavra;
         Palavra chaveRaiz = (Palavra) pt.getChave();
 
@@ -294,7 +293,7 @@ public class Arvore implements AVL {
                 pt.setEsq(buscAVL(chave, pt.getEsq()));
             } else if (chave.compareTo(chaveRaiz.getPalavra()) > 0) {
                 pt.setDir(buscAVL(chave, pt.getDir()));
-            } else if(chave.compareTo(chaveRaiz.getPalavra()) == 0) {
+            } else if (chave.compareTo(chaveRaiz.getPalavra()) == 0) {
                 encontrei = chaveRaiz;
                 return pt;
             }
