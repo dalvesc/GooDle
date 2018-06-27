@@ -24,15 +24,14 @@ public class Arvore implements AVL {
     }
 
     @Override
-    public void inserir(Object palavra, Object pagina) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
-        this.raiz = insAVL(palavra, pagina, this.raiz);
+    public void inserir(Object palavra) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
+        this.raiz = insAVL(palavra, this.raiz);
         size++;
     }
 
-    private NodeArvore insAVL(Object palavra, Object pagina, NodeArvore pt) {
+    private NodeArvore insAVL(Object palavra, NodeArvore pt) {
 
         Palavra chave = (Palavra) palavra;
-        Pagina pag = (Pagina) pagina;
 
         if (pt == null) {
             h = true;
@@ -42,20 +41,21 @@ public class Arvore implements AVL {
             Palavra raiz = (Palavra) pt.getChave();
 
             if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) { //fiz isso para caso as palavras sejam iguais
-                Iterator iterator = chave.getlPagina().iterator(); //pego a lista de pagina da palavra
+                Iterator iterator = raiz.getlPagina().iterator(); //pego a lista de pagina da palavra
                     while (iterator.hasNext()) {
-                        Pagina temp = (Pagina) iterator.next();
-                        if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
-                            temp.quantDaPalavra();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
+                        Pagina pagina = (Pagina) iterator.next();
+                        
+                        if (chave.getPagina().equals(pagina)) {//comparo se a pagina da palavra recebida é igual a pagina da palavra já resistrada
+                            pagina.quantDaPalavra();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
                         } else {
-                            chave.addPagina(pag);//caso não seja igual adiciona a pagina na lista
+                            raiz.addPagina(chave.getPagina());//caso não seja igual adiciona a pagina na lista
                         }
                     }
                 return pt;
             }
 
             if (chave.getPalavra().compareTo(raiz.getPalavra()) < 0) {//PERCORRO PARA O RAMO ESQUERDO
-                pt.setEsq(insAVL(chave, pagina, pt.getEsq()));
+                pt.setEsq(insAVL(chave, pt.getEsq()));
 
                 if (h) {
                     switch (pt.getBal()) {
@@ -74,7 +74,7 @@ public class Arvore implements AVL {
                     }
                 }
             } else {
-                pt.setDir(insAVL(chave, pagina, pt.getDir())); //PERCORRO PARA A DIREITA
+                pt.setDir(insAVL(chave, pt.getDir())); //PERCORRO PARA A DIREITA
 
                 if (h) {
                     switch (pt.getBal()) {

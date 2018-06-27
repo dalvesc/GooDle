@@ -15,7 +15,7 @@ public interface AVL {
      * @param palavra palavra que irá ser adicionada
      * @param pagina pagina que irá ser adicionada
      */
-    public void inserir(Object palavra, Object pagina);
+    public void inserir(Object palavra);
 
     /**
      * Método para remover determinado item da árvore

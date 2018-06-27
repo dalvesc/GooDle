@@ -8,18 +8,30 @@ public class Palavra implements Comparable {
     //pensando em coloca para receber a pagina no controller
     private String palavra;
     private int quantidade, buscas;
+    private Pagina pagina;
     private Ilist lPagina;
   
     /**
      * Controller da classe
      *
      * @param palavra
+     * @param pagina
      */
-    public Palavra(String palavra) {
+    public Palavra(String palavra, Pagina pagina) {
         this.palavra = palavra;
+        this.pagina = pagina;
         this.quantidade = 1;
         this.buscas = 0;
         this.lPagina = new LinkedList();
+        setPagina();
+    }
+    
+    public void setPagina(){
+        lPagina.addLast(this.pagina);
+    }
+    
+    public Pagina getPagina(){
+        return this.pagina;
     }
     
     public String getPalavra() {

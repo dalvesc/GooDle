@@ -12,14 +12,15 @@ public class ArvoreAVL07 {
     public static void main(String[] args) {
 
         Arvore listaPalavras = new Arvore();
+        Pagina pagina = new Pagina("Pagina");
         Scanner scan = new Scanner(System.in);
         Controller controller = new Controller(listaPalavras);
-        listaPalavras.percorrerPreOrdem(listaPalavras.raiz);
+        //listaPalavras.percorrerPreOrdem(listaPalavras.raiz);
         System.out.println(listaPalavras.size());
         System.out.println(controller.size);
         System.out.println("Digite palavra");
         String palavra = scan.next();
-        Palavra pal = new Palavra(palavra);
+        Palavra pal = new Palavra(palavra, pagina);
         Palavra temp = (Palavra) controller.buscar(listaPalavras, pal);
         if (temp == null) {
             System.out.println("palavra n encontrada");
