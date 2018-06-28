@@ -290,10 +290,10 @@ public class Arvore implements AVL {
             return null;
         } else {
             if (chave.getPalavra().compareTo(chaveRaiz.getPalavra()) < 0) {
-                pt.setEsq(buscAVL(chave, pt.getEsq()));
+                buscAVL(chave, pt.getEsq());
             } else if (chave.compareTo(chaveRaiz.getPalavra()) > 0) {
-                pt.setDir(buscAVL(chave, pt.getDir()));
-            } else if (chave.compareTo(chaveRaiz.getPalavra()) == 0) {
+                buscAVL(chave, pt.getDir());
+            } else {
                 encontrei = chaveRaiz;
                 return pt;
             }

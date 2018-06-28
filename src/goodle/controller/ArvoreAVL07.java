@@ -31,7 +31,7 @@ public class ArvoreAVL07 {
     public static void main(String[] args) {
 
         Arvore listaPalavras = new Arvore();
-        Pagina pagina = new Pagina("Pagina");
+        
         Scanner scan = new Scanner(System.in);
         Palavra temp = null;
         Controller controller = new Controller(listaPalavras);
@@ -49,6 +49,7 @@ public class ArvoreAVL07 {
 
                 case "1":
                     try {
+                        Pagina pagina = new Pagina("Pagina");
                         System.out.println("Digite palavra");
                         String palavra = scan.next();
                         Palavra pal = new Palavra(palavra, pagina);

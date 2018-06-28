@@ -67,10 +67,11 @@ public class Controller {
      *
      * @param listaPalavras árvore das palavras
      * @param palavra palavra que o usuário deseja buscar
-     * @return objeto com a palavra que foi buscada
+     * @return palavra que foi buscada
      */
-    public Object buscar(Arvore listaPalavras, Palavra palavra) {
+    public Palavra buscar(Arvore listaPalavras, Palavra palavra) {
         Palavra temp = (Palavra) listaPalavras.busca(palavra);
+        temp.buscas();
         return temp;
     }
 
@@ -85,7 +86,7 @@ public class Controller {
      * determinado caractere
      */
     private String[] formataTexto(File file) throws FileNotFoundException, UnsupportedEncodingException {
-        Scanner scan = new Scanner(new FileInputStream(file), "UTF-8"); 
+        Scanner scan = new Scanner(new FileInputStream(file), "UTF-8");
 
         String texto = null;
         String textoFormatado = "";
@@ -94,11 +95,11 @@ public class Controller {
         while (scan.hasNext()) {
             texto = scan.nextLine();
 
-            Pattern pattern = Pattern.compile("[\\p{L}0-9]+{1,}"); 
+            Pattern pattern = Pattern.compile("[\\p{L}0-9]+{1,}");
             Matcher matcher = pattern.matcher(texto);
 
             while (matcher.find()) {
-                textoFormatado += (matcher.group() + " ");              
+                textoFormatado += (matcher.group() + " ");
             }
         }
         scan.close();
