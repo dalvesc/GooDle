@@ -30,11 +30,6 @@ public class Pagina {
         return quantDaPalavra;
     }
 
-    public void setQuantDaPalavra(int quantDaPalavra) {
-        this.quantDaPalavra += quantDaPalavra;
-    }
-    
-
     /**
      *
      * @return quantidade de vezes que a página foi acessada
@@ -51,11 +46,7 @@ public class Pagina {
         return arq;
     }
 
-    /**
-     * Contador para a quantidade de vezes que determinada palavra aparece 
-     * 
-     */
-    public void quantDaPalavra() {
+    public void setQuantDaPalavra() {
         this.quantDaPalavra = quantDaPalavra + 1;
     }
 
@@ -86,6 +77,6 @@ public class Pagina {
 
     @Override
     public String toString() {
-        return "na Página " +arq + " aparece " + quantDaPalavra +" vez(es)";
+        return "na Página " + arq + " aparece " + quantDaPalavra + " vez(es)";
     }
 }

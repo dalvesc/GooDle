@@ -1,10 +1,11 @@
-package goodle.controller;
+package goodle.view;
 
+import goodle.controller.Controller;
 import goodle.util.*;
 import goodle.model.*;
 import java.util.Scanner;
 
-public class ArvoreAVL07 {
+public class View {
 
     /**
      * ************************************************************************
@@ -30,7 +31,6 @@ public class ArvoreAVL07 {
      */
     public static void main(String[] args) {
         
-        Pagina pagina = new Pagina("Pagina");
         Scanner scan = new Scanner(System.in);
         Palavra temp = null;
         
@@ -43,7 +43,7 @@ public class ArvoreAVL07 {
         int sair = 1;
         
         do {
-            System.out.println("\nO que você deseja?\n"
+            System.out.println("O que você deseja?\n"
                     + "[1] - Pesquisar palavra\n"
                     + "[0] - Sair\n");
 
@@ -52,18 +52,19 @@ public class ArvoreAVL07 {
 
                 case "1":
                     try {
+                        Pagina pagina = new Pagina("Pagina");
                         System.out.println("Digite palavra");
                         String palavra = scan.next();
                         Palavra pal = new Palavra(palavra, pagina);
                         temp = (Palavra) controller.buscar(pal);
-                        System.out.println("Para a palavra " +temp +": "); 
+                        System.out.println("\nPara a palavra '" +temp +"': \n"); 
                                 
                         Iterator iterator = temp.getlPagina().iterator();
                         while (iterator.hasNext()) {
                             pagina = (Pagina) iterator.next(); 
-                            System.out.println("Página: " + pagina.getArq() + ", ocorrências: " + pagina.getQuantDaPalavra() + "\n");
+                            System.out.println("*Página: " + pagina.getArq() + ", ocorrências: " + pagina.getQuantDaPalavra() + "*");
                         }
-                        
+                        System.out.println("");
                     } catch (NullPointerException e) {
                         System.out.println("A palavra buscada não foi encontrada");
                     }

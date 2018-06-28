@@ -16,12 +16,11 @@ public class Controller {
     /**
      * Construtor da classe
      *
-     * @param listaPalavras árvore das palavras criada na view
      */
     public Controller() {
         diretorio = null;
         paginas = new LinkedList();
-        listaPalavras = new Arvore ();
+        listaPalavras = new Arvore();
         adicionarPalavras();
     }
 
@@ -53,7 +52,6 @@ public class Controller {
                 for (String word : palavras) {
                     Pagina novaPagina = new Pagina(nomeArquivo);
                     Palavra novaPalavra = new Palavra(word, novaPagina);
-                    //System.out.println(word);
 
                     listaPalavras.inserir(novaPalavra);
                 }
@@ -67,12 +65,12 @@ public class Controller {
     /**
      * Faz a busca da palavra que o usuário deseja
      *
-     * @param listaPalavras árvore das palavras
      * @param palavra palavra que o usuário deseja buscar
-     * @return objeto com a palavra que foi buscada
+     * @return palavra que foi buscada
      */
-    public Object buscar(Palavra palavra) {
+    public Palavra buscar(Palavra palavra) {
         Palavra temp = (Palavra) listaPalavras.busca(palavra);
+        temp.buscas();
         return temp;
     }
 
@@ -145,6 +143,6 @@ public class Controller {
             System.out.println(e.getMessage());
         }
     }
-
+    
     //Falta imprimir os hankings
 }

@@ -32,7 +32,7 @@ public class Palavra implements Comparable {
      *Método para adiciona a primeira página na lista
      */
     public void  setPagina(){
-        this.pagina.quantDaPalavra();
+        this.pagina.setQuantDaPalavra();
         lPagina.addLast(this.pagina);
     }
     
