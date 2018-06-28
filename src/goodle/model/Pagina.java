@@ -1,12 +1,18 @@
 package goodle.model;
 
+import java.util.Objects;
+
+/**
+ *
+ * @author danco
+ */
 public class Pagina {
 
     private int quantDaPalavra, acesso;
     String arq;
 
     /**
-     * Controller da classe
+     * Construtor da classe
      *
      * @param arq nome do arquivo
      */
@@ -16,42 +22,70 @@ public class Pagina {
         this.acesso = 0;
     }
 
+    /**
+     *
+     * @return quantidade da palavra que está presente na página
+     */
     public int getQuantDaPalavra() {
         return quantDaPalavra;
     }
 
     public void setQuantDaPalavra(int quantDaPalavra) {
-        this.quantDaPalavra = quantDaPalavra;
+        this.quantDaPalavra += quantDaPalavra;
     }
+    
 
+    /**
+     *
+     * @return quantidade de vezes que a página foi acessada
+     */
     public int getAcesso() {
         return acesso;
     }
 
-    public void setAcesso(int acesso) {
-        this.acesso = acesso;
-    }
-
+    /**
+     *
+     * @return nome da página
+     */
     public String getArq() {
         return arq;
     }
 
-    public void setArq(String arq) {
-        this.arq = arq;
-    }
-
     /**
-     * Contador para a quantidade de vezes que determinada palavra aparece acho
-     * que vai precisar mudar isso
+     * Contador para a quantidade de vezes que determinada palavra aparece 
+     * 
      */
-    public void Quantidade() {
+    public void quantDaPalavra() {
         this.quantDaPalavra = quantDaPalavra + 1;
     }
 
     /**
      * Contador para a quantidade de acessos na página
      */
-    public void Acesso() {
+    public void quantAcesso() {
         this.acesso = acesso + 1;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pagina other = (Pagina) obj;
+        if (!Objects.equals(this.arq, other.arq)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "na Página " +arq + " aparece " + quantDaPalavra +" vez(es)";
     }
 }

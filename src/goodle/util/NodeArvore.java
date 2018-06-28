@@ -7,10 +7,10 @@ package goodle.util;
  */
 public class NodeArvore {
 
-    public Object chave;
-    public int bal;
-    public NodeArvore esq;
-    public NodeArvore dir;
+    private Object chave;
+    private int bal;
+    private NodeArvore esq;
+    private NodeArvore dir;
 
     public NodeArvore(Object chave) {
         this.chave = chave;
@@ -19,7 +19,39 @@ public class NodeArvore {
         this.esq = null;
     }
 
-    public NodeArvore() {
+    public Object getChave() {
+        return chave;
     }
+
+    public int getBal() {
+        return bal;
+    }
+
+    public NodeArvore getEsq() {
+        return esq;
+    }
+
+    public NodeArvore getDir() {
+        return dir;
+    }
+
+    public void setChave(Object chave) {
+        this.chave = chave;
+    }
+
+    public void setBal(int bal) {
+        this.bal = bal;
+    }
+
+    public void setEsq(NodeArvore esq) {
+        this.esq = esq;
+    }
+
+    public void setDir(NodeArvore dir) {
+        this.dir = dir;
+    }
+    
+    
+    
 
 }
