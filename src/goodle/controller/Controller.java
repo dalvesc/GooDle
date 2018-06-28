@@ -11,25 +11,25 @@ public class Controller {
 
     Ilist paginas;
     String diretorio;
+    Arvore listaPalavras;
 
     /**
      * Construtor da classe
      *
-     * @param listaPalavras árvore das palavras criada na view
      */
-    public Controller(Arvore listaPalavras) {
+    public Controller() {
         diretorio = null;
         paginas = new LinkedList();
-        adicionarPalavras(listaPalavras);
+        listaPalavras = new Arvore();
+        adicionarPalavras();
     }
 
     /**
      * Lê os arquivos de texto de determindo diretorio e salva dentro de uma
      * árvore
      *
-     * @param listaPalavras árvore das palavras
      */
-    public void adicionarPalavras(Arvore listaPalavras) {
+    public void adicionarPalavras() {
 
         String[] arquivos = null;
         File arq = null;
@@ -65,11 +65,10 @@ public class Controller {
     /**
      * Faz a busca da palavra que o usuário deseja
      *
-     * @param listaPalavras árvore das palavras
      * @param palavra palavra que o usuário deseja buscar
      * @return palavra que foi buscada
      */
-    public Palavra buscar(Arvore listaPalavras, Palavra palavra) {
+    public Palavra buscar(Palavra palavra) {
         Palavra temp = (Palavra) listaPalavras.busca(palavra);
         temp.buscas();
         return temp;
@@ -141,7 +140,7 @@ public class Controller {
             }
             arq.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

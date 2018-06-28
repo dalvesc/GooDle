@@ -6,7 +6,7 @@ import java.util.Objects;
  *
  * @author danco
  */
-public class Pagina implements Comparable{
+public class Pagina {
 
     private int quantDaPalavra, acesso;
     String arq;
@@ -46,11 +46,7 @@ public class Pagina implements Comparable{
         return arq;
     }
 
-    /**
-     * Contador para a quantidade de vezes que determinada palavra aparece 
-     * 
-     */
-    public void quantDaPalavra() {
+    public void setQuantDaPalavra() {
         this.quantDaPalavra = quantDaPalavra + 1;
     }
 
@@ -78,21 +74,9 @@ public class Pagina implements Comparable{
         }
         return true;
     }
-    
-    @Override
-    public int compareTo(Object p) {
-        int quantDaPalavra = (int) p;
-        if (this.quantDaPalavra > quantDaPalavra) {
-            return 1;
-        } else if (this.quantDaPalavra < quantDaPalavra) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
 
     @Override
     public String toString() {
-        return "Na Página " +arq + " aparece " +quantDaPalavra +" vez(es)";
+        return "na Página " + arq + " aparece " + quantDaPalavra + " vez(es)";
     }
 }

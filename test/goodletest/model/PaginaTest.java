@@ -18,10 +18,10 @@ public class PaginaTest {
     
     @Test
     public void testQuantidade(){
-        pagina1.quantDaPalavra();
-        pagina1.quantDaPalavra();
+        pagina1.setQuantDaPalavra();
+        pagina1.setQuantDaPalavra();
         
-        pagina2.quantDaPalavra();
+        pagina2.setQuantDaPalavra();
         
         assertEquals(2, pagina1.getQuantDaPalavra());
         assertEquals(1, pagina2.getQuantDaPalavra());

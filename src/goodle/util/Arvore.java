@@ -37,7 +37,7 @@ public class Arvore implements AVL {
                 while (iterator.hasNext()) {
                     Pagina pagina = (Pagina) iterator.next();
                     if (chave.getPagina().equals(pagina)) {
-                        pagina.quantDaPalavra();
+                        pagina.setQuantDaPalavra();
                         return pt;
                     }
                 }
@@ -293,7 +293,7 @@ public class Arvore implements AVL {
                 buscAVL(chave, pt.getEsq());
             } else if (chave.compareTo(chaveRaiz.getPalavra()) > 0) {
                 buscAVL(chave, pt.getDir());
-            } else {
+            } else if (chave.compareTo(chaveRaiz.getPalavra()) == 0) {
                 encontrei = chaveRaiz;
                 return pt;
             }

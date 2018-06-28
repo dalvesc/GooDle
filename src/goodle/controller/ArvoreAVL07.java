@@ -29,16 +29,18 @@ public class ArvoreAVL07 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-        Arvore listaPalavras = new Arvore();
         
         Scanner scan = new Scanner(System.in);
         Palavra temp = null;
-        Controller controller = new Controller(listaPalavras);
+        
+        System.out.println("\t\tGooDle");
+        System.out.println("\nCarregando repositório de arquivos...\n");
+        
+        Controller controller = new Controller();
+        
         String opcao;
         int sair = 1;
 
-        System.out.println("\t\tGooDle");
         do {
             System.out.println("\nO que você deseja?\n"
                     + "[1] - Pesquisar palavra\n"
@@ -53,13 +55,13 @@ public class ArvoreAVL07 {
                         System.out.println("Digite palavra");
                         String palavra = scan.next();
                         Palavra pal = new Palavra(palavra, pagina);
-                        temp = (Palavra) controller.buscar(listaPalavras, pal);
-                        System.out.println("A palavra " +temp +" foi encontrada " 
-                                +temp.getQuantidade() +" vezes na(s) página(s):\n");
+                        temp = (Palavra) controller.buscar(pal);
+                        System.out.println("Para a palavra " +temp +": "); 
+                                
                         Iterator iterator = temp.getlPagina().iterator();
                         while (iterator.hasNext()) {
                             pagina = (Pagina) iterator.next();
-                            System.out.println(pagina);
+                            System.out.println("Página: " + pagina.getArq() + ", ocorrências: " + pagina.getQuantDaPalavra() + "\n");
                         }
                     } catch (NullPointerException e) {
                         System.out.println("A palavra buscada não foi encontrada");
