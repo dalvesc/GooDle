@@ -7,6 +7,10 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *
+ * @author danco
+ */
 public class Controller {
 
     Ilist paginas;
@@ -140,6 +144,13 @@ public class Controller {
         arq.close();
     }
 
+    /**
+     * Deleta a página que o usuário deseja
+     *
+     * @param pagina página para deletar
+     * @return boolean para saber se deletou
+     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
+     */
     public boolean deletarPagina(Object pagina) throws FileNotFoundException {
         String nomePagina = diretorio + "\\" + (String) pagina + ".txt";
         File arq = new File(nomePagina);
