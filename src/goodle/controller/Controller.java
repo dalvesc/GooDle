@@ -110,7 +110,7 @@ public class Controller {
     /**
      * Imprime a página que o usuário deseja visualizar
      *
-     * @param pagina página que deseja ser lida
+     * @param pagina página que será exibida
      * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
      * @throws IOException exceção para caso ocorra erro com entrada ou saída de
      * dados
@@ -119,7 +119,7 @@ public class Controller {
         FileReader arq;
         BufferedReader lerArq;
         String linha;
-        String nomePagina = diretorio + "\\" + (String) pagina;
+        String nomePagina = diretorio + "\\" + (String) pagina + ".txt";
         Iterator iterator = this.paginas.iterator();
 
         while (iterator.hasNext()) {
@@ -129,7 +129,6 @@ public class Controller {
             }
         }
 
-        try {
             arq = new FileReader(nomePagina);
             lerArq = new BufferedReader(arq);
             linha = lerArq.readLine();
@@ -139,9 +138,6 @@ public class Controller {
                 linha = lerArq.readLine();
             }
             arq.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     //Falta imprimir os hankings

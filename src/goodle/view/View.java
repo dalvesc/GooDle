@@ -1,10 +1,13 @@
-package goodle.controller;
+package goodle.view;
 
+import goodle.controller.Controller;
 import goodle.util.*;
 import goodle.model.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
-public class ArvoreAVL07 {
+public class View {
 
     /**
      * ************************************************************************
@@ -23,21 +26,21 @@ public class ArvoreAVL07 {
      **************************************************************************
      */
     /**
-     * Método principal do programa
+     * MÃ©todo principal do programa
      *
      * @author Daniel Alves e Gabriela dos Santos
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws IOException {
+
         Scanner scan = new Scanner(System.in);
         Palavra temp = null;
-        
+
         System.out.println("\t\tGooDle");
-        System.out.println("\nCarregando repositório de arquivos...\n");
-        
+        System.out.println("\nCarregando repositório  de arquivos...\n");
+
         Controller controller = new Controller();
-        
+
         String opcao;
         int sair = 1;
 
@@ -56,15 +59,34 @@ public class ArvoreAVL07 {
                         String palavra = scan.next();
                         Palavra pal = new Palavra(palavra, pagina);
                         temp = (Palavra) controller.buscar(pal);
-                        System.out.println("Para a palavra " +temp +": "); 
-                                
+                        System.out.println("\nPara a palavra '" + temp + "': \n");
+
                         Iterator iterator = temp.getlPagina().iterator();
                         while (iterator.hasNext()) {
                             pagina = (Pagina) iterator.next();
                             System.out.println("Página: " + pagina.getArq() + ", ocorrências: " + pagina.getQuantDaPalavra() + "\n");
                         }
+                        System.out.println("");
+
+                        System.out.println("\nDeseja abrir algum arquivo?\n"
+                                + "[1] - SIM"
+                                + "[2] - NÃO");
+                        opcao = scan.next();
+                        switch (opcao) {
+
+                            case "1":
+                                System.out.println("Digite o nome do arquivo");
+                                String abrirPagina = scan.next();
+                                controller.imprimirPagina(abrirPagina);
+                                break;
+                            default:
+                                System.out.println("Opção inválida! Digite novamente: ");
+                        }
+
                     } catch (NullPointerException e) {
                         System.out.println("A palavra buscada não foi encontrada");
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Arquivo buscado não encontrado");
                     }
                     break;
 
@@ -77,4 +99,5 @@ public class ArvoreAVL07 {
             }
         } while (sair == 1);
     }
+
 }
