@@ -1,10 +1,9 @@
 package goodle.view;
 
-import goodle.controller.Controller;
+import goodle.controller.*;
 import goodle.util.*;
 import goodle.model.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class View {
@@ -26,7 +25,7 @@ public class View {
      **************************************************************************
      */
     /**
-     * MÃ©todo principal do programa
+     * Método principal do programa
      *
      * @author Daniel Alves e Gabriela dos Santos
      * @param args the command line arguments
@@ -64,7 +63,8 @@ public class View {
                         Iterator iterator = temp.getlPagina().iterator();
                         while (iterator.hasNext()) {
                             pagina = (Pagina) iterator.next();
-                            System.out.println("Página: " + pagina.getArq() + ", ocorrências: " + pagina.getQuantDaPalavra() + "\n");
+                            System.out.println("Página: " + pagina.getArq() + ", ocorrências: "
+                                    + pagina.getQuantDaPalavra() + "\n");
                         }
                         System.out.println("");
 
@@ -78,6 +78,20 @@ public class View {
                                 System.out.println("Digite o nome do arquivo");
                                 String abrirPagina = scan.next();
                                 controller.imprimirPagina(abrirPagina);
+                                System.out.println("Deseja deletar a página?"
+                                        + "[1] - SIM"
+                                        + "[2] - NÃO");
+                                opcao = scan.next();
+                                switch (opcao) {
+                                    case "1":
+                                        if(controller.deletarPagina(abrirPagina)){
+                                            System.out.println("Página deletada");
+                                            controller.adicionarPalavras();
+                                        }
+                                        break;
+                                    default:
+                                        System.out.println("Opção inválida! Digite novamente: ");
+                                }
                                 break;
                             default:
                                 System.out.println("Opção inválida! Digite novamente: ");

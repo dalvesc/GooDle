@@ -129,15 +129,21 @@ public class Controller {
             }
         }
 
-            arq = new FileReader(nomePagina);
-            lerArq = new BufferedReader(arq);
+        arq = new FileReader(nomePagina);
+        lerArq = new BufferedReader(arq);
+        linha = lerArq.readLine();
+        System.out.println("\n");
+        while (linha != null) {
+            System.out.println(linha);
             linha = lerArq.readLine();
+        }
+        arq.close();
+    }
 
-            while (linha != null) {
-                System.out.println(linha);
-                linha = lerArq.readLine();
-            }
-            arq.close();
+    public boolean deletarPagina(Object pagina) throws FileNotFoundException {
+        String nomePagina = diretorio + "\\" + (String) pagina + ".txt";
+        File arq = new File(nomePagina);
+        return arq.delete();
     }
 
     //Falta imprimir os hankings
