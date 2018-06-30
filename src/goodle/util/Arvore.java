@@ -5,59 +5,49 @@ import goodle.model.Palavra;
 
 public class Arvore implements AVL {
 
-    //não esta inserindo a pagina junto com a palavra
     public boolean h;
     public NodeArvore raiz;
-    private int size;
     private Object encontrei;
 
     public Arvore() {
         this.raiz = null;
         this.h = false;
-        this.size = 0;
         encontrei = null;
     }
 
     @Override
-    public int size() {
-        return this.size;
+    public void inserir(Object palavra) {
+        this.raiz = insAVL(palavra, this.raiz);
     }
 
-    @Override
-    public void inserir(Object palavra, Object pagina) {//MÉTODO PUBLIC QUE VOU CHAMAR NO MAIN, PARA CHAMAR O PRIVADO ABAIXO
-        this.raiz = insAVL(palavra, pagina, this.raiz);
-        size++;
-    }
-
-    private NodeArvore insAVL(Object palavra, Object pagina, NodeArvore pt) {
+    private NodeArvore insAVL(Object palavra, NodeArvore pt) {
 
         Palavra chave = (Palavra) palavra;
-        Pagina pag = (Pagina) pagina;   
-        
+
         if (pt == null) {
             h = true;
             return new NodeArvore(chave);
         } else {
-            
-            Palavra raiz = (Palavra) pt.getChave();            
-            
 
-            if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) { //fiz isso para caso as palavras sejam iguais
-                Iterator iterator = chave.getlPagina().iterator(); //pego a lista de pagina da palavra
+            Palavra raiz = (Palavra) pt.getChave();
+
+            if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) {
+                raiz.quantidade();
+                Iterator iterator = raiz.getlPagina().iterator();
                 while (iterator.hasNext()) {
-                    Pagina temp = (Pagina) iterator.next();
-                    if (pag.getArq().equals(temp.getArq())) {//comparo se a pagina que está sendo lida é a mesma da que já foi cadastrada na lista
-                        temp.Quantidade();//caso seja igual adiciona +1 na quantidade daquela palavra na pagina
-                    } else {
-                        chave.Pagina(pag);//caso não seja igual adiciona a pagina na lista
+                    Pagina pagina = (Pagina) iterator.next();
+                    if (chave.getPagina().equals(pagina)) {
+                        pagina.setQuantDaPalavra();
+                        return pt;
                     }
                 }
+                raiz.addPagina(chave.getPagina());//caso não seja igual adiciona a pagina na lista
                 return pt;
             }
 
             if (chave.getPalavra().compareTo(raiz.getPalavra()) < 0) {//PERCORRO PARA O RAMO ESQUERDO
-                pt.setEsq(insAVL(chave, pagina, pt.getEsq())); 
-                
+                pt.setEsq(insAVL(chave, pt.getEsq()));
+
                 if (h) {
                     switch (pt.getBal()) {
                         case 1:
@@ -75,8 +65,8 @@ public class Arvore implements AVL {
                     }
                 }
             } else {
-                pt.setDir(insAVL(chave, pagina, pt.getDir())); //PERCORRO PARA A DIREITA
-                
+                pt.setDir(insAVL(chave, pt.getDir())); //PERCORRO PARA A DIREITA
+
                 if (h) {
                     switch (pt.getBal()) {
                         case -1:
@@ -99,23 +89,16 @@ public class Arvore implements AVL {
     }
 
     public NodeArvore caso1(NodeArvore pt) {
-        NodeArvore ptu = pt.getEsq();        
+        NodeArvore ptu = pt.getEsq();
         Palavra palavra = (Palavra) pt.getChave();
-        
-        
-        if (ptu.getBal() == -1) {//ROTAÇÃO SIMPLES PARA A DIREITA
 
-            System.out.println("ROTACAO SIMPLES DIREITA COM " + palavra.getPalavra() + "\n ***ANTES***");
-            percorrerPreOrdem(this.raiz);
+        if (ptu.getBal() == -1) {//ROTAÇÃO SIMPLES PARA A DIREITA
 
             pt.setEsq(ptu.getDir());
             ptu.setDir(pt);
             pt.setBal(0);
             pt = ptu;
         } else {//ROTAÇÃO DUPLA PARA A DIREITA
-
-            System.out.println("ROTACAO DUPLA A DIREITA \n ***ANTES***");
-            percorrerPreOrdem(this.raiz);
 
             NodeArvore ptv = ptu.getDir();
             ptu.setDir(ptv.getEsq());
@@ -135,26 +118,20 @@ public class Arvore implements AVL {
             pt = ptv;
         }
         pt.setBal(0);
-        System.out.println("******************");
         return pt;
     }
 
     public NodeArvore caso2(NodeArvore pt) {
         NodeArvore ptu = pt.getDir();
         Palavra palavra = (Palavra) pt.getChave();
-        
-        if (ptu.getBal() == 1) {//ROTAÇÃO SIMPLES PARA A ESQUERDA
 
-            System.out.println("ROTACAO SIMPLES A ESQUERDA COM " + palavra.getPalavra() + "\n ***ANTES");
-            percorrerPreOrdem(this.raiz);
+        if (ptu.getBal() == 1) {//ROTAÇÃO SIMPLES PARA A ESQUERDA
 
             pt.setDir(ptu.getEsq());
             ptu.setEsq(pt);
             pt.setBal(0);
             pt = ptu;
         } else {//DUPLA ROTAÇÃO PARA A ESQUERDA
-            System.out.println("ROTACAO DUPLA A ESQUERDA \n ***ANTES***");
-            percorrerPreOrdem(this.raiz);
             NodeArvore ptv = ptu.getEsq();
             ptu.setEsq(ptv.getDir());
             ptv.setDir(ptu);
@@ -173,22 +150,19 @@ public class Arvore implements AVL {
             pt = ptv;
         }
         pt.setBal(0);
-        System.out.println("******************");
         return pt;
     }
 
     @Override
     public void remove(Object palavra) {
         this.raiz = remover(palavra, this.raiz);
-        size--;
     }
 
     private NodeArvore remover(Object palavra, NodeArvore pt) {
         Palavra chave = (Palavra) palavra;
         Palavra chaveRaiz = (Palavra) pt.getChave();
-        
+
         if (pt == null) {
-            System.out.println("ELEMENTO NÃO ENCONTRADO");//QUANDO PERCORRE TODA A ARVORE E NAO ENCONTRO O ELEMENTO
             h = false;//PARA REMOVER ELEMENTOS Q NAO EXISTE, POIS TAVA DANDO ERRO
             return pt;
         } else {
@@ -271,26 +245,9 @@ public class Arvore implements AVL {
     }
 
     //desnecessario
-    public void percorrerInOrdem(NodeArvore pt) {
-        Palavra palavra = (Palavra) pt.getChave();
-        
-        
-        if (pt == null) {
-            return;
-        }
-        if (pt.getEsq() != null) {//primeiro percorro a subarvore esquerda, OU SEJA, visitando os menores
-            percorrerInOrdem(pt.getEsq());
-        }//QUANDO CHEGO NO ULTIMO A ESQ É QUE IMPRIMO ELE E VOU VOLTANDO POIS É RECURSIVO
-        System.out.println("Chave: " + palavra.getPalavra());
-        if (pt.getDir() != null) {
-            percorrerInOrdem(pt.getDir());//por fim a direita, após a raiz
-        }
-    }
-
-    //desnecessario
     public void percorrerPreOrdem(NodeArvore pt) {
         Palavra palavra = (Palavra) pt.getChave();
-        
+
         if (pt == null) {
             return;
         }
@@ -325,7 +282,6 @@ public class Arvore implements AVL {
         return encontrei;
     }
 
-    //pensando em alterar isso
     private NodeArvore buscAVL(Object palavra, NodeArvore pt) {
         Palavra chave = (Palavra) palavra;
         Palavra chaveRaiz = (Palavra) pt.getChave();
@@ -334,10 +290,10 @@ public class Arvore implements AVL {
             return null;
         } else {
             if (chave.getPalavra().compareTo(chaveRaiz.getPalavra()) < 0) {
-                pt.setEsq(buscAVL(chave, pt.getEsq()));
+                buscAVL(chave, pt.getEsq());
             } else if (chave.compareTo(chaveRaiz.getPalavra()) > 0) {
-                pt.setDir(buscAVL(chave, pt.getDir()));
-            } else {
+                buscAVL(chave, pt.getDir());
+            } else if (chave.compareTo(chaveRaiz.getPalavra()) == 0) {
                 encontrei = chaveRaiz;
                 return pt;
             }
