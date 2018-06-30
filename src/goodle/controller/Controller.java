@@ -7,45 +7,57 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *
+ * @author Daniel Alves e Gabriela Nunes
+ */
 public class Controller {
 
+    Ilist paginas;
+    String diretorio;
     Arvore listaPalavras;
-    boolean size;
 
+    /**
+     * Construtor da classe
+     *
+     */
     public Controller() {
+        diretorio = null;
+        paginas = new LinkedList();
         listaPalavras = new Arvore();
         adicionarPalavras();
     }
 
     /**
-     * Lê os arquivos de texto e salva dentro de uma árvore
+     * Lê os arquivos de texto de determindo diretorio e salva dentro de uma
+     * árvore
+     *
      */
     public void adicionarPalavras() {
 
         String[] arquivos = null;
-        String diretorio = null;
-
+        File arq = null;
         try {
-            diretorio = new File("arquivos").getCanonicalPath(); //PROCURA NO DIRETÓRIO ATUAL PELA PASTA 
-            File arq = new File(diretorio);
-            arquivos = arq.list(); //ESSE MÉTODO DEVOLVE UM ARRAY COM TODOS OS ARQUIVOS QUE ESTÃO NESSA PASTA
+            diretorio = new File("hehe").getCanonicalPath();
+            arq = new File(diretorio);
+            arquivos = arq.list();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        for (String nomeArquivo : arquivos) {//OS ARQUIVOS DE TEXTO SÃO VISITADOS            
+        for (String nomeArquivo : arquivos) {
 
             File file = new File(diretorio, nomeArquivo);
 
             try {
 
-                String[] palavras = formataTexto(file); //AQUI EU CHAMO O MÉTODO QUE "LIMPA" O TEXTO E DEVOLVE UM ARRAY COM TODAS AS PALAVRAS
+                String[] palavras = formataTexto(file);
 
                 for (String word : palavras) {
-                    Palavra novaPalavra = new Palavra(word);
                     Pagina novaPagina = new Pagina(nomeArquivo);
+                    Palavra novaPalavra = new Palavra(word, novaPagina);
 
-                    listaPalavras.inserir(novaPalavra, novaPagina); //CRIO OS OBJETOS E CHAMO O MÉTODO DE INSERIR NA ÁRVORE                  
+                    listaPalavras.inserir(novaPalavra);
                 }
 
             } catch (IOException e) {
@@ -57,46 +69,98 @@ public class Controller {
     /**
      * Faz a busca da palavra que o usuário deseja
      *
-     * @param listaPalavras
      * @param palavra palavra que o usuário deseja buscar
-     * @return
+     * @return lista de páginas ordenada da palavra buscada
      */
-    public Object buscar(Arvore listaPalavras, Palavra palavra) {
+    public Ilist buscar(Palavra palavra) {
+
         Palavra temp = (Palavra) listaPalavras.busca(palavra);
-        return temp;
+        Ilist paginas = temp.getlPagina();
+        MergeSort merge = new MergeSort();
+        Ilist teste = merge.sort(paginas);
+
+        return teste;
     }
 
     /**
      * Formata o texto do arquivo, criando um array somente com as palavras
      * contidas nele
      *
-     * @param file
-     * @return String[] palavras
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     * @param file arquivo que irá ser lido
+     * @return String[] palavras array com as palavras
+     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
+     * @throws UnsupportedEncodingException exceção para caso não consiga ler
+     * determinado caractere
      */
     private String[] formataTexto(File file) throws FileNotFoundException, UnsupportedEncodingException {
-        Scanner scan = new Scanner(new FileInputStream(file), "UTF-8"); // TENTEI USAR ISSO QUE TU DISSE MAS NÃO DEU CERTO
+        Scanner scan = new Scanner(new FileInputStream(file), "UTF-8");
 
         String texto = null;
         String textoFormatado = "";
         String[] palavras = null;
 
         while (scan.hasNext()) {
-            texto = scan.nextLine(); // O TEXTO É FORMATADO UMA LINHA DE CADA VEZ
+            texto = scan.nextLine();
 
-            Pattern pattern = Pattern.compile("[\\p{L}0-9]+{1,}"); //ESSA EXPRESSÃO É RESPONSÁVEL POR PROCURAR UM DETERMINADO PADRÃO NO TEXTO, O PADRÃO NESSE CASO É APENAS LETRAS, NÚMEROS E ESPAÇOS EM BRANCO
+            Pattern pattern = Pattern.compile("[\\p{L}0-9]+{1,}");
             Matcher matcher = pattern.matcher(texto);
 
             while (matcher.find()) {
-                textoFormatado += (matcher.group() + " "); //E AQUI O "MATCHER" DEVOLVE PRA STRING TUDO O QUE ELE ACHOU NO TEXTO QUE SATISFAZ ESSE PADRÃO               
+                textoFormatado += (matcher.group() + " ");
             }
         }
         scan.close();
 
-        palavras = textoFormatado.split(" |\n"); //DEVOLVE UM ARRAY COM TODAS AS PALAVRAS
+        palavras = textoFormatado.split(" |\n");
         return palavras;
+    }
+
+    /**
+     * Imprime a página que o usuário deseja visualizar
+     *
+     * @param pagina página que será exibida
+     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
+     * @throws IOException exceção para caso ocorra erro com entrada ou saída de
+     * dados
+     */
+    public void imprimirPagina(Object pagina) throws FileNotFoundException, IOException {
+        FileReader arq;
+        BufferedReader lerArq;
+        String linha;
+        String nomePagina = (String) pagina + ".txt";
+        File file = new File(diretorio, nomePagina);
+        Iterator iterator = this.paginas.iterator();
+
+        while (iterator.hasNext()) {
+            Pagina comparar = (Pagina) iterator.next();
+            if (pagina.equals(comparar.getArq())) {
+                comparar.quantAcesso();
+            }
+        }
+        arq = new FileReader(file);
+        lerArq = new BufferedReader(arq);
+        linha = lerArq.readLine();
+
+        while (linha != null) {
+            System.out.println(linha);
+            linha = lerArq.readLine();
+        }
+        arq.close();
+    }
+
+    /**
+     * Deleta a página que o usuário deseja
+     *
+     * @param pagina página para deletar
+     * @return boolean para saber se deletou
+     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
+     */
+    public boolean deletarPagina(Object pagina) throws FileNotFoundException {
+        String nomePagina = (String) pagina + ".txt";
+        File arq = new File(diretorio, nomePagina);;
+        return arq.delete();
     }
 
     //Falta imprimir os hankings
 }
+
