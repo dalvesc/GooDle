@@ -21,7 +21,7 @@ public class Node {
         return data;
     }
 
-    public void setO(Object data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }

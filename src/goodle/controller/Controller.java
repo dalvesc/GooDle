@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author danco
+ * @author Daniel Alves e Gabriela Nunes
  */
 public class Controller {
 
@@ -70,12 +70,16 @@ public class Controller {
      * Faz a busca da palavra que o usuário deseja
      *
      * @param palavra palavra que o usuário deseja buscar
-     * @return palavra que foi buscada
+     * @return lista de páginas ordenada da palavra buscada
      */
-    public Palavra buscar(Palavra palavra) {
+    public Ilist buscar(Palavra palavra) {
+
         Palavra temp = (Palavra) listaPalavras.busca(palavra);
-        temp.buscas();
-        return temp;
+        Ilist paginas = temp.getlPagina();
+        MergeSort merge = new MergeSort();
+        Ilist teste = merge.sort(paginas);
+
+        return teste;
     }
 
     /**
@@ -123,7 +127,8 @@ public class Controller {
         FileReader arq;
         BufferedReader lerArq;
         String linha;
-        String nomePagina = diretorio + "\\" + (String) pagina + ".txt";
+        String nomePagina = (String) pagina + ".txt";
+        File file = new File(diretorio, nomePagina);
         Iterator iterator = this.paginas.iterator();
 
         while (iterator.hasNext()) {
@@ -132,11 +137,10 @@ public class Controller {
                 comparar.quantAcesso();
             }
         }
-
-        arq = new FileReader(nomePagina);
+        arq = new FileReader(file);
         lerArq = new BufferedReader(arq);
         linha = lerArq.readLine();
-        System.out.println("\n");
+
         while (linha != null) {
             System.out.println(linha);
             linha = lerArq.readLine();
@@ -152,8 +156,8 @@ public class Controller {
      * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
      */
     public boolean deletarPagina(Object pagina) throws FileNotFoundException {
-        String nomePagina = diretorio + "\\" + (String) pagina + ".txt";
-        File arq = new File(nomePagina);
+        String nomePagina = (String) pagina + ".txt";
+        File arq = new File(diretorio, nomePagina);;
         return arq.delete();
     }
 

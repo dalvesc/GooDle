@@ -2,7 +2,7 @@ package goodle.util;
 
 /**
  * Adaptado do código https://github.com/douglasrz/ArvoreAVL Adaptado por Daniel
- * Alves e Gabriela dos Santos
+ * Alves e Gabriela Nunes
  *
  * @author Douglas, Daniel Alves e Gabriela dos Santos
  */
