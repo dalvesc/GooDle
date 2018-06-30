@@ -163,4 +163,3 @@ public class Controller {
 
     //Falta imprimir os hankings
 }
-
