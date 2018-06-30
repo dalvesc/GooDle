@@ -56,17 +56,17 @@ public class View {
                         System.out.println("Digite palavra");
                         String palavra = scan.next();
                         Palavra pal = new Palavra(palavra, pagina);
-                        temp = (Palavra) controller.buscar(pal);
-                        System.out.println("\nPara a palavra '" +temp +"': \n"); 
+                        Ilist ocorrencias = controller.buscar(pal);
+                        System.out.println("\nPara a palavra '" + pal +"': \n"); 
                                 
-                        Iterator iterator = temp.getlPagina().iterator();
+                        Iterator iterator = ocorrencias.iterator();
                         while (iterator.hasNext()) {
                             pagina = (Pagina) iterator.next(); 
                             System.out.println("*Página: " + pagina.getArq() + ", ocorrências: " + pagina.getQuantDaPalavra() + "*");
                         }
                         System.out.println("");
-                    } catch (NullPointerException e) {
-                        System.out.println("A palavra buscada não foi encontrada");
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
 

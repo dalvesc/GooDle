@@ -62,7 +62,6 @@ public class LinkedList implements Ilist {
         return new MyIterator(head);
     }
 
-    //Método para retornar um determinado Node a partir de uma posição 
     private Node getNode(int index) {
         if (index >= 0 && index < size()) {
             Node n = this.head;
@@ -72,5 +71,22 @@ public class LinkedList implements Ilist {
             return n;
         }
         return null;
+    }
+
+    @Override
+    public Object get(int index) {
+        Node n = getNode(index);
+        if (n != null) {
+            return n.getData();
+        }
+        return null;
+    }
+
+    @Override
+    public void set(int index, Object data) {
+        Node n = getNode(index);
+        if (n != null) {
+            n.setData(data);
+        }
     }
 }

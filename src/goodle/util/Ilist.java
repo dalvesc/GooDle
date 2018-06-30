@@ -56,4 +56,20 @@ public interface Ilist {
      */
     public Iterator iterator();
 
+    /**
+     *  Retorna o conteúdo do nó do index recebido
+     * 
+     * @param index
+     * @return n.getData();
+     */
+    public Object get(int index);
+    
+    /**
+     * Troca o conteúdo do nó do index recebido pelo dado recebido
+     * 
+     * @param index
+     * @param data
+     */
+    public void set(int index, Object data);
+
 }

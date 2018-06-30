@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  *
- * @author danco
+ * @author Daniel Alves e Gabriela Nunes
  */
 public class Pagina {
 
@@ -46,6 +46,9 @@ public class Pagina {
         return arq;
     }
 
+    /**
+     * Atualiza a quantidade da palavra 
+     */
     public void setQuantDaPalavra() {
         this.quantDaPalavra = quantDaPalavra + 1;
     }
@@ -57,6 +60,12 @@ public class Pagina {
         this.acesso = acesso + 1;
     }
 
+    /**
+     * Compara dois objetos entre si
+     * 
+     * @param obj
+     * @return "true" se os objetos forem iguais e "false" se forem diferentes
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -75,8 +84,14 @@ public class Pagina {
         return true;
     }
 
+    /**
+     *
+     * @return texto informando o nome da página e as ocorrências da palavra
+     */
     @Override
     public String toString() {
         return "na Página " + arq + " aparece " + quantDaPalavra + " vez(es)";
     }
+
+    
 }
