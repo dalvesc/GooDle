@@ -104,7 +104,7 @@ public class Palavra implements Comparable {
     /**
      * Compara dois objetos do tipo "palavra" de acordo com seu nome.
      * 
-     * @param p
+     * @param p objeto a ser comparado.
      * @return "1" se essa palavra for maior do que a dada por parâmetro, "-1" se for maior e "0" se forem iguais.
      */
     @Override
@@ -113,6 +113,24 @@ public class Palavra implements Comparable {
         if (this.palavra.compareToIgnoreCase(palavra) > 0) {
             return 1;
         } else if (this.palavra.compareToIgnoreCase(palavra) < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+    
+    /**
+     * Compara dois objetos do tipo "palavra" de acordo com sua quantidade de buscas.
+     * 
+     * @param p objeto a ser comparado.
+     * @param s identifica se o objeto "Palavra" será comparado pelo seu nome ou quantidade de buscas.
+     * @return "1" se essa palavra for maior do que a dada por parâmetro, "-1" se for maior e "0" se forem iguais.
+     */
+    public int compareTo(Object p, String s) {
+        Palavra palavra = (Palavra) p;
+        if (buscas > palavra.getBuscas()) {
+            return 1;
+        } else if (buscas < palavra.getBuscas()) {
             return -1;
         } else {
             return 0;

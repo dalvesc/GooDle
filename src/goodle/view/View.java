@@ -64,7 +64,9 @@ public class View {
                     break;
 
                 case "2":
-
+                    ranking(controller);
+                    break;
+                    
                 case "0":
                     sair = 0;
                     break;
@@ -97,12 +99,12 @@ public class View {
             System.out.println("");
 
             System.out.println("Deseja inverter a ordem  dos resultados?\n"
-                    + "[0] - SIM\n"
-                    + "[1] - NÃO");
+                    + "[1] - SIM\n"
+                    + "[2] - NÃO");
             int ordem = scan.nextInt();
 
             switch (ordem) {
-                case 0:
+                case 1:
                     ocorrencias = controller.buscar(pal, true);
                     System.out.println("\nPara a palavra '" + pal + "': \n");
 
@@ -113,7 +115,7 @@ public class View {
                     }
                     System.out.println("");
 
-                case 1:
+                case 2:
                     break;
 
                 default:
@@ -158,6 +160,7 @@ public class View {
 
                 default:
                     System.out.println("Opção inválida! Digite novamente: ");
+                    opcao = scan.next();
             }
         } catch (NullPointerException e) {
             System.out.println("A palavra buscada não foi encontrada");
@@ -166,7 +169,7 @@ public class View {
         }
     }
 
-    public void ranking(Controller controller) {
+    public static void ranking(Controller controller) {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Listar Top X:\n"
@@ -180,15 +183,90 @@ public class View {
             case 0:
                 System.out.println("Quantos itens deseja listar?");
                 int quant = scan.nextInt();
-                controller.ranking("palavra", quant);
+                Ilist lista = controller.ranking("palavra", true);
+                
+                if(lista.size() == 0){
+                    System.out.println("Não há dados para exibir.");
+                    break;
+                }
+                
+                int i = 0;
+                Iterator iterador = lista.iterator();
+                
+                while(iterador.hasNext() && i < quant){
+                    Palavra p = (Palavra)iterador.next();
+                    System.out.println("\n*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
+                    i++;
+                }
+                System.out.println(" ");
+                break;
+                
+            case 1:
+                System.out.println("Quantos itens deseja listar?");
+                quant = scan.nextInt();
+                lista = controller.ranking("palavra", false);
+                
+                if(lista.size() == 0){
+                    System.out.println("Não há dados para exibir.");
+                    break;
+                }
+                
+                i = 0;
+                iterador = lista.iterator();
+                
+                while(iterador.hasNext() && i < quant){
+                    Palavra p = (Palavra)iterador.next();
+                    System.out.println("\n*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
+                    i++;
+                }
+                System.out.println(" ");
+                break;
             
-            
-            
-            
-            
-            
-            
+            case 2:
+                System.out.println("Quantos itens deseja listar?");
+                quant = scan.nextInt();
+                lista = controller.ranking("pagina", true);
+                
+                if(lista.size() == 0){
+                    System.out.println("Não há dados para exibir.\n");
+                    break;
+                }
+                
+                i = 0;
+                iterador = lista.iterator();
+                
+                while(iterador.hasNext() && i < quant){
+                    Pagina p = (Pagina)iterador.next();
+                    System.out.println("\n*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
+                    i++;
+                }
+                System.out.println(" ");
+                break;
+                
+            case 3:
+                System.out.println("Quantos itens deseja listar?");
+                quant = scan.nextInt();
+                lista = controller.ranking("pagina", false);
+                
+                if(lista.size() == 0){
+                    System.out.println("Não há dados para exibir.\n");
+                    break;
+                }
+                
+                i = 0;
+                iterador = lista.iterator();
+                
+                while(iterador.hasNext() && i < quant){
+                    Pagina p = (Pagina)iterador.next();
+                    System.out.println("\n*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
+                    i++;
+                }
+                System.out.println(" ");
+                break;
+                
+            default:
+                System.out.println("Opção inválida, digite novamente: ");
+                listar = scan.nextInt();            
         }
-
     }
 }
