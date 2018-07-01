@@ -4,6 +4,7 @@ import goodle.util.Ilist;
 import goodle.util.LinkedList;
 
 /**
+ * A classe implementa a interface "Comparable" para facilitar a comparação entre dois objetos pertencentes a ela.
  * 
  * @author Daniel Alves e Gabriela Nunes
  */
@@ -15,9 +16,10 @@ public class Palavra implements Comparable {
     private Ilist lPagina;
  
     /**
-     * Construtor da classe
-     * @param palavra palavra que foi lida da página
-     * @param pagina pagina em que a palavra foi lida pela primeira vez
+     * Construtor da classe.
+     * 
+     * @param palavra nome da palavra.
+     * @param pagina pagina em que a palavra foi lida pela primeira vez.
      */
     public Palavra(String palavra, Pagina pagina) {
         this.palavra = palavra;
@@ -29,7 +31,7 @@ public class Palavra implements Comparable {
     }
     
     /**
-     *Método para adicionar a primeira página na lista
+     * Método para adicionar a primeira página na lista.
      */
     public void  setPagina(){
         this.pagina.setQuantDaPalavra();
@@ -38,7 +40,7 @@ public class Palavra implements Comparable {
     
     /**
      *
-     * @return primeira página em que a palavra aparece
+     * @return primeira página em que a palavra aparece.
      */
     public Pagina getPagina(){
         return this.pagina;
@@ -54,7 +56,7 @@ public class Palavra implements Comparable {
 
     /**
      *
-     * @return quantidade total da palavra
+     * @return quantidade total da palavra.
      */
     public int getQuantidade() {
         return quantidade;
@@ -62,7 +64,7 @@ public class Palavra implements Comparable {
 
     /**
      *
-     * @return quantidade de vezes que a palavra foi buscada
+     * @return quantidade de vezes que a palavra foi buscada.
      */
     public int getBuscas() {
         return buscas;
@@ -70,21 +72,21 @@ public class Palavra implements Comparable {
 
     /**
      *
-     * @return lista com as páginas em que a palavra aparece
+     * @return lista com as páginas em que a palavra aparece.
      */
     public Ilist getlPagina() {
         return lPagina;
     }
 
     /**
-     *Contador para atualizar a quantidade de vezes que essa palavra foi lida
+     * Contador para atualizar a quantidade de vezes que essa palavra foi lida.
      */
     public void quantidade(){
         this.quantidade = this.quantidade + 1;
     }
  
     /**
-     * Cria uma lista para salvar os arquivos em que essa palavra aparece
+     * Cria uma lista para salvar os arquivos em que essa palavra aparece.
      *
      * @param pagina pagina em que a palavra aparece
      */
@@ -93,17 +95,17 @@ public class Palavra implements Comparable {
     }
 
     /**
-     * Contador para a quantidade de vezes que essa palavra foi buscada
+     * Contador para a quantidade de vezes que essa palavra foi buscada.
      */
     public void buscas() {
         this.buscas = this.buscas + 1;
     }
 
     /**
-     * Compara dois objetos do tipo "palavra" de acordo com seu nome
+     * Compara dois objetos do tipo "palavra" de acordo com seu nome.
      * 
      * @param p
-     * @return "1" se essa palavra for maior do que a dada por parâmetro, "-1" se for maior e "0" se forem iguais
+     * @return "1" se essa palavra for maior do que a dada por parâmetro, "-1" se for maior e "0" se forem iguais.
      */
     @Override
     public int compareTo(Object p) {
@@ -119,7 +121,7 @@ public class Palavra implements Comparable {
 
     /**
      * 
-     * @return o nome da palavra
+     * @return o nome da palavra.
      */
     @Override
     public String toString() {
