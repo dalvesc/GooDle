@@ -124,12 +124,12 @@ public class Controller {
      * @throws FileNotFoundException exceção caso a leitura do arquivo não seja efetuada.
      * @throws IOException exceção caso ocorra erro com entrada ou saída de dados.
      */
-    public void imprimirPagina(Object pagina) throws FileNotFoundException, IOException {
+    public void imprimirPagina(String pagina) throws FileNotFoundException, IOException {
+               
         FileReader arq;
         BufferedReader lerArq;
         String linha;
-        String nomePagina = (String) pagina + ".txt";
-        File file = new File(diretorio, nomePagina);
+        String nomePagina = diretorio + "//" + (String) pagina + ".txt";
         Iterator iterator = this.paginas.iterator();
         
         while (iterator.hasNext()) {
@@ -138,10 +138,11 @@ public class Controller {
                 comparar.quantAcesso();
             }
         }
-        arq = new FileReader(file);
+        
+        arq = new FileReader(nomePagina);
         lerArq = new BufferedReader(arq);
         linha = lerArq.readLine();
-
+        System.out.println("\n");
         while (linha != null) {
             System.out.println(linha);
             linha = lerArq.readLine();
@@ -157,8 +158,8 @@ public class Controller {
      * @throws FileNotFoundException exceção para caso não consiga ler o arquivo.
      */
     public boolean deletarPagina(Object pagina) throws FileNotFoundException {
-        String nomePagina = (String) pagina + ".txt";
-        File arq = new File(diretorio, nomePagina);;
+        String nomePagina = diretorio + "\\" + (String) pagina + ".txt";
+        File arq = new File(nomePagina);
         return arq.delete();
     }
     
