@@ -3,18 +3,19 @@ package goodle.model;
 import java.util.Objects;
 
 /**
- *
+ * A classe implementa a interface "Comparable" para facilitar a comparação entre dois objetos pertencentes a ela.
+ * 
  * @author Daniel Alves e Gabriela Nunes
  */
-public class Pagina {
+public class Pagina implements Comparable {
 
     private int quantDaPalavra, acesso;
     String arq;
 
     /**
-     * Construtor da classe
+     * Construtor da classe.
      *
-     * @param arq nome do arquivo
+     * @param arq nome do arquivo.
      */
     public Pagina(String arq) {
         this.arq = arq;
@@ -24,7 +25,7 @@ public class Pagina {
 
     /**
      *
-     * @return quantidade da palavra que está presente na página
+     * @return quantidade da palavra que está presente na página.
      */
     public int getQuantDaPalavra() {
         return quantDaPalavra;
@@ -32,7 +33,7 @@ public class Pagina {
 
     /**
      *
-     * @return quantidade de vezes que a página foi acessada
+     * @return quantidade de vezes que a página foi acessada.
      */
     public int getAcesso() {
         return acesso;
@@ -40,31 +41,31 @@ public class Pagina {
 
     /**
      *
-     * @return nome da página
+     * @return nome da página.
      */
     public String getArq() {
         return arq;
     }
 
     /**
-     * Atualiza a quantidade da palavra
+     * Atualiza a quantidade da palavra. 
      */
     public void setQuantDaPalavra() {
         this.quantDaPalavra = quantDaPalavra + 1;
     }
 
     /**
-     * Contador para a quantidade de acessos na página
+     * Contador para a quantidade de acessos na página.
      */
     public void quantAcesso() {
         this.acesso = acesso + 1;
     }
 
     /**
-     * Compara dois objetos entre si
-     *
+     * Compara dois objetos entre si.
+     * 
      * @param obj
-     * @return "true" se os objetos forem iguais e "false" se forem diferentes
+     * @return "true" se os objetos forem iguais e "false" se forem diferentes.
      */
     @Override
     public boolean equals(Object obj) {
@@ -91,5 +92,24 @@ public class Pagina {
     @Override
     public String toString() {
         return "na Página " + arq + " aparece " + quantDaPalavra + " vez(es)";
+    }
+
+    /**
+     * Compara dois objetos do tipo "pagina" através de seu atributo "quantDaPalavra".
+     * 
+     * @param t
+     * @return "1" se esse objeto for maior que o recebido por parâmetro, "-1" se for menor e "0" se forem iguais.
+     */
+    @Override
+    public int compareTo(Object t) {
+        Pagina pagina = (Pagina)t;
+        
+        if (quantDaPalavra > pagina.getQuantDaPalavra()) {
+            return 1;
+        } else if (quantDaPalavra < pagina.getQuantDaPalavra()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
