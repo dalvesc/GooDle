@@ -67,4 +67,8 @@ public class PalavraTest {
         assertSame(pagina3, it.next());
         assertFalse(it.hasNext());
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> nova2

@@ -39,4 +39,8 @@ public class PaginaTest {
         assertEquals(3, pagina3.getAcesso());
         assertEquals(2, pagina2.getAcesso());
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> nova2
