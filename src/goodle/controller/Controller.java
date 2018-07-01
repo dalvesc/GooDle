@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  */
 public class Controller {
     
-    Ilist paginas, palavrasBuscadas;
+    Ilist paginas, palavrasBuscadas, paginasVisitadas;
     String diretorio;
     Arvore listaPalavras;    
 
@@ -26,6 +26,7 @@ public class Controller {
         diretorio = null;
         paginas = new LinkedList();
         palavrasBuscadas = new LinkedList();
+        paginasVisitadas = new LinkedList();
         listaPalavras = new Arvore();
         adicionarPalavras();
     }
@@ -76,12 +77,17 @@ public class Controller {
      * @return lista de páginas ordenada da palavra buscada.
      */
     public Ilist buscar(Palavra palavra, boolean crescente) {
-        palavrasBuscadas.addLast(palavra);
         
-        Palavra temp = (Palavra) listaPalavras.busca(palavra);
+        Palavra temp = (Palavra) listaPalavras.busca(palavra);        
+        
+        if(!palavrasBuscadas.contains(temp)){
+            palavrasBuscadas.addLast(temp);
+        }
+        temp.buscas();
+        
         paginas = temp.getlPagina();
         
-        Ilist teste = ordenar(paginas, crescente);
+        Ilist teste = ordenar(paginas, crescente, 0);
         return teste;
     }
 
@@ -125,29 +131,34 @@ public class Controller {
      * @throws IOException exceção caso ocorra erro com entrada ou saída de dados.
      */
     public void imprimirPagina(String pagina) throws FileNotFoundException, IOException {
-               
         FileReader arq;
         BufferedReader lerArq;
+        
         String linha;
-        String nomePagina = diretorio + "//" + (String) pagina + ".txt";
+        String nomePagina = pagina + ".txt";
+        File file = new File(diretorio, nomePagina);
+        
         Iterator iterator = this.paginas.iterator();
         
         while (iterator.hasNext()) {
             Pagina comparar = (Pagina) iterator.next();
-            if (pagina.equals(comparar.getArq())) {
-                comparar.quantAcesso();
+            if (pagina.compareTo(comparar.getArq()) == 0) {
+                comparar.setAcessos(1);
+                
+                if(!paginasVisitadas.contains(comparar)){
+                    paginasVisitadas.addLast(comparar);
+                }
             }
         }
-        
-        arq = new FileReader(nomePagina);
+        arq = new FileReader(file);
         lerArq = new BufferedReader(arq);
         linha = lerArq.readLine();
-        System.out.println("\n");
+
         while (linha != null) {
             System.out.println(linha);
             linha = lerArq.readLine();
         }
-        arq.close();
+        arq.close();        
     }
 
     /**
@@ -157,21 +168,42 @@ public class Controller {
      * @return boolean para saber se deletou.
      * @throws FileNotFoundException exceção para caso não consiga ler o arquivo.
      */
-    public boolean deletarPagina(Object pagina) throws FileNotFoundException {
-        String nomePagina = diretorio + "\\" + (String) pagina + ".txt";
-        File arq = new File(nomePagina);
+    public boolean deletarPagina(String pagina) throws FileNotFoundException {
+        String nomePagina = pagina + ".txt";
+        File arq = new File(diretorio, nomePagina);
+        
+        Iterator iterator = this.paginas.iterator();
+        
+        while (iterator.hasNext()) {
+            Pagina comparar = (Pagina) iterator.next();
+            if (pagina.compareTo(comparar.getArq()) == 0) {
+                paginas.remove(comparar);
+                paginasVisitadas.remove(comparar);
+            }
+        }
         return arq.delete();
     }
     
-    public void ranking(String lista, int quant){
+    /**
+     * O método chama o MergeSort de acordo com o que deseja ordenar.
+     * Ele é utilizado quando a opção de exibir um "Top K" de palavras ou páginas é escolhida pelo usuário.
+     * 
+     * @param objeto indica se a ordenação será de páginas ou palavras.
+     * @param crescente e for "true", apresenta os resultados de maneira decrescente. Se for "false", de maneira crescente.
+     * @return a lista ordenada.
+     */
+    public Ilist ranking(String objeto, boolean crescente){
         
+        Ilist lista = null;
         
+        if(objeto.equals("palavra")){
+            lista = ordenar(palavrasBuscadas, crescente, 0);            
+        }
+        else if(objeto.equals("pagina")){
+            lista = ordenar(paginasVisitadas, crescente, 1); 
+        }
         
-        
-        
-        
-        
-        
+        return lista;        
     }
     
     /**
@@ -179,20 +211,16 @@ public class Controller {
      * 
      * @param lista coleção que será ordenada.
      * @param crescente se for "true", apresenta os resultados de maneira decrescente. Se for "false", de maneira crescente.
+     * @param dif responsável por identificar se as páginas serão ordenadas pelas ocorrências da palavra ou pela quantidade de acessos.
      * @return a lista ordenada.
      */
-    public Ilist ordenar(Ilist lista, boolean crescente){
+    public Ilist ordenar(Ilist lista, boolean crescente, int dif){
         MergeSort merge = new MergeSort();
-        Ilist teste = merge.sort(paginas, crescente);
+        Ilist teste = merge.sort(lista, crescente, dif);
         
         return teste;
     }
-        
-        
-        
-        
-        
-        
+    
 }
 
     

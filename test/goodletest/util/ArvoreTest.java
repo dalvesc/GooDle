@@ -54,8 +54,4 @@ public class ArvoreTest {
         assertSame(pagina2, pag);
         assertFalse(iterator.hasNext());
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> nova2

@@ -132,8 +132,4 @@ public class LinkedListTest {
         assertSame(pagina2, it.next());
         assertFalse(it.hasNext());
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> nova2

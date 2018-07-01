@@ -14,8 +14,4 @@ import org.junit.runners.*;
 	PalavraTest.class,
 	ControllerTest.class,
 })
-<<<<<<< HEAD
 public class AllTests { }
-=======
-public class AllTests { }
->>>>>>> nova2

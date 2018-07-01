@@ -56,15 +56,16 @@ public class Pagina implements Comparable {
 
     /**
      * Contador para a quantidade de acessos na página.
+     * @param x indica o valor a ser adicionado ao atributo "acessos".
      */
-    public void quantAcesso() {
-        this.acesso = acesso + 1;
+    public void setAcessos(int x) {
+        this.acesso += x;
     }
 
     /**
      * Compara dois objetos entre si.
      * 
-     * @param obj
+     * @param obj objeto a ser comparado.
      * @return "true" se os objetos forem iguais e "false" se forem diferentes.
      */
     @Override
@@ -107,6 +108,25 @@ public class Pagina implements Comparable {
         if (quantDaPalavra > pagina.getQuantDaPalavra()) {
             return 1;
         } else if (quantDaPalavra < pagina.getQuantDaPalavra()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+    
+    /**
+     * Compara dois objetos do tipo "pagina" através de seu atributo "acesso".
+     * 
+     * @param t objeto a ser comparado.
+     * @param s identifica se o objeto do tipo "Pagina" sera comparado pelo seu atributo "quantDaPalavra" ou "acesso".
+     * @return "1" se esse objeto for maior que o recebido por parâmetro, "-1" se for menor e "0" se forem iguais.
+     */
+    public int compareTo(Object t, int s) {
+        Pagina pagina = (Pagina)t;
+        
+        if (acesso > pagina.getAcesso()) {
+            return 1;
+        } else if (acesso < pagina.getAcesso()) {
             return -1;
         } else {
             return 0;
