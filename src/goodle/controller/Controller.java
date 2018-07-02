@@ -246,7 +246,7 @@ public class Controller {
      * @throws UnsupportedEncodingException exceção lançada caso determinado
      * caractere não seja lido corretamente.
      */
-    public void removerBusca(Pagina remover) throws FileNotFoundException, UnsupportedEncodingException {
+    private void removerBusca(Pagina remover) throws FileNotFoundException, UnsupportedEncodingException {
         File arq = new File(diretorio, remover.getArq());
         String[] palavras = formataTexto(arq);
         Ilist palavrasJaApagadas = new LinkedList();
