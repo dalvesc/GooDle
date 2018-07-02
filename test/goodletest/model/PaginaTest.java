@@ -29,12 +29,9 @@ public class PaginaTest {
     
     @Test
     public void testAcessos(){
-        pagina3.quantAcesso();
-        pagina3.quantAcesso();
-        pagina3.quantAcesso();
-        
-        pagina2.quantAcesso();
-        pagina2.quantAcesso();
+        pagina3.setAcessos(3);
+                
+        pagina2.setAcessos(2);
         
         assertEquals(3, pagina3.getAcesso());
         assertEquals(2, pagina2.getAcesso());

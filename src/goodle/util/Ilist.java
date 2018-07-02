@@ -2,8 +2,7 @@ package goodle.util;
 
 /**
  *
- * @author Daniel Alves e Gabriela dos Santos. Código baseado nos slides do
- * professor João Batista
+ * @author Daniel Alves e Gabriela dos Santos. Adaptado do código do professor João Batista.
  */
 public interface Ilist {
 
@@ -57,19 +56,41 @@ public interface Ilist {
     public Iterator iterator();
 
     /**
-     * Retorna o conteúdo do nó do index recebido
-     *
-     * @param index
+     *  Retorna o conteúdo do nó do index recebido.
+     * 
+     * @param index índice do nó que será buscado.
      * @return n.getData();
      */
     public Object get(int index);
-
+    
     /**
      * Troca o conteúdo do nó do index recebido pelo dado recebido
-     *
-     * @param index
-     * @param data
+     * 
+     * @param index índice do nó que terá seu conteúdo modificado.
+     * @param data novo conteúdo do nó.
      */
     public void set(int index, Object data);
+    
+    /**
+     * Verifica se a lista em questão contém um determinado objeto.
+     * 
+     * @param data objeto a ser procurado na lista.
+     * @return "true" se o objeto estiver contido na lista e "false" se não.
+     */
+    public boolean contains(Object data);
+    
+    /**
+     * Remove da lista determinado objeto.
+     * 
+     * @param data objeto a ser removido.
+     */
+    public void remove(Object data);
+    
+    /**
+     * Remove da lista o nó com o índice indicado.
+     * 
+     * @param index índice do nó a ser removido.
+     */
+    public void remove(int index);
 
 }

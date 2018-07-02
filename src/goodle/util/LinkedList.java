@@ -89,4 +89,40 @@ public class LinkedList implements Ilist {
             n.setData(data);
         }
     }
+
+    @Override
+    public boolean contains(Object data) {
+        for (Node n = head; n != null; n = n.getNext()) {
+            if (n.getData() != null
+                    && n.getData().equals(data)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void remove(Object data) {
+        Node n = head;
+        for (int i = 0; n != null; i++) {
+            if (n.getData() != null
+                    && n.getData().equals(data)) {
+                remove(i);
+                return;
+            }
+            n = n.getNext();
+        }
+    }
+
+    @Override
+    public void remove(int index) {
+        if (index == 0) { 
+            head = head.getNext();
+        } else if (index > 0 && index <= (size() - 1)) {
+            
+            Node prev = getNode(index - 1);
+            Node remNode = prev.getNext();
+            prev.setNext(remNode.getNext());
+        }
+    }
 }

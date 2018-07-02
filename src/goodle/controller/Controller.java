@@ -8,14 +8,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
- * @author Daniel Alves e Gabriela Nunes
+ * Classe que controla as interações entre a View e o restante do sistema.
+ * 
+ * @author Daniel Alves e Gabriela Nunes.
  */
 public class Controller {
-
-    Ilist paginas;
+    
+    Ilist paginas, palavrasBuscadas, paginasVisitadas;
     String diretorio;
-    Arvore listaPalavras;
+    Arvore listaPalavras;    
 
     /**
      * Construtor da classe
@@ -24,17 +25,18 @@ public class Controller {
     public Controller() {
         diretorio = null;
         paginas = new LinkedList();
+        palavrasBuscadas = new LinkedList();
+        paginasVisitadas = new LinkedList();
         listaPalavras = new Arvore();
         adicionarPalavras();
     }
 
     /**
-     * Lê os arquivos de texto de determindo diretorio e salva dentro de uma
-     * árvore
-     *
+     * Lê os arquivos de texto de determindo diretório e salva suas palavras dentro de uma
+     * árvore AVL.     
      */
     public void adicionarPalavras() {
-
+        
         String[] arquivos = null;
         File arq = null;
         try {
@@ -44,22 +46,23 @@ public class Controller {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
+        
         for (String nomeArquivo : arquivos) {
-
+            
             File file = new File(diretorio, nomeArquivo);
-
+            
             try {
-
+                
                 String[] palavras = formataTexto(file);
-
+                
                 for (String word : palavras) {
                     Pagina novaPagina = new Pagina(nomeArquivo);
+                    paginas.addLast(novaPagina);
                     Palavra novaPalavra = new Palavra(word, novaPagina);
-
+                    
                     listaPalavras.inserir(novaPalavra);
                 }
-
+                
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -67,74 +70,84 @@ public class Controller {
     }
 
     /**
-     * Faz a busca da palavra que o usuário deseja
+     * Faz a busca da palavra que o usuário deseja.
      *
-     * @param palavra palavra que o usuário deseja buscar
-     * @return lista de páginas ordenada da palavra buscada
+     * @param palavra palavra que o usuário deseja buscar.
+     * @param crescente se for "true", apresenta os resultados de maneira decrescente. Se for "false", de maneira crescente.
+     * @return lista de páginas ordenada da palavra buscada.
      */
-    public Ilist buscar(Palavra palavra) {
-
-        Palavra temp = (Palavra) listaPalavras.busca(palavra);
-        Ilist paginas = temp.getlPagina();
-        MergeSort merge = new MergeSort();
-        Ilist teste = merge.sort(paginas);
-
+    public Ilist buscar(Palavra palavra, boolean crescente) {
+        
+        Palavra temp = (Palavra) listaPalavras.busca(palavra);        
+        
+        if(!palavrasBuscadas.contains(temp)){
+            palavrasBuscadas.addLast(temp);
+        }
+        temp.buscas();
+        
+        paginas = temp.getlPagina();
+        
+        Ilist teste = ordenar(paginas, crescente, 0);
         return teste;
     }
 
     /**
-     * Formata o texto do arquivo, criando um array somente com as palavras
-     * contidas nele
+     * Formata o texto do arquivo, criando um array somente com as palavras e números
+     * contidos nele, excluindo qualquer tipo de caractere fora desse limite - como pontuação e símbolos - através do uso da biblioteca "Regex".
      *
-     * @param file arquivo que irá ser lido
-     * @return String[] palavras array com as palavras
-     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
-     * @throws UnsupportedEncodingException exceção para caso não consiga ler
-     * determinado caractere
+     * @param file arquivo de texto que seár lido.
+     * @return String[] palavras array com as palavras.
+     * @throws FileNotFoundException exceção lançada caso a leitura do arquivo não seja possível.
+     * @throws UnsupportedEncodingException exceção lançada caso determinado caractere não seja lido corretamente.
      */
     private String[] formataTexto(File file) throws FileNotFoundException, UnsupportedEncodingException {
         Scanner scan = new Scanner(new FileInputStream(file), "UTF-8");
-
+        
         String texto = null;
         String textoFormatado = "";
         String[] palavras = null;
-
+        
         while (scan.hasNext()) {
             texto = scan.nextLine();
-
+            
             Pattern pattern = Pattern.compile("[\\p{L}0-9]+{1,}");
             Matcher matcher = pattern.matcher(texto);
-
+            
             while (matcher.find()) {
                 textoFormatado += (matcher.group() + " ");
             }
         }
         scan.close();
-
+        
         palavras = textoFormatado.split(" |\n");
         return palavras;
     }
 
     /**
-     * Imprime a página que o usuário deseja visualizar
+     * Imprime a página - arquivo de texto - que o usuário deseja visualizar.
      *
-     * @param pagina página que será exibida
-     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
-     * @throws IOException exceção para caso ocorra erro com entrada ou saída de
-     * dados
+     * @param pagina página que será exibida.
+     * @throws FileNotFoundException exceção caso a leitura do arquivo não seja efetuada.
+     * @throws IOException exceção caso ocorra erro com entrada ou saída de dados.
      */
-    public void imprimirPagina(Object pagina) throws FileNotFoundException, IOException {
+    public void imprimirPagina(String pagina) throws FileNotFoundException, IOException {
         FileReader arq;
         BufferedReader lerArq;
+        
         String linha;
-        String nomePagina = (String) pagina + ".txt";
+        String nomePagina = pagina + ".txt";
         File file = new File(diretorio, nomePagina);
+        
         Iterator iterator = this.paginas.iterator();
-
+        
         while (iterator.hasNext()) {
             Pagina comparar = (Pagina) iterator.next();
-            if (pagina.equals(comparar.getArq())) {
-                comparar.quantAcesso();
+            if (pagina.compareTo(comparar.getArq()) == 0) {
+                comparar.setAcessos(1);
+                
+                if(!paginasVisitadas.contains(comparar)){
+                    paginasVisitadas.addLast(comparar);
+                }
             }
         }
         arq = new FileReader(file);
@@ -145,21 +158,70 @@ public class Controller {
             System.out.println(linha);
             linha = lerArq.readLine();
         }
-        arq.close();
+        arq.close();        
     }
 
     /**
-     * Deleta a página que o usuário deseja
+     * Deleta a página que o usuário deseja.
      *
-     * @param pagina página para deletar
-     * @return boolean para saber se deletou
-     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo
+     * @param pagina página para deletar.
+     * @return boolean para saber se deletou.
+     * @throws FileNotFoundException exceção para caso não consiga ler o arquivo.
      */
-    public boolean deletarPagina(Object pagina) throws FileNotFoundException {
-        String nomePagina = (String) pagina + ".txt";
-        File arq = new File(diretorio, nomePagina);;
+    public boolean deletarPagina(String pagina) throws FileNotFoundException {
+        String nomePagina = pagina + ".txt";
+        File arq = new File(diretorio, nomePagina);
+        
+        Iterator iterator = this.paginas.iterator();
+        
+        while (iterator.hasNext()) {
+            Pagina comparar = (Pagina) iterator.next();
+            if (pagina.compareTo(comparar.getArq()) == 0) {
+                paginas.remove(comparar);
+                paginasVisitadas.remove(comparar);
+            }
+        }
         return arq.delete();
     }
-
-    //Falta imprimir os hankings
+    
+    /**
+     * O método chama o MergeSort de acordo com o que deseja ordenar.
+     * Ele é utilizado quando a opção de exibir um "Top K" de palavras ou páginas é escolhida pelo usuário.
+     * 
+     * @param objeto indica se a ordenação será de páginas ou palavras.
+     * @param crescente e for "true", apresenta os resultados de maneira decrescente. Se for "false", de maneira crescente.
+     * @return a lista ordenada.
+     */
+    public Ilist ranking(String objeto, boolean crescente){
+        
+        Ilist lista = null;
+        
+        if(objeto.equals("palavra")){
+            lista = ordenar(palavrasBuscadas, crescente, 0);            
+        }
+        else if(objeto.equals("pagina")){
+            lista = ordenar(paginasVisitadas, crescente, 1); 
+        }
+        
+        return lista;        
+    }
+    
+    /**
+     * Método responsável por requisitar a ordenação de uma lista encadeada, que será efetuada através do método de ordenação "Merge Sort". 
+     * 
+     * @param lista coleção que será ordenada.
+     * @param crescente se for "true", apresenta os resultados de maneira decrescente. Se for "false", de maneira crescente.
+     * @param dif responsável por identificar se as páginas serão ordenadas pelas ocorrências da palavra ou pela quantidade de acessos.
+     * @return a lista ordenada.
+     */
+    private Ilist ordenar(Ilist lista, boolean crescente, int dif){
+        MergeSort merge = new MergeSort();
+        Ilist teste = merge.sort(lista, crescente, dif);
+        
+        return teste;
+    }
+    
 }
+
+    
+
