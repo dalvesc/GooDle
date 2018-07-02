@@ -44,9 +44,9 @@ public class PalavraTest {
         assertEquals(3, palavra3.getBuscas());
         assertEquals(2, palavra2.getBuscas());
     }
-    
+
     @Test
-    public void testPagina(){
+    public void testPagina() {
         assertSame(pagina1, palavra1.getPagina());
         assertSame(pagina1, palavra2.getPagina());
         assertSame(pagina2, palavra3.getPagina());

@@ -37,14 +37,14 @@ public class ArvoreTest {
         assertSame(test.busca(palavra3), palavra3);
         test.remove(palavra3);
     }
-    
+
     @Test
-    public void testListaPagina(){
+    public void testListaPagina() {
         Pagina pag;
         test.inserir(palavra1);
         test.inserir(palavra2);
         test.inserir(palavra3);
-        
+
         Iterator iterator = palavra1.getlPagina().iterator();
         assertTrue(iterator.hasNext());
         pag = (Pagina) iterator.next();

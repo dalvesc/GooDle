@@ -6,33 +6,36 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PaginaTest {
-    
+
     Pagina pagina1, pagina2, pagina3;
-    
+
     @Before
     public void setUp() throws Exception {
         pagina1 = new Pagina("Pagina1");
         pagina2 = new Pagina("Pagina2");
         pagina3 = new Pagina("Pagina3");
     }
-    
+
     @Test
-    public void testQuantidade(){
+    public void testQuantidade() {
         pagina1.setQuantDaPalavra();
         pagina1.setQuantDaPalavra();
-        
+
         pagina2.setQuantDaPalavra();
-        
+
         assertEquals(2, pagina1.getQuantDaPalavra());
         assertEquals(1, pagina2.getQuantDaPalavra());
     }
-    
+
     @Test
-    public void testAcessos(){
-        pagina3.setAcessos(3);
-                
-        pagina2.setAcessos(2);
-        
+    public void testAcessos() {
+        pagina3.setAcessos();
+        pagina3.setAcessos();
+        pagina3.setAcessos();
+
+        pagina2.setAcessos();
+        pagina2.setAcessos();
+
         assertEquals(3, pagina3.getAcesso());
         assertEquals(2, pagina2.getAcesso());
     }

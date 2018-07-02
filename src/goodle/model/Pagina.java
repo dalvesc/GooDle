@@ -3,8 +3,9 @@ package goodle.model;
 import java.util.Objects;
 
 /**
- * A classe implementa a interface "Comparable" para facilitar a comparação entre dois objetos pertencentes a ela.
- * 
+ * A classe implementa a interface "Comparable" para facilitar a comparação
+ * entre dois objetos pertencentes a ela.
+ *
  * @author Daniel Alves e Gabriela Nunes
  */
 public class Pagina implements Comparable {
@@ -48,7 +49,7 @@ public class Pagina implements Comparable {
     }
 
     /**
-     * Atualiza a quantidade da palavra. 
+     * Atualiza a quantidade da palavra.
      */
     public void setQuantDaPalavra() {
         this.quantDaPalavra = quantDaPalavra + 1;
@@ -56,15 +57,14 @@ public class Pagina implements Comparable {
 
     /**
      * Contador para a quantidade de acessos na página.
-     * @param x indica o valor a ser adicionado ao atributo "acessos".
      */
-    public void setAcessos(int x) {
-        this.acesso += x;
+    public void setAcessos() {
+        this.acesso = this.acesso + 1;
     }
 
     /**
      * Compara dois objetos entre si.
-     * 
+     *
      * @param obj objeto a ser comparado.
      * @return "true" se os objetos forem iguais e "false" se forem diferentes.
      */
@@ -96,15 +96,17 @@ public class Pagina implements Comparable {
     }
 
     /**
-     * Compara dois objetos do tipo "pagina" através de seu atributo "quantDaPalavra".
-     * 
+     * Compara dois objetos do tipo "pagina" através de seu atributo
+     * "quantDaPalavra".
+     *
      * @param t
-     * @return "1" se esse objeto for maior que o recebido por parâmetro, "-1" se for menor e "0" se forem iguais.
+     * @return "1" se esse objeto for maior que o recebido por parâmetro, "-1"
+     * se for menor e "0" se forem iguais.
      */
     @Override
     public int compareTo(Object t) {
-        Pagina pagina = (Pagina)t;
-        
+        Pagina pagina = (Pagina) t;
+
         if (quantDaPalavra > pagina.getQuantDaPalavra()) {
             return 1;
         } else if (quantDaPalavra < pagina.getQuantDaPalavra()) {
@@ -113,17 +115,19 @@ public class Pagina implements Comparable {
             return 0;
         }
     }
-    
+
     /**
      * Compara dois objetos do tipo "pagina" através de seu atributo "acesso".
-     * 
+     *
      * @param t objeto a ser comparado.
-     * @param s identifica se o objeto do tipo "Pagina" sera comparado pelo seu atributo "quantDaPalavra" ou "acesso".
-     * @return "1" se esse objeto for maior que o recebido por parâmetro, "-1" se for menor e "0" se forem iguais.
+     * @param s identifica se o objeto do tipo "Pagina" sera comparado pelo seu
+     * atributo "quantDaPalavra" ou "acesso".
+     * @return "1" se esse objeto for maior que o recebido por parâmetro, "-1"
+     * se for menor e "0" se forem iguais.
      */
     public int compareTo(Object t, int s) {
-        Pagina pagina = (Pagina)t;
-        
+        Pagina pagina = (Pagina) t;
+
         if (acesso > pagina.getAcesso()) {
             return 1;
         } else if (acesso < pagina.getAcesso()) {

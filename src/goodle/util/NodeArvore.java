@@ -50,8 +50,5 @@ public class NodeArvore {
     public void setDir(NodeArvore dir) {
         this.dir = dir;
     }
-    
-    
-    
 
 }

@@ -116,10 +116,10 @@ public class LinkedList implements Ilist {
 
     @Override
     public void remove(int index) {
-        if (index == 0) { 
+        if (index == 0) {
             head = head.getNext();
         } else if (index > 0 && index <= (size() - 1)) {
-            
+
             Node prev = getNode(index - 1);
             Node remNode = prev.getNext();
             prev.setNext(remNode.getNext());

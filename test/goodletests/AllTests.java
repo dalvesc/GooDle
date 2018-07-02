@@ -8,10 +8,10 @@ import org.junit.runners.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	LinkedListTest.class,
-	ArvoreTest.class,
-	PaginaTest.class,
-	PalavraTest.class,
-	ControllerTest.class,
-})
-public class AllTests { }
+    LinkedListTest.class,
+    ArvoreTest.class,
+    PaginaTest.class,
+    PalavraTest.class,
+    ControllerTest.class,})
+public class AllTests {
+}

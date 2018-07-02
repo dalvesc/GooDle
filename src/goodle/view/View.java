@@ -66,7 +66,7 @@ public class View {
                 case "2":
                     ranking(controller);
                     break;
-                    
+
                 case "0":
                     sair = 0;
                     break;
@@ -178,95 +178,78 @@ public class View {
                 + "[2] - Páginas mais visitadas\n"
                 + "[3] - Páginas menos visitadas\n");
         int listar = scan.nextInt();
+        try {
+            switch (listar) {
+                case 0:
+                    System.out.println("Quantos itens deseja listar?");
+                    int quant = scan.nextInt();
+                    Ilist lista = controller.ranking("palavra", false);
 
-        switch (listar) {
-            case 0:
-                System.out.println("Quantos itens deseja listar?");
-                int quant = scan.nextInt();
-                Ilist lista = controller.ranking("palavra", true);
-                
-                if(lista.size() == 0){
-                    System.out.println("Não há dados para exibir.");
+                    int i = 0;
+                    Iterator iterador = lista.iterator();
+
+                    while (iterador.hasNext() && i < quant) {
+                        Palavra p = (Palavra) iterador.next();
+                        System.out.println("\n*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
+                        i++;
+                    }
+                    System.out.println(" ");
                     break;
-                }
-                
-                int i = 0;
-                Iterator iterador = lista.iterator();
-                
-                while(iterador.hasNext() && i < quant){
-                    Palavra p = (Palavra)iterador.next();
-                    System.out.println("\n*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
-                    i++;
-                }
-                System.out.println(" ");
-                break;
-                
-            case 1:
-                System.out.println("Quantos itens deseja listar?");
-                quant = scan.nextInt();
-                lista = controller.ranking("palavra", false);
-                
-                if(lista.size() == 0){
-                    System.out.println("Não há dados para exibir.");
+
+                case 1:
+                    System.out.println("Quantos itens deseja listar?");
+                    quant = scan.nextInt();
+                    lista = controller.ranking("palavra", true);
+
+                    i = 0;
+                    iterador = lista.iterator();
+
+                    while (iterador.hasNext() && i < quant) {
+                        Palavra p = (Palavra) iterador.next();
+                        System.out.println("\n*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
+                        i++;
+                    }
+                    System.out.println(" ");
                     break;
-                }
-                
-                i = 0;
-                iterador = lista.iterator();
-                
-                while(iterador.hasNext() && i < quant){
-                    Palavra p = (Palavra)iterador.next();
-                    System.out.println("\n*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
-                    i++;
-                }
-                System.out.println(" ");
-                break;
-            
-            case 2:
-                System.out.println("Quantos itens deseja listar?");
-                quant = scan.nextInt();
-                lista = controller.ranking("pagina", true);
-                
-                if(lista.size() == 0){
-                    System.out.println("Não há dados para exibir.\n");
+
+                case 2:
+                    System.out.println("Quantos itens deseja listar?");
+                    quant = scan.nextInt();
+                    lista = controller.ranking("pagina", false);
+
+                    i = 0;
+                    iterador = lista.iterator();
+
+                    while (iterador.hasNext() && i < quant) {
+                        Pagina p = (Pagina) iterador.next();
+                        System.out.println("\n*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
+                        i++;
+                    }
+                    System.out.println(" ");
                     break;
-                }
-                
-                i = 0;
-                iterador = lista.iterator();
-                
-                while(iterador.hasNext() && i < quant){
-                    Pagina p = (Pagina)iterador.next();
-                    System.out.println("\n*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
-                    i++;
-                }
-                System.out.println(" ");
-                break;
-                
-            case 3:
-                System.out.println("Quantos itens deseja listar?");
-                quant = scan.nextInt();
-                lista = controller.ranking("pagina", false);
-                
-                if(lista.size() == 0){
-                    System.out.println("Não há dados para exibir.\n");
+
+                case 3:
+                    System.out.println("Quantos itens deseja listar?");
+                    quant = scan.nextInt();
+                    lista = controller.ranking("pagina", true);
+
+                    i = 0;
+                    iterador = lista.iterator();
+
+                    while (iterador.hasNext() && i < quant) {
+                        Pagina p = (Pagina) iterador.next();
+                        System.out.println("\n*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
+                        i++;
+                    }
+                    System.out.println(" ");
                     break;
-                }
-                
-                i = 0;
-                iterador = lista.iterator();
-                
-                while(iterador.hasNext() && i < quant){
-                    Pagina p = (Pagina)iterador.next();
-                    System.out.println("\n*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
-                    i++;
-                }
-                System.out.println(" ");
-                break;
-                
-            default:
-                System.out.println("Opção inválida, digite novamente: ");
-                listar = scan.nextInt();            
+
+                default:
+                    System.out.println("Opção inválida, digite novamente: ");
+                    listar = scan.nextInt();
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Não há dados para exibir.\n");
         }
     }
 }

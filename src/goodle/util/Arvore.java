@@ -277,7 +277,7 @@ public class Arvore implements AVL {
     }
 
     @Override
-    public Object busca(Object palavra) {        
+    public Object busca(Object palavra) {
         buscAVL(palavra, this.raiz);
         return encontrei;
     }
