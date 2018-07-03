@@ -131,7 +131,6 @@ public class MergeSort {
         while (left <= mid) {
             lista.set(low++, aux.get(left++));
         }
-      
         dif = 0;
         retorno = lista;
     }

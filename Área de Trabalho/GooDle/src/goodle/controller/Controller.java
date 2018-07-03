@@ -24,11 +24,17 @@ public class Controller {
      */
     public Controller() {
         diretorio = null;
-        paginas = new LinkedList();
         palavrasBuscadas = new LinkedList();
         paginasVisitadas = new LinkedList();
-        listaPalavras = new Arvore();
         adicionarPalavras();
+    }
+
+    /**
+     *
+     * @return diretório em que os arquivos estão presentes
+     */
+    public String getDiretorio() {
+        return this.diretorio;
     }
 
     /**
@@ -37,10 +43,12 @@ public class Controller {
      */
     public void adicionarPalavras() {
 
+        listaPalavras = new Arvore();
+        paginas = new LinkedList();
         String[] arquivos = null;
         File arq = null;
         try {
-            diretorio = new File("hehe").getCanonicalPath();
+            diretorio = new File("hehe2").getCanonicalPath();
             arq = new File(diretorio);
             arquivos = arq.list();
         } catch (Exception e) {
@@ -48,18 +56,15 @@ public class Controller {
         }
 
         for (String nomeArquivo : arquivos) {
-
             File file = new File(diretorio, nomeArquivo);
 
             try {
 
                 String[] palavras = formataTexto(file);
-
                 for (String word : palavras) {
                     Pagina novaPagina = new Pagina(nomeArquivo);
                     paginas.addLast(novaPagina);
                     Palavra novaPalavra = new Palavra(word, novaPagina);
-
                     listaPalavras.inserir(novaPalavra);
                 }
 
@@ -186,12 +191,14 @@ public class Controller {
 
         while (iterator.hasNext()) {
             Pagina comparar = (Pagina) iterator.next();
+
             if (nomePagina.compareTo(comparar.getArq()) == 0) {
                 paginas.remove(comparar);
                 paginasVisitadas.remove(comparar);
                 removerBusca(comparar);
             }
         }
+        listaPalavras = null;
         return arq.delete();
     }
 
@@ -262,6 +269,10 @@ public class Controller {
                         palavrasJaApagadas.addLast(word);
                         comparar.minBuscas();
                         if (comparar.getBuscas() == 0) {
+                            if(palavrasBuscadas.size() == 1){
+                                palavrasBuscadas = new LinkedList();
+                                return;
+                            }
                             palavrasBuscadas.remove(comparar);
                         }
                     }

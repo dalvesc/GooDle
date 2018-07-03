@@ -105,15 +105,29 @@ public class View {
 
             switch (ordem) {
                 case 1:
-                    ocorrencias = controller.buscar(pal, true);
-                    System.out.println("\nPara a palavra '" + pal + "': \n");
-
+                    
+                     Pagina [] array = new Pagina[ocorrencias.size()];
+                    int i = 0;
+                    
                     iterator = ocorrencias.iterator();
                     while (iterator.hasNext()) {
                         pagina = (Pagina) iterator.next();
+                        array[i] = pagina;
+                        i++;
+                    }
+                    
+                    System.out.println("\nPara a palavra '" + pal + "': \n");
+
+                    if(ocorrencias.size() == 1){
                         System.out.println("*Página: " + pagina.getArq() + ", ocorrências: " + pagina.getQuantDaPalavra() + "*");
                     }
-                    System.out.println("");
+                    else{
+                        for(i = array.length-1; i > 0; i--){                            
+                            System.out.println("*Página: " + array[i].getArq() + ", ocorrências: " + array[i].getQuantDaPalavra() + "*");
+                        }
+                    }
+                    
+                    break;
 
                 case 2:
                     break;

@@ -158,6 +158,4 @@ public class Palavra implements Comparable {
     public String toString() {
         return palavra;
     }
-    
-    
 }
