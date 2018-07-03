@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 /**
  * Classe que controla as interações entre a View e o restante do sistema.
  *
+ * Base de dados extraída do Twitter pelo Grupo Adam (http:/adam.uefs.br/)
+ *
  * @author Daniel Alves e Gabriela Nunes.
  */
 public class Controller {
@@ -48,7 +50,7 @@ public class Controller {
         String[] arquivos = null;
         File arq = null;
         try {
-            diretorio = new File("hehe").getCanonicalPath();
+            diretorio = new File("arquivos").getCanonicalPath();
             arq = new File(diretorio);
             arquivos = arq.list();
         } catch (Exception e) {
@@ -269,7 +271,7 @@ public class Controller {
                         palavrasJaApagadas.addLast(word);
                         comparar.minBuscas();
                         if (comparar.getBuscas() == 0) {
-                            if(palavrasBuscadas.size() == 1){
+                            if (palavrasBuscadas.size() == 1) {
                                 palavrasBuscadas = new LinkedList();
                                 return;
                             }

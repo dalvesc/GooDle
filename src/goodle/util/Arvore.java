@@ -5,8 +5,8 @@ import goodle.model.Palavra;
 
 public class Arvore implements AVL {
 
-    public boolean h;
-    public NodeArvore raiz;
+    private boolean h;
+    private NodeArvore raiz;
     private Object encontrei;
 
     public Arvore() {
@@ -88,7 +88,7 @@ public class Arvore implements AVL {
         return pt;
     }
 
-    public NodeArvore caso1(NodeArvore pt) {
+    private NodeArvore caso1(NodeArvore pt) {
         NodeArvore ptu = pt.getEsq();
         Palavra palavra = (Palavra) pt.getChave();
 
@@ -121,7 +121,7 @@ public class Arvore implements AVL {
         return pt;
     }
 
-    public NodeArvore caso2(NodeArvore pt) {
+    private NodeArvore caso2(NodeArvore pt) {
         NodeArvore ptu = pt.getDir();
         Palavra palavra = (Palavra) pt.getChave();
 
