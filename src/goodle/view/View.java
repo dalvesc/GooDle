@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * Autor: Daniel Alves Costa e Gabriela dos Santos Costa Nunes
  *
- * Componente Curricular: Programação * Concluido em: 29/06/2018
+ * Componente Curricular: Programação * Concluido em: 03/07/2018
  *
  * Declaro que este código foi elaborado por mim e minha dupla e não contém
  * nenhum trecho de código de outro colega ou de outro autor, tais como
@@ -37,7 +37,7 @@ public class View {
         Scanner scan = new Scanner(System.in);
         Palavra temp = null;
 
-        System.out.println("\t\tGooDle");
+        System.out.println("\t\tFeiraGugou");
         System.out.println("\nCarregando repositório de arquivos...\n");
 
         Controller controller = new Controller();
