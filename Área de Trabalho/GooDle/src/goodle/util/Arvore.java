@@ -84,7 +84,7 @@ public class Arvore implements AVL {
                     }
                 }
             }
-        }
+        }       
         return pt;
     }
 
