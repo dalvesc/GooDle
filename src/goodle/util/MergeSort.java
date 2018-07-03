@@ -123,7 +123,7 @@ public class MergeSort {
                 } else if (verifica(aux.get(left)) == 2) {
                     Pagina auxLeft = (Pagina) aux.get(left);
                     Pagina auxRight = (Pagina) aux.get(right);
-                    lista.set(low++, auxLeft.compareTo(auxRight) > 0 ? aux.get(left++) : aux.get(right++));
+                    lista.set(low++, auxLeft.compareTo(auxRight, 1) > 0 ? aux.get(left++) : aux.get(right++));
                 }
             }
         }

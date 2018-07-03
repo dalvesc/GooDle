@@ -45,10 +45,10 @@ public class MergeSortTest {
         lista.addFirst(pagina4);
         assertFalse(lista.isEmpty());
 
-        lista2 = merge.sort(lista, true, 1);
+        lista2 = merge.sort(lista, true, 0);
         assertFalse(lista2.isEmpty());
         Iterator it = lista.iterator();
-
+        
         assertTrue(it.hasNext());
         assertSame(pagina3, it.next());
         assertTrue(it.hasNext());

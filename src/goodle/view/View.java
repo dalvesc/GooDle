@@ -105,27 +105,28 @@ public class View {
 
             switch (ordem) {
                 case 1:
-
-                    Pagina[] array = new Pagina[ocorrencias.size()];
+                    
+                     Pagina [] array = new Pagina[ocorrencias.size()];
                     int i = 0;
-
+                    
                     iterator = ocorrencias.iterator();
                     while (iterator.hasNext()) {
                         pagina = (Pagina) iterator.next();
                         array[i] = pagina;
                         i++;
                     }
-
+                    
                     System.out.println("\nPara a palavra '" + pal + "': \n");
 
-                    if (ocorrencias.size() == 1) {
+                    if(ocorrencias.size() == 1){
                         System.out.println("*Página: " + pagina.getArq() + ", ocorrências: " + pagina.getQuantDaPalavra() + "*");
-                    } else {
-                        for (i = array.length - 1; i > 0; i--) {
+                    }
+                    else{
+                        for(i = array.length-1; i > 0; i--){                            
                             System.out.println("*Página: " + array[i].getArq() + ", ocorrências: " + array[i].getQuantDaPalavra() + "*");
                         }
                     }
-
+                    
                     break;
 
                 case 2:
@@ -199,7 +200,7 @@ public class View {
                     Ilist lista = controller.ranking("palavra", false);
 
                     int i = 0;
-                    Iterator iterador = lista.iterator();
+                    Iterator iterador = lista.iterator(); 
 
                     System.out.println(" ");
                     while (iterador.hasNext() && i < quant) {
