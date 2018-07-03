@@ -106,7 +106,7 @@ public class View {
             switch (ordem) {
                 case 1:
                     
-                     Pagina [] array = new Pagina[ocorrencias.size()];
+                    Pagina [] array = new Pagina[ocorrencias.size()];
                     int i = 0;
                     
                     iterator = ocorrencias.iterator();
