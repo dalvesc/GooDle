@@ -24,10 +24,10 @@ public class Controller {
      */
     public Controller() {
         diretorio = null;
-        paginas = new LinkedList();
+        
         palavrasBuscadas = new LinkedList();
         paginasVisitadas = new LinkedList();
-        listaPalavras = new Arvore();
+        
         adicionarPalavras();
     }
 
@@ -37,6 +37,8 @@ public class Controller {
      */
     public void adicionarPalavras() {
 
+        listaPalavras = new Arvore();
+        paginas = new LinkedList();
         String[] arquivos = null;
         File arq = null;
         try {
@@ -48,18 +50,15 @@ public class Controller {
         }
 
         for (String nomeArquivo : arquivos) {
-
             File file = new File(diretorio, nomeArquivo);
 
             try {
-
+         
                 String[] palavras = formataTexto(file);
-
                 for (String word : palavras) {
                     Pagina novaPagina = new Pagina(nomeArquivo);
                     paginas.addLast(novaPagina);
                     Palavra novaPalavra = new Palavra(word, novaPagina);
-
                     listaPalavras.inserir(novaPalavra);
                 }
 
