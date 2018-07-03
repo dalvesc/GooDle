@@ -1,51 +1,63 @@
 package goodletest.util;
 
 import goodle.model.*;
-import goodle.util.Ilist;
-import goodle.util.LinkedList;
-import goodle.util.MergeSort;
-import static org.junit.Assert.*;
+import goodle.util.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class MergeSortTest {
-    
+
     MergeSort merge;
-    Palavra pal1, pal2, pal3, expectedWord;
-    Pagina pag1, pag2, pag3, expectedPage;
-    
-    Ilist lista, listaOrdenada;
-    
+    Ilist lista, lista2;
+    Pagina pagina1, pagina2, pagina3, pagina4;
+
     @Before
     public void setUp() throws Exception {
+        merge = new MergeSort();
         lista = new LinkedList();
-        listaOrdenada = new LinkedList();
-        
-        pag1 = new Pagina("pag1");
-        pag2 = new Pagina("pag2");
-        pag3 = new Pagina("pag3");
-        
-        pal1 = new Palavra("pal1", pag1);
-        pal2 = new Palavra("pal2", pag2);
-        pal3 = new Palavra("pal3", pag3);
-        
-        lista.addLast(pal2);
-        lista.addLast(pal1);
-        lista.addLast(pal3);
+        lista2 = new LinkedList();
+        pagina1 = new Pagina("Arquivo1");
+        pagina2 = new Pagina("Arquivo2");
+        pagina3 = new Pagina("Arquivo3");
+        pagina4 = new Pagina("Arquivo4");
     }
-    
+
     @Test
-    public void sort(){
-        listaOrdenada = merge.sort(lista, true);
-        
-        expectedWord = (Palavra)listaOrdenada.get(0);
-        assertEquals(expectedWord, pal1);
-        
-        
-        
-        
-        
-        
+    public void testSort() {
+        pagina1.setQuantDaPalavra();
+        pagina1.setQuantDaPalavra();
+        pagina2.setQuantDaPalavra();
+        pagina2.setQuantDaPalavra();
+        pagina2.setQuantDaPalavra();
+        pagina2.setQuantDaPalavra();
+        pagina3.setQuantDaPalavra();
+        pagina4.setQuantDaPalavra();
+        pagina4.setQuantDaPalavra();
+        pagina4.setQuantDaPalavra();
+
+        lista.addLast(pagina1);
+        lista.addLast(pagina2);
+        lista.addLast(pagina3);
+        lista.addFirst(pagina4);
+        assertFalse(lista.isEmpty());
+
+        lista2 = merge.sort(lista, true, 1);
+        assertFalse(lista2.isEmpty());
+        Iterator it = lista.iterator();
+
+        assertTrue(it.hasNext());
+        assertSame(pagina3, it.next());
+        assertTrue(it.hasNext());
+        assertSame(pagina1, it.next());
+        assertTrue(it.hasNext());
+        assertSame(pagina4, it.next());
+        assertTrue(it.hasNext());
+        assertSame(pagina2, it.next());
+        assertFalse(it.hasNext());
+
     }
 }

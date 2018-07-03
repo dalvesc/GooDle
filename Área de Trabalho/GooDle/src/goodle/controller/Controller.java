@@ -269,7 +269,7 @@ public class Controller {
                         palavrasJaApagadas.addLast(word);
                         comparar.minBuscas();
                         if (comparar.getBuscas() == 0) {
-                            if(palavrasBuscadas.size() == 1){
+                            if (palavrasBuscadas.size() == 1) {
                                 palavrasBuscadas = new LinkedList();
                                 return;
                             }
