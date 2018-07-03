@@ -87,6 +87,7 @@ public class Controller {
     public Ilist buscar(Palavra palavra, boolean crescente) {
 
         Palavra temp = (Palavra) listaPalavras.busca(palavra);
+        Ilist paginas = new LinkedList();
 
         if (!palavrasBuscadas.contains(temp)) {
             palavrasBuscadas.addLast(temp);
@@ -158,7 +159,7 @@ public class Controller {
             Pagina comparar = (Pagina) iterator.next();
             if (nomePagina.compareTo(comparar.getArq()) == 0) {
                 comparar.setAcessos();
-
+                
                 if (!paginasVisitadas.contains(comparar)) {
                     paginasVisitadas.addLast(comparar);
                 }
