@@ -188,9 +188,10 @@ public class View {
                     int i = 0;
                     Iterator iterador = lista.iterator();
 
+                    System.out.println(" ");
                     while (iterador.hasNext() && i < quant) {
                         Palavra p = (Palavra) iterador.next();
-                        System.out.println("\n*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
+                        System.out.println("*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
                         i++;
                     }
                     System.out.println(" ");
@@ -204,9 +205,10 @@ public class View {
                     i = 0;
                     iterador = lista.iterator();
 
+                    System.out.println(" ");
                     while (iterador.hasNext() && i < quant) {
                         Palavra p = (Palavra) iterador.next();
-                        System.out.println("\n*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
+                        System.out.println("*Palavra: " + p.getPalavra() + ", buscas: " + p.getBuscas() + "*");
                         i++;
                     }
                     System.out.println(" ");
@@ -220,9 +222,10 @@ public class View {
                     i = 0;
                     iterador = lista.iterator();
 
+                    System.out.println(" ");
                     while (iterador.hasNext() && i < quant) {
                         Pagina p = (Pagina) iterador.next();
-                        System.out.println("\n*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
+                        System.out.println("*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
                         i++;
                     }
                     System.out.println(" ");
@@ -236,9 +239,10 @@ public class View {
                     i = 0;
                     iterador = lista.iterator();
 
+                    System.out.println(" ");
                     while (iterador.hasNext() && i < quant) {
                         Pagina p = (Pagina) iterador.next();
-                        System.out.println("\n*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
+                        System.out.println("*Página: " + p.getArq() + ", acessos: " + p.getAcesso() + "*");
                         i++;
                     }
                     System.out.println(" ");

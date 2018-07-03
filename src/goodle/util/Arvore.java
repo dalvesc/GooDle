@@ -31,7 +31,7 @@ public class Arvore implements AVL {
 
             Palavra raiz = (Palavra) pt.getChave();
 
-            if (chave.getPalavra().compareTo(raiz.getPalavra()) == 0) {
+            if (chave.compareTo(raiz.getPalavra()) == 0) {
                 raiz.quantidade();
                 Iterator iterator = raiz.getlPagina().iterator();
                 while (iterator.hasNext()) {
@@ -45,7 +45,7 @@ public class Arvore implements AVL {
                 return pt;
             }
 
-            if (chave.getPalavra().compareTo(raiz.getPalavra()) < 0) {//PERCORRO PARA O RAMO ESQUERDO
+            if (chave.compareTo(raiz.getPalavra()) < 0) {//PERCORRO PARA O RAMO ESQUERDO
                 pt.setEsq(insAVL(chave, pt.getEsq()));
 
                 if (h) {
@@ -289,7 +289,7 @@ public class Arvore implements AVL {
         if (pt == null) {
             return null;
         } else {
-            if (chave.getPalavra().compareTo(chaveRaiz.getPalavra()) < 0) {
+            if (chave.compareTo(chaveRaiz.getPalavra()) < 0) {
                 buscAVL(chave, pt.getEsq());
             } else if (chave.compareTo(chaveRaiz.getPalavra()) > 0) {
                 buscAVL(chave, pt.getDir());

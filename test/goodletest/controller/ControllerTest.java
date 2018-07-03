@@ -8,11 +8,15 @@ import java.io.UnsupportedEncodingException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
 
 public class ControllerTest {
 
     Controller controller;
-    Object pagina1, palavra;
+    Object pagina1;
+    Palavra palavra;
     Ilist lista;
 
     @Before
@@ -21,6 +25,19 @@ public class ControllerTest {
         pagina1 = new Pagina("teste2.txt");
         palavra = new Palavra("daniel", (Pagina) pagina1);
         lista = new LinkedList();
+        
+        String textoQueSeraEscrito = "Texto para arquivo para teste de"
+                + " exclusão de arquivo";
+        FileWriter arquivo;
+        try {
+            arquivo = new FileWriter(new File(controller.getDiretorio(), "Arquivo.txt"));
+            arquivo.write(textoQueSeraEscrito);
+            arquivo.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -32,17 +49,21 @@ public class ControllerTest {
         assertFalse(iterator.hasNext());
     }
     
-//    public void testDeletar() throws FileNotFoundException, UnsupportedEncodingException{
-//        assertTrue(controller.deletarPagina("teste3"));
-//    }
-
     @Test
+    public void testDeletar() throws FileNotFoundException, UnsupportedEncodingException{
+        controller.buscar((Palavra) palavra, true);
+        assertTrue(controller.deletarPagina("Arquivo"));
+    }
+    
+   @Test
     public void testRanking() {
         controller.buscar((Palavra) palavra, true);
+        
         lista = controller.ranking("palavra", true);
         Iterator iterator = lista.iterator();
-        while(iterator.hasNext())
-            System.out.println((Palavra)iterator.next());
-        assertTrue(lista.contains(palavra));
+        assertTrue(iterator.hasNext());        
+        Palavra temp = (Palavra) iterator.next();
+        assertEquals(0, temp.compareTo(palavra.getPalavra()));
+        assertFalse(iterator.hasNext());        
     }
 }

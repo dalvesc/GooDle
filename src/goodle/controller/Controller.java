@@ -24,11 +24,17 @@ public class Controller {
      */
     public Controller() {
         diretorio = null;
-        
         palavrasBuscadas = new LinkedList();
         paginasVisitadas = new LinkedList();
-        
         adicionarPalavras();
+    }
+
+    /**
+     *
+     * @return diretório em que os arquivos estão presentes
+     */
+    public String getDiretorio() {
+        return this.diretorio;
     }
 
     /**
@@ -53,7 +59,7 @@ public class Controller {
             File file = new File(diretorio, nomeArquivo);
 
             try {
-         
+
                 String[] palavras = formataTexto(file);
                 for (String word : palavras) {
                     Pagina novaPagina = new Pagina(nomeArquivo);
@@ -185,6 +191,7 @@ public class Controller {
 
         while (iterator.hasNext()) {
             Pagina comparar = (Pagina) iterator.next();
+
             if (nomePagina.compareTo(comparar.getArq()) == 0) {
                 paginas.remove(comparar);
                 paginasVisitadas.remove(comparar);
