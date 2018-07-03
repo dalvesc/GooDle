@@ -22,8 +22,8 @@ public class ControllerTest {
     @Before
     public void setUp() throws Exception {
         controller = new Controller();
-        pagina1 = new Pagina("teste2.txt");
-        palavra = new Palavra("daniel", (Pagina) pagina1);
+        pagina1 = new Pagina("teste1.txt");
+        palavra = new Palavra("facebook", (Pagina) pagina1);
         lista = new LinkedList();
         
         String textoQueSeraEscrito = "Texto para arquivo para teste de"
